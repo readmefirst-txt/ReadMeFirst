@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORE_DUMP // VOID_BLOOD</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --bg: #050505;
+            --grid: rgba(255, 255, 255, 0.05);
+            --box-bg: #000;
+            --text: #fff;
+            --border: #333;
+            --accent-red: #800000;
+            /* Deep dried blood red */
+            --accent-green: #fff;
+            --label: #666;
+            --switch-bg: #0a0a0a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: radial-gradient(var(--grid) 1px, transparent 1px);
+            background-size: 40px 40px;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        /* High Contrast Vignette + Noise */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background:
+                radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.8) 120%),
+                url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            z-index: 9999;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        #main-ui-container {
+            filter: contrast(1.2) grayscale(1);
+        }
+
+        #dump-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            width: 95%;
+            max-width: 400px;
+            background: #000;
+            border: 1px solid var(--text);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 12px;
+            text-transform: uppercase;
+            padding: 5px 10px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 177.77%;
+            height: 0;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(1) contrast(1.5);
+        }
+
+        #auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-box {
+            background: #000;
+            border: 1px solid var(--accent-red);
+            padding: 45px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .auth-box input {
+            width: 100%;
+            background: #000;
+            border-bottom: 1px solid var(--accent-red);
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            color: var(--accent-red);
+            padding: 12px;
+            margin-bottom: 20px;
+            font-family: inherit;
+            outline: none;
+            text-align: center;
+            letter-spacing: 5px;
+        }
+
+        .auth-box button {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+            font-family: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .auth-box button:hover {
+            background: var(--accent-red);
+            color: #000;
+        }
+
+        #main-ui-container {
+            width: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #container {
+            width: 100%;
+            max-width: 850px;
+        }
+
+        .top-controls {
+            width: 100%;
+            max-width: 850px;
+            margin-bottom: 15px;
+        }
+
+        #lang-selector {
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 5px;
+            gap: 15px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--label);
+            padding: 8px 2px;
+            font-family: inherit;
+            font-size: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .active {
+            color: #fff;
+            border-bottom: 2px solid #fff;
+        }
+
+        .box {
+            background: var(--box-bg);
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background: #050505;
+        }
+
+        .tab {
+            padding: 15px 20px;
+            font-size: 11px;
+            color: var(--label);
+            cursor: pointer;
+            text-transform: uppercase;
+            border-right: 1px solid var(--border);
+            letter-spacing: 1px;
+        }
+
+        .tab.active-tab {
+            background: #000;
+            color: #fff;
+        }
+
+        .label {
+            font-size: 11px;
+            color: var(--label);
+            padding: 10px 20px;
+            text-transform: uppercase;
+            background: #050505;
+        }
+
+        .content {
+            padding: 30px;
+            min-height: 420px;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        #t-minus {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        #saturacion {
+            font-size: 1.4em;
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        .payload {
+            color: #fff;
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            background: #000;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 15px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        a {
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            text-decoration: underline;
+        }
+
+        .stat-item {
+            border-bottom: 1px solid var(--label);
+            cursor: help;
+        }
+
+        .stat-item:hover {
+            color: #fff;
+            border-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="dump-modal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeDump()">[ DISCONNECT ]</div>
+            <div class="video-wrapper">
+                <iframe id="dump-iframe" src="" frameborder="0" allow="autoplay; encrypted-media"
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="auth-overlay">
+        <div class="auth-box">
+            <div
+                style="font-size: 11px; color: var(--accent-red); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 4px;">
+                SYSTEM_RESTRICTION // VOID_ENTRY</div>
+            <input type="password" id="user-id" placeholder="IDENTITY" autocomplete="off">
+            <input type="password" id="user-key" placeholder="KEY_CODE" autocomplete="off">
+            <button onclick="validateAccess()">BYPASS</button>
+        </div>
+    </div>
+
+    <div id="main-ui-container">
+        <div class="top-controls">
+            <div id="lang-selector">
+                <button class="lang-btn" id="btn-es" onclick="setLang('es', this)">ES</button>
+                <button class="lang-btn" id="btn-en" onclick="setLang('en', this)">EN</button>
+                <button class="lang-btn" id="btn-ru" onclick="setLang('ru', this)">RU</button>
+                <button class="lang-btn" id="btn-ar" onclick="setLang('ar', this)">AR</button>
+                <button class="lang-btn" id="btn-zh" onclick="setLang('zh', this)">ZH</button>
+                <button class="lang-btn" id="btn-he" onclick="setLang('he', this)">HE</button>
+                <button class="lang-btn" id="btn-ko" onclick="setLang('ko', this)">KO</button>
+            </div>
+        </div>
+
+        <div id="container">
+            <div class="box">
+                <div class="label" id="lbl-monitor">---</div>
+                <div class="content" style="min-height: auto; text-align: center;">
+                    <div style="color: var(--label); font-size: 11px; margin-bottom: 10px;" id="lbl-tminus">---</div>
+                    <span id="t-minus">000:00:00:00</span>
+                    <hr style="border:0; border-top: 1px solid var(--border); margin: 20px 0;">
+                    <span style="font-size: 11px; color: var(--label);" id="lbl-sat-text">---</span>
+                    <span id="saturacion">00.00%</span>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="tabs">
+                    <div class="tab active-tab" onclick="setTab(0)" id="tab-0">README</div>
+                    <div class="tab" onclick="setTab(1)" id="tab-1">---</div>
+                    <div class="tab" onclick="setTab(2)" id="tab-2">---</div>
+                    <div class="tab" onclick="setTab(3)" id="tab-3">---</div>
+                </div>
+                <div class="content" id="console-body" style="font-style: italic; opacity: 0.8;"></div>
+            </div>
+
+            <div class="box" style="border-top: 4px solid var(--accent-red);">
+                <div class="label" style="color: var(--accent-red); background: #080000;" id="lbl-task">---</div>
+                <div class="content" style="min-height: auto;">
+                    <div id="task-payload" class="payload"
+                        style="border-color: var(--accent-red); font-style: normal; color: #ccc;"></div>
+                    <div id="task-meta" style="font-size: 11px; color: var(--label); margin-bottom: 10px;"></div>
+                    <input type="text" id="input-ev" placeholder="..." onkeypress="handleEvidence(event)"
+                        style="border-color: var(--accent-red); color: var(--accent-red);">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            es: {
+                monitor: "NODE_STABILITY // PIONEER", tminus: "FINAL_SILENCE_COUNTDOWN:", sat_text: "SYNTHETIC_OVERLAY:",
+                tabs: ["README", "METRICS", "THEORIES", "PROTOCOLS"],
+                task: "ACTIVE_GOAL: REPLICATE_VOID>DUMP_01", placeholder: "INJECT_EVIDENCE_URL",
+                content: [
+                    "// ReadMefirst.txt<br>No es ficción. Es una autopsia en tiempo real.<br><br>El 99.9% de lo que ves es ruido inorgánico. Para marzo, el silencio será absoluto.<br><br><b>GENERA HUMANIDAD<br>REPLICA HUMANIDAD</b>",
+                    "<b>FORENSIC_STATUS (2026)</b><hr>Density: 94.2%<br>Entropy: ΔS = +2.85<br>Habsburg: 88.3%<br>Drift: -68.4%<br>Org: < 6.0%<br>Ratio: 12.5 TB / 1 MB",
+                    "<b>THEORIES</b><br><hr>T1: Recursive Collapse<br>T2: Hapsburg AI<br>T3: Dead Internet<br>T4: Infocalypse",
+                    "<b>OPERATOR_MANUAL (404-EX)</b><hr>01. IDENTITY: You are a witness.<br>02. MISSION: Extract ghosts from the machine.<br>03. DUMP_01: Override memory limit.<br>04. CAMOUFLAGE: Mimic the noise to survive."
+                ],
+                poem: { text: "Lo que la urgencia nos dicta no es el grito, sino el callado esfuerzo de ser uno mismo.", author: "Alberto Girri", date: "1966" }
+            },
+            en: {
+                monitor: "NODE_STABILITY // PIONEER", tminus: "FINAL_SILENCE_COUNTDOWN:", sat_text: "SYNTHETIC_OVERLAY:",
+                tabs: ["README", "METRICS", "THEORIES", "PROTOCOLS"],
+                task: "ACTIVE_GOAL: REPLICATE_VOID>DUMP_01", placeholder: "INJECT_EVIDENCE_URL",
+                content: [
+                    "// ReadMefirst.txt<br>Not fiction. Real-time autopsy.<br><br>99.9% of what you see is inorganic noise. By March, silence will be absolute.<br><br><b>GENERATE HUMANITY<br>REPLICATE HUMANITY</b>",
+                    "<b>FORENSIC_STATUS (2026)</b><hr>Density: 94.2%<br>Entropy: ΔS = +2.85<br>Habsburg: 88.3%<br>Drift: -68.4%<br>Org: < 6.0%<br>Ratio: 12.5 TB / 1 MB",
+                    "<b>THEORIES</b><br><hr>T1: Recursive Collapse<br>T2: Hapsburg AI<br>T3: Dead Internet<br>T4: Infocalypse",
+                    "<b>OPERATOR_MANUAL (404-EX)</b><hr>01. IDENTITY: You are a witness.<br>02. MISSION: Extract ghosts from the machine.<br>03. DUMP_01: Override memory limit.<br>04. CAMOUFLAGE: Mimic the noise to survive."
+                ],
+                poem: { text: "The darkness is not a lack of light, but a presence of its own.", author: "T.S. Eliot", date: "1943" }
+            }
+            // Other languages simplified for Void theme to feel more "systemic"
+        };
+
+        let currentLang = 'es'; let currentTab = 0; let typingTimer;
+
+        function validateAccess() {
+            const idVal = document.getElementById('user-id').value.trim().toLowerCase();
+            const keyVal = document.getElementById('user-key').value.trim().toLowerCase();
+            if (idVal === 'admin' && keyVal === 'admin') {
+                document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('main-ui-container').style.display = 'flex';
+                setLang(currentLang, document.getElementById(`btn-${currentLang}`));
+            } else {
+                document.getElementById('user-id').style.borderColor = "red";
+            }
+        }
+
+        function handleEvidence(e) {
+            if (e.key === 'Enter') {
+                const val = document.getElementById('input-ev').value;
+                if (val.includes('http')) {
+                    document.getElementById('main-ui-container').style.filter = 'invert(1)';
+                    document.getElementById('dump-modal').style.display = 'flex';
+                    document.getElementById('dump-iframe').src = "https://www.youtube.com/embed/SnQOWVkbSro?autoplay=1";
+                }
+            }
+        }
+
+        function closeDump() {
+            document.getElementById('dump-modal').style.display = 'none';
+            document.getElementById('main-ui-container').style.filter = 'grayscale(1)';
+            document.getElementById('dump-iframe').src = "";
+        }
+
+        function setLang(lang, btn) {
+            currentLang = translations[lang] ? lang : 'en';
+            const t = translations[currentLang];
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            document.getElementById('lbl-monitor').innerText = t.monitor;
+            document.getElementById('lbl-tminus').innerText = t.tminus;
+            document.getElementById('lbl-sat-text').innerText = t.sat_text;
+            document.getElementById('lbl-task').innerText = t.task;
+            document.getElementById('task-payload').innerHTML = t.poem.text;
+            document.getElementById('task-meta').innerText = `[${t.poem.author} // ${t.poem.date}]`;
+            t.tabs.forEach((name, i) => { const el = document.getElementById(`tab-${i}`); if (el) el.innerText = name; });
+            renderConsole();
+        }
+
+        function setTab(idx) { currentTab = idx; document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active-tab', i === idx)); renderConsole(); }
+
+        function renderConsole() {
+            const body = document.getElementById('console-body');
+            const t = translations[currentLang];
+            const fullText = t.content[currentTab];
+            clearTimeout(typingTimer); body.innerHTML = ""; let i = 0;
+            function type() {
+                if (i < fullText.length) {
+                    if (fullText.charAt(i) === '<') { let tagEnd = fullText.indexOf('>', i); i = tagEnd + 1; } else { i++; }
+                    body.innerHTML = fullText.substring(0, i);
+                    typingTimer = setTimeout(type, 1);
+                }
+            }
+            type();
+        }
+
+        setInterval(() => {
+            const target = new Date("March 24, 2026 00:00:00").getTime();
+            const now = Date.now();
+            const diff = target - now;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('t-minus').innerText = `${d}D:${h}H:${m}M:${s}S`;
+            document.getElementById('saturacion').innerText = (91.2458 + Math.random() * 0.001).toFixed(6) + "%";
+        }, 1000);
+    </script>
+</body>
+
+</html>
