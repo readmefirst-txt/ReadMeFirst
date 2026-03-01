@@ -288,14 +288,15 @@
             const authErr = document.getElementById('auth-err');
             const menu = document.getElementById('menu');
 
-            // IMMEDIATE AUTH CHECK
+            // IMMEDIATE AUTH CHECK REMOVED TO RESTORE BOOT SEQUENCE AS REQUESTED
+            /*
             if (localStorage.getItem('antigravity_auth') === 'true') {
                 document.getElementById('boot-log').style.display = 'none';
                 loginForm.style.display = 'none';
                 menu.style.display = 'flex';
-                // Success - Still check uplink in background if you want, or just show menu
                 return;
             }
+            */
 
             // Simulate drawn-out boot sequence printing
             let delay = 0;

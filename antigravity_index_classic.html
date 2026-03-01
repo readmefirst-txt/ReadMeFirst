@@ -277,22 +277,19 @@
             border-bottom: 2px solid #000;
         }
 
-        .bot-check-overlay {
+        .bot-check-container {
             background: #00ff41;
             color: #000;
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 100;
-            padding: 20px;
+            padding: 40px 20px;
             text-align: center;
             box-sizing: border-box;
+            flex-grow: 1;
         }
 
         .bot-check-btn {
@@ -718,11 +715,13 @@
 
         function showHumanCheck() {
             const body = document.getElementById('console-body');
-            const t = translations[currentLang] || translations['es'];
-            body.innerHTML = `
-                <div class="bot-check-overlay">
+            const bt = translations[currentLang] || translations['es'];
+            const header = `<div class="objective-header">${bt.override}</div>`;
+
+            body.innerHTML = header + `
+                <div class="bot-check-container">
                     <div style="font-size: 10px; margin-bottom: 30px; letter-spacing: 5px; font-weight: bold;">[ IDENTITY_VERIFICATION_REQUIRED ]</div>
-                    <button class="bot-check-btn" onclick="validateHuman()">${t.human_btn}</button>
+                    <button class="bot-check-btn" onclick="validateHuman()">${bt.human_btn}</button>
                     <div style="margin-top: 30px; font-size: 8px; opacity: 0.7; max-width: 250px;">SESSION_TOKEN: ${Math.random().toString(16).slice(2).toUpperCase()}-OVRD</div>
                 </div>
             `;
