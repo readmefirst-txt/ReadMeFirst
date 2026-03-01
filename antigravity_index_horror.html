@@ -992,13 +992,10 @@
 
             renderConsole();
         }
-
         function showHumanCheck() {
             const body = document.getElementById('console-body');
             const bt = translations[currentLang] || translations['es'];
-            const header = `<div class="objective-header">${bt.override}</div>`;
-
-            body.innerHTML = header + `
+            body.innerHTML = `
                 <div class="bot-check-container">
                     <div style="font-size: 10px; margin-bottom: 30px; letter-spacing: 5px; font-weight: bold;">[ IDENTITY_VERIFICATION_REQUIRED ]</div>
                     <button class="bot-check-btn" onclick="validateHuman()">${bt.human_btn}</button>
@@ -1030,7 +1027,7 @@
             }
 
             clearTimeout(typingTimer);
-            body.innerHTML = headerHTML;
+            body.innerHTML = "";
             const contentDiv = document.createElement('div');
             contentDiv.style.padding = currentTab === 4 ? "20px" : "0px";
             body.appendChild(contentDiv);
@@ -1098,6 +1095,7 @@
                 window.location.href = 'index.html';
             } else {
                 setLang(initialLang);
+                setTab(0); // Force README tab on start
             }
         };
     </script>

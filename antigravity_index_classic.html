@@ -267,8 +267,11 @@
         .bot-check-container {
             background: var(--accent-red);
             color: #000;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            min-height: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -276,7 +279,7 @@
             padding: 40px 20px;
             text-align: center;
             box-sizing: border-box;
-            flex-grow: 1;
+            z-index: 10;
         }
 
         .bot-check-btn {
@@ -749,12 +752,12 @@
         const bLang = navigator.language.split('-')[0];
         currentLang = translations[bLang] ? bLang : 'es';
 
-        // Redirigir si no hay sesión
         window.addEventListener('load', () => {
             if (localStorage.getItem('antigravity_auth') !== 'true') {
                 window.location.href = 'index.html';
             } else {
                 setLang(currentLang, document.getElementById(`btn-${currentLang}`));
+                setTab(0); // Force README tab on start
             }
         });
     </script>
