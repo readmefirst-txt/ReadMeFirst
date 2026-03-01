@@ -509,10 +509,9 @@
                 style="display: none; border: 1px solid var(--accent-green); background: rgba(0,255,65,0.05);">
                 <div class="label"
                     style="color: var(--accent-green); animation: pulse-warn 2s infinite; font-weight: bold;">[
-                    INCOMING_TRANSMISSION ]</div>
-                <div class="content" style="min-height: auto;">
-                    <div id="broadcast-payload" class="payload" style="color: #fff; font-size: 1.2rem;"></div>
-                    <div id="broadcast-meta" style="font-size: 10px; color: var(--label); margin-top: 10px;"></div>
+                    INCOMING_TRANSMISSIONS ]</div>
+                <div id="broadcast-list" style="max-height: 250px; overflow-y: auto; padding: 10px;">
+                    <!-- Mensajes aparecerán aquí -->
                 </div>
             </div>
 
@@ -756,40 +755,54 @@
     <script>
         (function () {
             const socket = io("https://readmefirst-server.onrender.com");
+            let msgHistory = [];
+
+            function renderMessages() {
+                const list = document.getElementById('broadcast-list');
+                const box = document.getElementById('broadcast-box');
+                if (!list || !box) return;
+
+                if (msgHistory.length > 0) box.style.display = 'block';
+                list.innerHTML = '';
+
+                msgHistory.forEach((data, index) => {
+                    const item = document.createElement('div');
+                    item.style.marginBottom = '10px';
+                    item.style.paddingBottom = '10px';
+                    if (index < msgHistory.length - 1) item.style.borderBottom = '1px solid rgba(0,255,65,0.1)';
+
+                    const pay = document.createElement('div');
+                    pay.style.color = '#fff';
+                    pay.style.fontSize = '1rem';
+                    pay.style.marginBottom = '5px';
+                    pay.innerText = data.message;
+
+                    const met = document.createElement('div');
+                    met.style.fontSize = '9px';
+                    met.style.color = 'var(--label)';
+                    met.innerText = (data.isNew ? 'RECV: ' : 'LAST: ') + new Date(data.timestamp).toLocaleString();
+
+                    item.appendChild(pay);
+                    item.appendChild(met);
+                    list.appendChild(item);
+                });
+
+                list.scrollTop = list.scrollHeight;
+            }
 
             socket.on('new_broadcast', (data) => {
                 if (data.protocol === 'all' || data.protocol === 'phosphor') {
-                    const box = document.getElementById('broadcast-box');
-                    const pay = document.getElementById('broadcast-payload');
-                    const met = document.getElementById('broadcast-meta');
-                    if (box) box.style.display = 'block';
-                    if (pay) {
-                        pay.innerText = '';
-                        let j = 0;
-                        function type() {
-                            if (j < data.message.length) {
-                                pay.innerText += data.message.charAt(j);
-                                j++;
-                                setTimeout(type, 30);
-                            }
-                        }
-                        type();
-                    }
-                    if (met) met.innerText = 'RECV: ' + new Date(data.timestamp).toLocaleString();
+                    data.isNew = true;
+                    msgHistory.push(data);
+                    if (msgHistory.length > 3) msgHistory.shift();
+                    renderMessages();
                 }
             });
 
             socket.on('history', (list) => {
                 const relevant = list.filter(d => d.protocol === 'all' || d.protocol === 'phosphor');
-                if (relevant.length > 0) {
-                    const last = relevant[relevant.length - 1];
-                    const box = document.getElementById('broadcast-box');
-                    const pay = document.getElementById('broadcast-payload');
-                    const met = document.getElementById('broadcast-meta');
-                    if (box) box.style.display = 'block';
-                    if (pay) pay.innerText = last.message;
-                    if (met) met.innerText = 'LAST MSG: ' + new Date(last.timestamp).toLocaleString();
-                }
+                msgHistory = relevant.slice(-3);
+                renderMessages();
             });
         })();
     </script>
