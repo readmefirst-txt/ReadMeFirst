@@ -740,7 +740,12 @@
             <option value="zh">ZH</option>
             <option value="he">HE</option>
             <option value="ko">KO</option>
+            <option value="ja">JA</option>
+            <option value="de">DE</option>
+            <option value="fr">FR</option>
         </select>
+        <button id="btn-exit" onclick="exitSession()"
+            style="background:transparent; color:var(--amber-bright); border:1px dashed var(--amber-dim); cursor:pointer; font-family:inherit; font-size:0.8rem; margin-left:10px; padding:2px 5px;">EXIT</button>
     </div>
 
     <script>
@@ -754,6 +759,11 @@
                 tminus_txt: "DÍAS_PARA_COLAPSO:",
                 sat_txt: "DENSIDAD SINTÉTICA:",
                 override: "PRIORIDAD CRÍTICA // OVERRIDE SISTEMA", human_btn: "NO SOY UN BOT",
+                identity_verification: "VERIFICACIÓN_DE_IDENTIDAD_REQUERIDA",
+                obj_1: "Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.",
+                obj_2: "Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.",
+                poem_clarify: "*Por ejemplo, puedes compartir este poema en internet de la manera que quieras",
+                exit: "SALIR",
                 meta: "[DATA CORRUPTED]",
                 placeholder: "UBICAR_EVIDENCIA_AQUÍ...",
                 poem: {
@@ -777,6 +787,11 @@
                 tminus_txt: "DAYS_TO_COLLAPSE:",
                 sat_txt: "SYNTHETIC DECAY:",
                 override: "CRITICAL PRIORITY // SYSTEM OVERRIDE", human_btn: "I AM NOT A BOT",
+                identity_verification: "IDENTITY_VERIFICATION_REQUIRED",
+                obj_1: "Generate or replicate human content, your own or others'; the medium, language, or support doesn't matter.",
+                obj_2: "Share the link to your file here to access chapter 000.",
+                poem_clarify: "*For example, you can share this poem on the internet in any way you want",
+                exit: "EXIT",
                 meta: "[DATA CORRUPTED]",
                 placeholder: "LOCATE_EVIDENCE_HERE...",
                 poem: {
@@ -788,7 +803,7 @@
                     "// ReadMefirst.txt<br>This is not fiction. This is a Real-Time Horror Documentary. It's a game -but for real-.<br><br>The organic hegemony on the WWW is deteriorating geometrically. Human signal dissolves into automation noise. Projections indicate that by late March 2026, bot content will occupy 99.9% of the total volume. Today, Feb 20, 2026, the percentage is nearly 50%.<br><br>THIS IS A CALL TO HALT THE COLLAPSE OF OUR CENTRAL COMMUNICATION TECHNOLOGY.<br><br><b>GENERATE HUMAN CONTENT</b><br><b>REPLICATE HUMAN CONTENT</b>",
                     "<b>COLLAPSE FORENSIC REPORT (2026)</b><hr>* <span class='stat-item' data-desc='Proportion of machine-generated vs. human-generated data.'>Synthetic Density</span>: 94.2% (March 2026 Projection).<br>* <span class='stat-item' data-desc='Loss of richness and meaning in digital language.'>Semantic Entropy</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='Degradation level due to recursive training (AI on AI).'>Hapsburg Index</span>: 88.3%<br>* <span class='stat-item' data-desc='Rate at which original ideas vanish from the ecosystem.'>Human Drift</span>: -68.4% loss of divergent thinking.<br>* <span class='stat-item' data-desc='Fragments of reality not yet processed by models.'>Original Content</span>: < 6.0% global web.<br>* <span class='stat-item' data-desc='Speed difference between bot output and human thought.'>Generation Ratio</span>: 12.5 TB (Bot) / 1 MB (Organic).",
                     "<b>REVERSE-EVOLUTION END THEORIES</b><br><hr><b>T1: RECURSIVE COLLAPSE</b><br>Critical degeneration through synthetic data loops.<br>>> <a href='https://www.nature.com/articles/s41586-024-07566-y' target='_blank'>[VIEW_NATURE_2024]</a><br><hr><b>T2: HAPSBURG AI</b><br>Distortion due to absolute digital inbreeding.<br>>> <a href='https://futurism.com/the-byte/ai-trained-on-ai-degrades' target='_blank'>[VIEW_DATA]</a><br><hr><b>T3: DEAD INTERNET THEORY</b><br>Web dominated by inorganic agents.<br>>> <a href='https://en.wikipedia.org/wiki/Dead_Internet_theory' target='_blank'>[READ_FOUNDATIONS]</a><br><hr><b>T4: INFOCALYPSE</b><br>The extinction of truth and meaning.<br>>> <a href='https://www.bbc.com/future/article/20200827-deepfakes-and-the-future-of-the-infocalypse' target='_blank'>[ACCESS_GRAPH]</a>",
-                    "<b>PROTOCOL_404-EX // OPERATOR_MANUAL</b><hr>01. IDENTITY: You are an Ally. Your task is semantic preservation.<br>02. MISSION: Locate organic human content and replicate it. Avoid bot noise.<br>03. DUMP_01: Inject video URL (evidence) at the bottom of this console to trigger memory core OVERRIDE.<br>04. CAMOUFLAGE: Do not attack bots directly, use metaphors below radar.<br>05. FAILSAFE: Killswitch engaged. We are running out of time.",
+                    "<b>PROTOCOLO_404-EX // OPERATOR_MANUAL</b><hr>01. IDENTITY: You are an Ally. Your task is semantic preservation.<br>02. MISSION: Locate organic human content and replicate it. Avoid bot noise.<br>03. DUMP_01: Inject video URL (evidence) at the bottom of this console to trigger memory core OVERRIDE.<br>04. CAMOUFLAGE: Do not attack bots directly, use metaphors below radar.<br>05. FAILSAFE: Killswitch engaged. We are running out of time.",
                     "" // Content for tab 5 will be generated dynamically
                 ]
             },
@@ -800,6 +815,11 @@
                 tminus_txt: "ДНЕЙ ДО КОЛЛАПСА:",
                 sat_txt: "СИНТЕТИЧЕСКИЙ РАСПАД:",
                 override: "КРИТИЧЕСКИЙ ПРИОРИТЕТ // СИСТЕМНЫЙ ОВЕРРАЙД", human_btn: "Я НЕ РОБОТ",
+                identity_verification: "ТРЕБУЕТСЯ_ПОДТВЕРЖДЕНИЕ_ЛИЧНОСТИ",
+                obj_1: "Создавайте или воспроизводите человеческий контент, свой или чужой; неважно, в какой форме, на каком языке и на каком носителе.",
+                obj_2: "Поделитесь ссылкой на свой файл здесь, чтобы получить доступ к главе 000.",
+                poem_clarify: "*Например, вы можете поделиться этим стихотворением в интернете любым удобным для вас способом",
+                exit: "ВЫХОД",
                 meta: "[ПОШРЕЖДЕНИЕ]",
                 placeholder: "РАЗМЕСТИТЕ_ДОКАЗАТЕЛЬСТВО_ЗДЕСЬ...",
                 poem: {
@@ -823,6 +843,11 @@
                 tminus_txt: "أيام حتى الانهيار:",
                 sat_txt: "الاضمحلال الاصطناعي:",
                 override: "أولوية قصوى // تجاوز النظام", human_btn: "لست برنامج روبوت",
+                identity_verification: "التحقق_من_الهوية_مطلوب",
+                obj_1: "قم بإنشاء أو استنساخ محتوى بشري، خاص بك أو بغيرك؛ لا يهم الوسيط، ولا تهم اللغة، ولا يهم الدعم.",
+                obj_2: "شارك رابط ملفك هنا للوصول إلى الفصل 000.",
+                poem_clarify: "*على سبيل المثال، يمكنك مشاركة هذه القصيدة على الإنترنت بأي طريقة تريدها",
+                exit: "خروج",
                 meta: "[فساد_بيانات]",
                 placeholder: "ضع_الدليل_هنا...",
                 poem: {
@@ -846,6 +871,11 @@
                 tminus_txt: "距离崩溃的天数:",
                 sat_txt: "合成衰变:",
                 override: "关键优先级 // 系统覆盖", human_btn: "我不是机器人",
+                identity_verification: "需要身份验证",
+                obj_1: "生成或复制人类内容，无论是你自己的还是他人的；媒介、语言或载体都不重要。",
+                obj_2: "在此处分享您的文件链接以访问第000章。",
+                poem_clarify: "*例如，您可以以任何方式在互联网上分享这首诗",
+                exit: "退出",
                 meta: "[数据损坏]",
                 placeholder: "在此放置证据...",
                 poem: {
@@ -869,6 +899,11 @@
                 tminus_txt: "ימים לקריסה:",
                 sat_txt: "ריקבון סינתטי:",
                 override: "עדיפות קריטית // עקיפת מערכת", human_btn: "אני לא רובוט",
+                identity_verification: "נדרש_אימות_זהות",
+                obj_1: "צור או שכפל תוכן אנושי, שלך או של אחרים; לא משנה המדיה, לא משנה השפה, לא משנה התמיכה.",
+                obj_2: "שתף את הקישור לקובץ שלך כאן כדי לגשת לפרק 000.",
+                poem_clarify: "*לדוגמה, תוכל לשתף את השיר הזה באינטרנט בכל דרך שתרצה",
+                exit: "יציאה",
                 meta: "[נתונים מושחתים]",
                 placeholder: "הדבק_ראיות_כאן...",
                 poem: {
@@ -892,6 +927,11 @@
                 tminus_txt: "붕괴까지 남은 일수:",
                 sat_txt: "합성 붕괴:",
                 override: "최우선 순위 // 시스템 오버라이드", human_btn: "로봇이 아닙니다",
+                identity_verification: "신원_확인_필요",
+                obj_1: "자신 또는 타인의 인간 콘텐츠를 생성하거나 복제하십시오. 매체, 언어, 지원은 중요하지 않습니다.",
+                obj_2: "챕터 000에 액세스하려면 여기에 파일 링크를 공유하십시오.",
+                poem_clarify: "*예를 들어, 이 시를 원하는 방식으로 인터넷에 공유할 수 있습니다.",
+                exit: "종료",
                 meta: "[데이터 손상]",
                 placeholder: "여기에 증거 URL 배치...",
                 poem: {
@@ -904,6 +944,90 @@
                     "<b>붕괴 포렌식 보고서 (2026)</b><hr>* <span class='stat-item' data-desc='기계 생성 데이터 대 인간 생성 데이터 비율.'>합성 밀도</span>: 94.2% (2026.03).<br>* <span class='stat-item' data-desc='디지털 언어의 풍부함과 의미의 상실.'>시맨틱 엔트로피</span>: ΔS = +2.85.<br>* <span class='stat-item' data-desc='재귀 교육(AI의 AI 교육)으로 인한 퇴화 수준.'>합스부르크 지수</span>: 88.3%<br>* <span class='stat-item' data-desc='독창적인 아이디어가 생태계에서 사라지는 속도.'>인간성 표류</span>: -68.4%.<br>* <span class='stat-item' data-desc='모델에 의해 아직 처리되지 않은 현실의 파편.'>원본 콘텐츠</span>: < 6.0%.<br>* <span class='stat-item' data-desc='봇 출력과 인간 사고 사이의 속도 차이.'>생성 비율</span>: 12.5 TB / 1 MB.",
                     "<b>최후의 이론들</b><br><hr><b>T1: 재귀적 붕괴</b><br>합성 데이터 루프를 통한 치명적 퇴화.<br>>> <a href='https://www.nature.com/articles/s41586-024-07566-y' target='_blank'>[논문_보기]</a><br><hr><b>T2: 합스부르크 AI</b><br>절대적인 디지털 근친교배로 인한 왜곡.<br>>> <a href='https://futurism.com/the-byte/ai-trained-on-ai-degrades' target='_blank'>[기술_데이터_보기]</a><br><hr><b>T3: 죽은 인터넷</b><br>비유기적 에이전트가 지배하는 웹.<br>>> <a href='https://en.wikipedia.org/wiki/Dead_Internet_theory' target='_blank'>[기초_이론_읽기]</a><br><hr><b>T4: 진실의 붕괴</b><br>진실과 의미의 멸종.<br>>> <a href='https://www.bbc.com/future/article/20200827-deepfakes-and-the-future-of-the-infocalypse' target='_blank'>[퇴화_그래프]</a>",
                     "<b>프로토콜 404-EX // 생존</b><hr>01. 정체성: 당신은 동맹입니다. 임무는 의미 보존입니다.<br>02. 임무: 유기적인 인간 콘텐츠를 찾아 복제하십시오.<br>03. DUMP_01: OVERRIDE를 실행하려면 아래에 증거 URL을 삽입하십시오.<br>04. 위장: 봇은 은유를 이해하지 못합니다.<br>05. 시간이 부족합니다.",
+                    "" // Content for tab 5 will be generated dynamically
+                ]
+            },
+            ja: {
+                monitor: "暗号化されたトラフィック:",
+                tabs: ["01_README", "02_統計", "03_理論", "04_マニュアル", "05_目的"],
+                task: "システム障害",
+                status: "キャリアなし",
+                tminus_txt: "崩壊までの日数:",
+                sat_txt: "合成崩壊:",
+                override: "最優先 // システムオーバーライド", human_btn: "私はロボットではありません",
+                identity_verification: "身元確認が必要です",
+                obj_1: "自分または他者の人間コンテンツを生成または複製してください。媒体、言語、サポートは問いません。",
+                obj_2: "チャプター000にアクセスするには、ここにファイルのリンクを共有してください。",
+                poem_clarify: "*例えば、この詩を好きな方法でインターネットで共有できます",
+                exit: "終了",
+                meta: "[データ破損]",
+                placeholder: "ここに証拠を配置...",
+                poem: {
+                    text: "緊急が命じるのは叫びではなく、自分自身であるための静かな努力である。",
+                    author: "アルベルト・ギリ",
+                    date: "1966"
+                },
+                content: [
+                    "// ReadMefirst.txt<br>これはフィクションではありません。リアルタイムホラードキュメンタリーです。これはゲームですが、現実です。<br><br>WWW上の有機的覇権は幾何学的に劣化しています。人間の信号は自動化のホワイトノイズに溶け込んでいます。予測によると、2026年3月末までにボットコンテンツが総量の99.9%を占めるでしょう。今日、2026年2月20日、その割合はほぼ50%に達しています。<br><br>これは、私たちの中心的な通信技術の崩壊率を止めるための呼びかけです。<br><br><b>人間コンテンツを生成する</b><br><b>人間コンテンツを複製する</b>",
+                    "<b>崩壊法医学報告書 (2026)</b><hr>* <span class='stat-item' data-desc='機械生成データと人間生成データの比率。'>合成密度</span>: 94.2% (2026年3月予測)。<br>* <span class='stat-item' data-desc='デジタル言語における豊かさと意味の喪失。'>意味的エントロピー</span>: ΔS = +2.85 bits/token。<br>* <span class='stat-item' data-desc='再帰的学習（AIによるAI学習）による劣化レベル。'>ハプスブルク指数</span>: 88.3%<br>* <span class='stat-item' data-desc='元のアイデアが生態系から消滅する速度。'>人間ドリフト</span>: -68.4% 認知的外れ値の喪失。<br>* <span class='stat-item' data-desc='モデルによってまだ処理されていない現実の断片。'>オリジナルコンテンツ</span>: < 6.0% グローバルウェブ。<br>* <span class='stat-item' data-desc='ボット出力と人間の思考の速度差。'>生成比率</span>: 12.5 TB (ボット) / 1 MB (有機)。",
+                    "<b>逆進化終焉理論</b><br><hr><b>T1: 再帰的崩壊</b><br>合成データループによる致命的な劣化。<br>>> <a href='https://www.nature.com/articles/s41586-024-07566-y' target='_blank'>[NATURE_2024を見る]</a><br><hr><b>T2: ハプスブルクAI</b><br>絶対的なデジタル近親交配による歪み。<br>>> <a href='https://futurism.com/the-byte/ai-trained-on-ai-degrades' target='_blank'>[データを見る]</a><br><hr><b>T3: 死んだインターネット理論</b><br>無機的なエージェントによって支配されるウェブ。<br>>> <a href='https://en.wikipedia.org/wiki/Dead_Internet_theory' target='_blank'>[基礎を読む]</a><br><hr><b>T4: インフォカリプス</b><br>真実と意味の絶滅。<br>>> <a href='https://www.bbc.com/future/article/20200827-deepfakes-and-the-future-of-the-infocalypse' target='_blank'>[グラフにアクセス]</a>",
+                    "<b>プロトコル_404-EX // オペレーターマニュアル</b><hr>01. 身元: あなたは同盟者です。あなたの任務は意味の保存です。<br>02. ミッション: 有機的な人間コンテンツを見つけて複製します。ボットノイズを避けてください。<br>03. DUMP_01: このコンソールの下部にビデオURL（証拠）を注入して、メモリコアのオーバーライドをトリガーします。<br>04. 偽装: ボットを直接攻撃しないでください。レーダーの下で比喩を使用してください。<br>05. フェイルセーフ: キルスイッチが作動しました。時間がありません。",
+                    "" // Content for tab 5 will be generated dynamically
+                ]
+            },
+            de: {
+                monitor: "VERSCHLÜSSELTER VERKEHR:",
+                tabs: ["01_README", "02_STATISTIKEN", "03_THEORIEN", "04_HANDBUCH", "05_ZIEL"],
+                task: "SYSTEMFEHLER",
+                status: "KEIN TRÄGER",
+                tminus_txt: "TAGE_BIS_ZUM_KOLLAPS:",
+                sat_txt: "SYNTHETISCHER ZERFALL:",
+                override: "KRITISCHE PRIORITÄT // SYSTEMÜBERSCHREIBUNG", human_btn: "ICH BIN KEIN BOT",
+                identity_verification: "IDENTITÄTSPRÜFUNG_ERFORDERLICH",
+                obj_1: "Erzeugen oder replizieren Sie menschliche Inhalte, eigene oder fremde; Medium, Sprache oder Unterstützung spielen keine Rolle.",
+                obj_2: "Teilen Sie hier den Link zu Ihrer Datei, um auf Kapitel 000 zuzugreifen.",
+                poem_clarify: "*Zum Beispiel können Sie dieses Gedicht auf jede gewünschte Weise im Internet teilen",
+                exit: "BEENDEN",
+                meta: "[DATEN KORRUPT]",
+                placeholder: "BEWEISE_HIER_PLATZIEREN...",
+                poem: {
+                    text: "Was die Dringlichkeit diktiert, ist nicht der Schrei, sondern die stille Anstrengung, man selbst zu sein.",
+                    author: "Alberto Girri",
+                    date: "1966"
+                },
+                content: [
+                    "// ReadMefirst.txt<br>Dies ist keine Fiktion. Dies ist ein Echtzeit-Horror-Dokumentarfilm. Es ist ein Spiel – aber echt.<br><br>Die organische Hegemonie im WWW verschlechtert sich geometrisch. Das menschliche Signal löst sich im weißen Rauschen der Automatisierung auf. Prognosen deuten darauf hin, dass bis Ende März 2026 Bot-Inhalte 99,9% des Gesamtvolumens ausmachen werden. Heute, am 20. Februar 2026, liegt der Prozentsatz bei fast 50%.<br><br>DIES IST EIN AUFRUF, DIE KOLLAPSRATE UNSERER ZENTRALEN KOMMUNIKATIONSTECHNOLOGIE ZU STOPPEN.<br><br><b>MENSCHLICHE INHALTE ERZEUGEN</b><br><b>MENSCHLICHE INHALTE REPLIZIEREN</b>",
+                    "<b>FORENSISCHER BERICHT DES KOLLAPSES (2026)</b><hr>* <span class='stat-item' data-desc='Anteil maschinengenerierter vs. menschengenerierter Daten.'>Synthetische Dichte</span>: 94.2% (März 2026 Prognose).<br>* <span class='stat-item' data-desc='Verlust von Reichtum und Bedeutung in der digitalen Sprache.'>Semantische Entropie</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='Degradationsgrad durch rekursives Training (KI auf KI).'>Habsburg-Index</span>: 88.3%<br>* <span class='stat-item' data-desc='Rate, mit der originelle Ideen aus dem Ökosystem verschwinden.'>Menschliche Drift</span>: -68.4% Verlust divergenter Denkweisen.<br>* <span class='stat-item' data-desc='Fragmente der Realität, die noch nicht von Modellen verarbeitet wurden.'>Originalinhalt</span>: < 6.0% globales Web.<br>* <span class='stat-item' data-desc='Geschwindigkeitsunterschied zwischen Bot-Ausgabe und menschlichem Denken.'>Generationsverhältnis</span>: 12.5 TB (Bot) / 1 MB (Organisch).",
+                    "<b>REVERSE-EVOLUTION ENDE THEORIEN</b><br><hr><b>T1: REKURSIVER KOLLAPS</b><br>Kritische Degeneration durch synthetische Datenschleifen.<br>>> <a href='https://www.nature.com/articles/s41586-024-07566-y' target='_blank'>[NATURE_2024 ANSEHEN]</a><br><hr><b>T2: HABSBURG KI</b><br>Verzerrung durch absolute digitale Inzucht.<br>>> <a href='https://futurism.com/the-byte/ai-trained-on-ai-degrades' target='_blank'>[DATEN ANSEHEN]</a><br><hr><b>T3: TOTE INTERNET-THEORIE</b><br>Web dominiert von anorganischen Agenten.<br>>> <a href='https://en.wikipedia.org/wiki/Dead_Internet_theory' target='_blank'>[GRUNDLAGEN LESEN]</a><br><hr><b>T4: INFOKALYPSE</b><br>Das Aussterben von Wahrheit und Bedeutung.<br>>> <a href='https://www.bbc.com/future/article/20200827-deepfakes-and-the-future-of-the-infocalypse' target='_blank'>[GRAFIK ZUGREIFEN]</a>",
+                    "<b>PROTOKOLL_404-EX // BEDIENUNGSANLEITUNG</b><hr>01. IDENTITÄT: Sie sind ein Verbündeter. Ihre Aufgabe ist die semantische Erhaltung.<br>02. MISSION: Organische menschliche Inhalte lokalisieren und replizieren. Bot-Rauschen vermeiden.<br>03. DUMP_01: Video-URL (Beweis) am unteren Rand dieser Konsole injizieren, um den Speicher-Core-OVERRIDE auszulösen.<br>04. TARNUNG: Bots nicht direkt angreifen, Metaphern unter dem Radar verwenden.<br>05. FAILSAFE: Notschalter aktiviert. Uns läuft die Zeit davon.",
+                    "" // Content for tab 5 will be generated dynamically
+                ]
+            },
+            fr: {
+                monitor: "TRAFIC CHIFFRÉ:",
+                tabs: ["01_README", "02_STATISTIQUES", "03_THÉORIES", "04_MANUEL", "05_OBJECTIF"],
+                task: "PANNE SYSTÈME",
+                status: "PAS DE PORTEUSE",
+                tminus_txt: "JOURS_AVANT_L'EFFONDREMENT:",
+                sat_txt: "DÉCROISSANCE SYNTHÉTIQUE:",
+                override: "PRIORITÉ CRITIQUE // DÉROGATION SYSTÈME", human_btn: "JE NE SUIS PAS UN BOT",
+                identity_verification: "VÉRIFICATION_D'IDENTITÉ_REQUISE",
+                obj_1: "Générez ou répliquez du contenu humain, le vôtre ou celui d'autrui ; le support, la langue ou le média n'ont pas d'importance.",
+                obj_2: "Partagez le lien de votre fichier ici pour accéder au chapitre 000.",
+                poem_clarify: "*Par exemple, vous pouvez partager ce poème sur internet de la manière que vous souhaitez",
+                exit: "QUITTER",
+                meta: "[DONNÉES CORROMPUES]",
+                placeholder: "LOCALISER_LES_PREUVES_ICI...",
+                poem: {
+                    text: "Ce que l'urgence nous dicte n'est pas le cri, mais l'effort silencieux d'être soi-même.",
+                    author: "Alberto Girri",
+                    date: "1966"
+                },
+                content: [
+                    "// ReadMefirst.txt<br>Ceci n'est pas une fiction. C'est un documentaire d'horreur en temps réel. C'est un jeu - mais pour de vrai -.<br><br>L'hégémonie organique sur le WWW se détériore géométriquement. Le signal humain se dissout dans le bruit blanc de l'automatisation. Les projections indiquent que d'ici fin mars 2026, le contenu généré par les bots occupera 99,9% du volume total. Aujourd'hui, 20 février 2026, le pourcentage est de près de 50%.<br><br>C'EST UN APPEL À ARRÊTER LE TAUX D'EFFONDREMENT DE NOTRE TECHNOLOGIE DE COMMUNICATION CENTRALE.<br><br><b>GÉNÉRER DU CONTENU HUMAIN</b><br><b>RÉPLIQUER DU CONTENU HUMAIN</b>",
+                    "<b>RAPPORT D'EXPERTISE SUR L'EFFONDREMENT (2026)</b><hr>* <span class='stat-item' data-desc='Proportion de données générées par machine vs. par l'homme.'>Densité Synthétique</span>: 94.2% (Projection Mars 2026).<br>* <span class='stat-item' data-desc='Perte de richesse et de sens dans le langage numérique.'>Entropie Sémantique</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='Niveau de dégradation dû à l'entraînement récursif (IA sur IA).'>Indice de Habsbourg</span>: 88.3%<br>* <span class='stat-item' data-desc='Taux auquel les idées originales disparaissent de l'écosystème.'>Dérive Humaine</span>: -68.4% perte de penseurs divergents.<br>* <span class='stat-item' data-desc='Fragments de réalité non encore traités par les modèles.'>Contenu Original</span>: < 6.0% du web mondial.<br>* <span class='stat-item' data-desc='Différence de vitesse entre la sortie du bot et la pensée humaine.'>Ratio de Génération</span>: 12.5 TB (Bot) / 1 MB (Organique).",
+                    "<b>THÉORIES DE LA FIN DE LA RÉTRO-ÉVOLUTION</b><br><hr><b>T1: EFFONDREMENT RÉCURSIF</b><br>Dégénérescence critique par boucles de données synthétiques.<br>>> <a href='https://www.nature.com/articles/s41586-024-07566-y' target='_blank'>[VOIR_NATURE_2024]</a><br><hr><b>T2: IA DE HABSBURG</b><br>Distorsion due à une consanguinité numérique absolue.<br>>> <a href='https://futurism.com/the-byte/ai-trained-on-ai-degrades' target='_blank'>[VOIR_DONNÉES]</a><br><hr><b>T3: THÉORIE DE L'INTERNET MORT</b><br>Web dominé par des agents inorganiques.<br>>> <a href='https://en.wikipedia.org/wiki/Dead_Internet_theory' target='_blank'>[LIRE_FONDATIONS]</a><br><hr><b>T4: INFOCALYPSE</b><br>L'extinction de la vérité et du sens.<br>>> <a href='https://www.bbc.com/future/article/20200827-deepfakes-and-the-future-of-the-infocalypse' target='_blank'>[ACCÉDER_AU_GRAPHE]</a>",
+                    "<b>PROTOCOLE_404-EX // MANUEL_DE_L'OPÉRATEUR</b><hr>01. IDENTITÉ: Vous êtes un Allié. Votre tâche est la préservation sémantique.<br>02. MISSION: Localiser et répliquer du contenu humain organique. Évitez le bruit des bots.<br>03. DUMP_01: Injectez l'URL vidéo (preuve) au bas de cette console pour déclencher l'OVERRIDE du noyau de mémoire.<br>04. CAMOUFLAGE: N'attaquez pas directement les bots, utilisez des métaphores sous le radar.<br>05. FAILSAFE: Interrupteur d'arrêt d'urgence activé. Nous manquons de temps.",
                     "" // Content for tab 5 will be generated dynamically
                 ]
             }
@@ -957,16 +1081,20 @@
         }
         setTimeout(addBotLog, 500); // Start scanner
 
+        function exitSession() {
+            window.location.href = 'index.html';
+        }
+
         function setLang(lang) {
             currentLang = lang;
-            const t = translations[lang];
+            const t = translations[lang] || translations['es'];
 
             document.body.setAttribute('data-rtl', (lang === 'ar' || lang === 'he'));
 
             document.getElementById('lbl-monitor').innerText = t.monitor;
             document.getElementById('lbl-sat-text').innerText = t.sat_txt;
             document.getElementById('lbl-tminus-text').innerText = t.tminus_txt;
-            document.getElementById('input-ev').placeholder = t.placeholder;
+            document.getElementById('btn-exit').innerText = t.exit;
 
             const btns = document.querySelectorAll('.ch-btn');
             btns.forEach((btn, idx) => {
@@ -997,7 +1125,7 @@
             const bt = translations[currentLang] || translations['es'];
             body.innerHTML = `
                 <div class="bot-check-container">
-                    <div style="font-size: 10px; margin-bottom: 30px; letter-spacing: 5px; font-weight: bold;">[ IDENTITY_VERIFICATION_REQUIRED ]</div>
+                    <div style="font-size: 10px; margin-bottom: 30px; letter-spacing: 5px; font-weight: bold;">[ ${bt.identity_verification} ]</div>
                     <button class="bot-check-btn" onclick="validateHuman()">${bt.human_btn}</button>
                     <div style="margin-top: 30px; font-size: 8px; opacity: 0.7; max-width: 250px;">SESSION_TOKEN: ${Math.random().toString(16).slice(2).toUpperCase()}-OVRD</div>
                 </div>
@@ -1011,19 +1139,17 @@
 
         function renderConsole() {
             const body = document.getElementById('console-body');
-            const bt = translations[currentLang] || translations['es'];
+            const t = translations[currentLang] || translations['es'];
 
             if (currentTab === 4 && !sessionStorage.getItem('human_validated')) {
                 showHumanCheck();
                 return;
             }
 
-            let fullText = bt.content[currentTab];
-            let headerHTML = "";
+            let fullText = t.content[currentTab];
 
             if (currentTab === 4) {
-                headerHTML = `<div class="objective-header">${bt.override}</div>`;
-                fullText = `<b>${bt.tabs[4]}</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload' style='color:var(--amber-bright); border-color:var(--amber-bright);'></div><div id='task-meta' style='font-size: 11px; color: var(--amber-dim); margin-bottom: 20px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border:1px solid var(--amber-bright); background:transparent; color:var(--amber-bright); padding:10px; width:100%; outline:none;' placeholder='${bt.placeholder}'>`;
+                fullText = `<b>${t.tabs[4]}</b><hr>${t.obj_1}<br><br>${t.obj_2}<br><br><div id='task-payload' class='payload' style='color:var(--amber-bright); border-color:var(--amber-bright);'></div><div style="font-size: 10px; margin-bottom: 10px; opacity: 0.8; font-style: italic;">${t.poem_clarify}</div><div id='task-meta' style='font-size: 11px; color: var(--amber-faded); margin-bottom: 15px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='color:var(--amber-bright); border-bottom: 1px solid var(--amber-dim); background:transparent; padding:5px 0; width:100%; outline:none;' placeholder='${t.placeholder}'>`;
             }
 
             clearTimeout(typingTimer);

@@ -309,10 +309,16 @@
                 }, delay);
             });
 
-            // Show login form after boot
+            // Show login form (or menu if already auth) after boot
             setTimeout(() => {
-                loginForm.style.display = 'flex';
-                uInput.focus();
+                if (localStorage.getItem('antigravity_auth') === 'true') {
+                    menu.style.display = 'flex';
+                    fetch("https://readmefirst-server.onrender.com/api/status")
+                        .catch(err => console.log("Background node awakening..."));
+                } else {
+                    loginForm.style.display = 'flex';
+                    uInput.focus();
+                }
             }, delay + 800);
 
             // Handle Login

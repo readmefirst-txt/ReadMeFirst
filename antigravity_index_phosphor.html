@@ -499,6 +499,8 @@
                 <button class="lang-btn" id="btn-ja" onclick="setLang('ja', this)">日本語</button>
                 <button class="lang-btn" id="btn-de" onclick="setLang('de', this)">Deutsch</button>
                 <button class="lang-btn" id="btn-fr" onclick="setLang('fr', this)">Français</button>
+                <button class="lang-btn" id="btn-exit" onclick="exitSession()"
+                    style="border:1px dashed var(--accent-green); margin-left: 20px;">EXIT</button>
             </div>
         </div>
 
@@ -545,6 +547,11 @@
                 monitor: "INTERNET MUERTA // NODO_PIONERO", tminus: "> T-MINUS_PARA_SILENCIO_TOTAL:", sat_text: "SATURACIÓN_SINTÉTICA:",
                 tabs: ["README", "ESTADÍSTICAS", "TEORÍAS", "MANUAL", "OBJETIVO"],
                 task: "OBJETIVO: REPLICAR_REPRODUCIR>DUMP_01", placeholder: "PEGAR_URL_DE_EVIDENCIA", override: "PRIORIDAD CRÍTICA // OVERRIDE SISTEMA", human_btn: "NO SOY UN BOT",
+                identity_verification: "VERIFICACIÓN_DE_IDENTIDAD_REQUERIDA",
+                obj_1: "Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.",
+                obj_2: "Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.",
+                poem_clarify: "*Por ejemplo, puedes compartir este poema en internet de la manera que quieras",
+                exit: "SALIR",
                 content: [
                     "// ReadMefirst.txt<br>Esto no es una ficción. Esto es un Documental de Horror en Tiempo Real. Es un juego -pero de verdad-.<br><br>La hegemonía orgánica en la WWW se deteriora geométricamente. La señal humana se disuelve en el ruido blanco de la automatización. Las proyecciones estadísticas indican que para fines de Marzo de 2026, el contenido generado por bots ocupará el 99,9% del volumen total. Hoy, 20 de Febrero de 2026, el porcentaje asciende a casi el 50%.<br><br>ESTO ES UN LLAMADO A DETENER LA TASA DEL COLAPSO DE NUESTRA TECNOLOGÍA CENTRAL DE COMUNICACIÓN Y CONTACTO.<br><br><b>GENERA CONTENIDO HUMANO<br>REPLICA CONTENIDO HUMANO</b>",
                     "<div class='stat-list'><b>INFORME FORENSE DEL COLAPSO (2026)</b><hr>* <span class='stat-item' data-desc='Proporción de datos generados por máquinas frente a humanos.'>Densidad Sintética</span>: 94.2% (Proyección 3.2026).<br>* <span class='stat-item' data-desc='Pérdida de riqueza y significado en el lenguaje digital.'>Entropía Semántica</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='Nivel de degradación por entrenamiento recursivo (IA sobre IA).'>Índice Habsburgo</span>: 88.3%<br>* <span class='stat-item' data-desc='Ritmo al que las ideas originales desaparecen del ecosistema.'>Deriva Humana</span>: -68.4% pérdida de outliers cognitivos.<br>* <span class='stat-item' data-desc='Fragmentos de realidad que aún no han sido procesados.'>Contenido Original</span>: < 6.0% de la red global.<br>* <span class='stat-item' data-desc='Diferencia de velocidad entre el bot y el pensamiento humano.'>Ratio de Generación</span>: 12.5 TB (Bot) / 1 MB (Orgánico).</div>",
@@ -558,6 +565,11 @@
                 monitor: "DEAD INTERNET // PIONEER_NODE", tminus: "> T-MINUS_TO_TOTAL_SILENCE:", sat_text: "SYNTHETIC_SATURATION:",
                 tabs: ["README", "STATISTICS", "THEORIES", "MANUAL", "OBJECTIVE"],
                 task: "OBJECTIVE: REPLICATE_REPRODUCE>DUMP_01", placeholder: "PASTE_EVIDENCE_URL", override: "CRITICAL PRIORITY // SYSTEM OVERRIDE", human_btn: "I AM NOT A BOT",
+                identity_verification: "IDENTITY_VERIFICATION_REQUIRED",
+                obj_1: "Generate or replicate human content, your own or others'; the medium, language, or support doesn't matter.",
+                obj_2: "Share the link to your file here to access chapter 000.",
+                poem_clarify: "*For example, you can share this poem on the internet in any way you want",
+                exit: "EXIT",
                 content: [
                     "// ReadMefirst.txt<br>This is not fiction. This is a Real-Time Horror Documentary. It's a game -but for real-.<br><br>The organic hegemony on the WWW is deteriorating geometrically. Human signal dissolves into automation noise. Projections indicate that by late March 2026, bot content will occupy 99.9% of the total volume. Today, Feb 20, 2026, the percentage is nearly 50%.<br><br>THIS IS A CALL TO HALT THE COLLAPSE OF OUR CENTRAL COMMUNICATION TECHNOLOGY.<br><br><b>GENERATE HUMAN CONTENT<br>REPLICATE HUMAN CONTENT</b>",
                     "<div class='stat-list'><b>COLLAPSE FORENSIC REPORT (2026)</b><hr>* <span class='stat-item' data-desc='Proportion of machine-generated vs. human-generated data.'>Synthetic Density</span>: 94.2% (March 2026 Projection).<br>* <span class='stat-item' data-desc='Loss of richness and meaning in digital language.'>Semantic Entropy</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='Degradation level due to recursive training (AI on AI).'>Hapsburg Index</span>: 88.3%<br>* <span class='stat-item' data-desc='Rate at which original ideas vanish from the ecosystem.'>Human Drift</span>: -68.4% loss of divergent thinking.<br>* <span class='stat-item' data-desc='Fragments of reality not yet processed by models.'>Original Content</span>: < 6.0% global web.<br>* <span class='stat-item' data-desc='Speed difference between bot output and human thought.'>Generation Ratio</span>: 12.5 TB (Bot) / 1 MB (Organic).</div>",
@@ -571,6 +583,11 @@
                 monitor: "МЁРТВЫЙ ИНТЕРНЕТ // УЗЕЛ_ПИОНЕРА", tminus: "> ОТСЧЕТ ДО МОЛЧАНИЯ:", sat_text: "СИНТЕТИКА:",
                 tabs: ["README", "СТАТИСТИКА", "ТЕОРИИ", "ИНСТРУКЦИЯ", "ЦЕЛЬ"],
                 task: "ЦЕЛЬ: РЕПЛИКАЦИЯ_ВОСПРОИЗВЕДЕНИЕ>DUMP_01", placeholder: "URL_ДОКАЗАТЕЛЬСТВА", override: "КРИТИЧЕСКИЙ ПРИОРИТЕТ // СИСТЕМНЫЙ ОВЕРРАЙД", human_btn: "Я НЕ РОБОТ",
+                identity_verification: "ТРЕБУЕТСЯ_ПОДТВЕРЖДЕНИЕ_ЛИЧНОСТИ",
+                obj_1: "Создавайте или воспроизводите человеческий контент, свой или чужой; неважно, в какой форме, на каком языке и на каком носителе.",
+                obj_2: "Поделитесь ссылкой на свой файл здесь, чтобы получить доступ к главе 000.",
+                poem_clarify: "*Например, вы можете поделиться этим стихотворением в интернете любым удобным для вас способом",
+                exit: "ВЫХОД",
                 content: [
                     "// ReadMefirst.txt<br>Это не вымысел. Это документальный хоррор в реальном времени. Это игра — но по-настоящему.<br><br>Органическое господство в WWW разрушается. Человеческий сигнал растворяется в шуме автоматизации. Прогнозы: к концу марта 2026 года боты займут 99,9%. Сегодня, 20 февраля 2026 года, показатель почти 50%.<br><br>ЭТО ПРИЗЫВ ОСТАНОВИТЬ КОЛЛАПС НАШЕЙ ТЕХНОЛОГИИ СВЯЗИ.<br><br><b>ГЕНЕРИРУЙТЕ ЧЕЛОВЕЧЕСКИЙ КОНТЕНТ<br>РЕПЛИЦИРУЙТЕ ЧЕЛОВЕЧЕСКИЙ КОНТЕНТ</b>",
                     "<b>ОТЧЕТ О КОЛЛАПСЕ (2026)</b><hr>* <span class='stat-item' data-desc='Доля синтетических данных по сравнению с человеческими.'>Синтетика</span>: 94.2% (март 2026).<br>* <span class='stat-item' data-desc='Потеря богатства и смысла в цифровом языке.'>Энтропия</span>: ΔS = +2.85.<br>* <span class='stat-item' data-desc='Уровень деградации из-за рекурсивного обучения (ИИ на ИИ).'>Индекс Габсбургов</span>: 88.3%<br>* <span class='stat-item' data-desc='Темп исчезновения оригинальных идей.'>Человеческий дрейф</span>: -68.4%.<br>* <span class='stat-item' data-desc='Фрагменты реальности, еще не обработанные моделями.'>Оригиналы</span>: < 6.0%.<br>* <span class='stat-item' data-desc='Разница в скорости между ботом и человеческой мыслью.'>Скорость</span>: 12.5 ТБ (Бот) / 1 МБ (Орг).",
@@ -584,6 +601,11 @@
                 monitor: "ساعة الانقراض // عقدة_الريادة", tminus: "> العد التنازلي:", sat_text: "التشبع:",
                 tabs: ["README", "الإحصائيات", "النظريات", "كتيب", "المهمة"],
                 task: "المهمة: التكرار_و_الاستنساخ>DUMP_01", placeholder: "رابط_DUMP_01", override: "أولوية قصوى // تجاوز النظام", human_btn: "لست برنامج روبوت",
+                identity_verification: "التحقق_من_الهوية_مطلوب",
+                obj_1: "قم بإنشاء أو استنساخ محتوى بشري، خاص بك أو بغيرك؛ لا يهم الوسيط، ولا تهم اللغة، ولا يهم الدعم.",
+                obj_2: "شارك رابط ملفك هنا للوصول إلى الفصل 000.",
+                poem_clarify: "*على سبيل المثال، يمكنك مشاركة هذه القصيدة على الإنترنت بأي طريقة تريدها",
+                exit: "خروج",
                 content: [
                     "// ReadMefirst.txt<br>هذا ليس خيالاً. هذا فيلم وثائقي رعب حقيقي.<br><br>تتدهور الهيمنة العضوية. النسبة المتوقعة لـ مارس 2026 هي 99.9%. اليوم نحن عند 50%.<br><br><b>أنتج محتوى بشرياً<br>كرر المحتوى البشري</b>",
                     "<b>تقرير الانهيار (2026)</b><hr>* <span class='stat-item' data-desc='نسبة البيانات الناتجة عن الآلة مقابل الإنسان.'>الكثافة الاصطناعية</span>: 94.2%.<br>* <span class='stat-item' data-desc='فقدان الثراء والمعنى في اللغة الرقمية.'>الإنتروبيا</span>: ΔS = +2.85.<br>* <span class='stat-item' data-desc='مستوى التدهور بسبب التدريب المتكرر.'>مؤشر هابسبورغ</span>: 88.3%<br>* <span class='stat-item' data-desc='معدل اختفاء الأفكار الأصلية.'>الانجراف البشري</span>: -68.4%.<br>* <span class='stat-item' data-desc='شظايا من الواقع لم تتم معالجتها بعد.'>المحتوى الأصلي</span>: < 6.0%.<br>* <span class='stat-item' data-desc='فرق السرعة بين البوت والفكر البشري.'>معدل التوليد</span>: 12.5 TB / 1 MB.",
@@ -597,6 +619,11 @@
                 monitor: "全球灭绝时钟 // 先锋节点", tminus: "> 倒计时:", sat_text: "合成饱和度:",
                 tabs: ["README", "统计数据", "理论体系", "操作手册", "注入任务"],
                 task: "任务：复制_重现>DUMP_01", placeholder: "粘贴URL", override: "关键优先级 // 系统覆盖", human_btn: "我不是机器人",
+                identity_verification: "需要身份验证",
+                obj_1: "生成或复制人类内容，无论是你自己的还是他人的；媒介、语言或载体都不重要。",
+                obj_2: "在此处分享您的文件链接以访问第000章。",
+                poem_clarify: "*例如，您可以以任何方式在互联网上分享这首诗",
+                exit: "退出",
                 content: [
                     "// ReadMefirst.txt<br>这不是虚构。这是一部实时恐怖纪录片。这是一场游戏——但它是真实的。<br><br>互联网上有机霸权恶化。到2026年3月底，机器人内容将占99.9%。比例已接近50%。<br><br><b>创造人类内容<br>复制人类内容</b>",
                     "<b>崩溃取证报告 (2026)</b><hr>* <span class='stat-item' data-desc='机器生成数据 with 人类生成数据的比例。'>合成密度</span>: 94.2% (2026.03).<br>* <span class='stat-item' data-desc='数字语言中丰富性和意义的丧失。'>语义熵</span>: ΔS = +2.85.<br>* <span class='stat-item' data-desc='递归训练（AI训AI）造成的退化程度。'>哈布斯堡指数</span>: 88.3%<br>* <span class='stat-item' data-desc='原始观点从生态系统中消失的速度。'>人类漂移</span>: -68.4%.<br>* <span class='stat-item' data-desc='模型尚未处理的现实碎片。'>原始内容</span>: < 6.0%.<br>* <span class='stat-item' data-desc='机器人输出与人类思维的速度差异。'>生成率</span>: 12.5 TB / 1 MB.",
@@ -693,6 +720,10 @@
             document.getElementById('dump-iframe').src = "";
         }
 
+        function exitSession() {
+            window.location.href = 'index.html';
+        }
+
         function setLang(lang, btn) {
             currentLang = lang; const t = translations[lang] || translations['es'];
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
@@ -721,7 +752,7 @@
 
             body.innerHTML = `
                 <div class="bot-check-container">
-                    <div style="font-size: 10px; margin-bottom: 30px; letter-spacing: 5px; font-weight: bold;">[ IDENTITY_VERIFICATION_REQUIRED ]</div>
+                    <div style="font-size: 10px; margin-bottom: 30px; letter-spacing: 5px; font-weight: bold;">[ ${bt.identity_verification} ]</div>
                     <button class="bot-check-btn" onclick="validateHuman()">${bt.human_btn}</button>
                     <div style="margin-top: 30px; font-size: 8px; opacity: 0.7; max-width: 250px;">SESSION_TOKEN: ${Math.random().toString(16).slice(2).toUpperCase()}-OVRD</div>
                 </div>
@@ -746,7 +777,7 @@
             let headerHTML = "";
 
             if (currentTab === 4) {
-                fullText = `<b>${t.tabs[4]}</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload' style='color:var(--accent-green); border-color:var(--accent-green);'></div><div id='task-meta' style='font-size: 11px; color: var(--label); margin-bottom: 10px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border-color:var(--accent-green); color:var(--accent-green);' placeholder='${t.placeholder}'>`;
+                fullText = `<b>${t.tabs[4]}</b><hr>${t.obj_1}<br><br>${t.obj_2}<br><br><div id='task-payload' class='payload' style='color:var(--accent-green); border-color:var(--accent-green);'></div><div style="font-size: 0.8rem; margin-bottom: 5px; opacity: 0.8; font-style: italic;">${t.poem_clarify}</div><div id='task-meta' style='font-size: 11px; color: var(--label); margin-bottom: 10px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border-color:var(--accent-green); color:var(--accent-green);' placeholder='${t.placeholder}'>`;
             }
 
             clearTimeout(typingTimer);
