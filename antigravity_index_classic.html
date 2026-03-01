@@ -423,24 +423,12 @@
             <div class="box">
                 <div class="label" id="lbl-monitor">---</div>
                 <div class="content" style="min-height: auto;">
-                    <div style="color: var(--accent-red); font-size: 10px;" id="lbl-tminus">---</div>
+                    <div style="color: var(--label); font-size: 10px;" id="lbl-tminus">---</div>
                     <span id="t-minus">000:00:00:00</span>
                     <div style="border-top: 1px solid var(--border); padding-top: 10px;">
                         <span style="font-size: 10px; color: var(--label);" id="lbl-sat-text">---</span>
                         <span id="saturacion">00.00%</span>
                     </div>
-                </div>
-            </div>
-
-            <!-- BROADCAST NETWORK -->
-            <div class="box" id="broadcast-box" style="display: none; border-color: var(--accent-red);">
-                <div class="label"
-                    style="color: var(--accent-red); font-weight: bold; background: rgba(255,51,51,0.1);">
-                    INCOMING_TRANSMISSIONS // NODE_OVERRIDE
-                </div>
-                <div class="content" id="broadcast-content"
-                    style="min-height: auto; max-height: 200px; padding: 10px 20px;">
-                    <!-- Mensajes aparecerán aquí -->
                 </div>
             </div>
 
@@ -453,6 +441,17 @@
                     <div class="tab" onclick="setTab(4)" id="tab-4">---</div>
                 </div>
                 <div class="content" id="console-body"></div>
+            </div>
+
+            <div class="box" id="broadcast-box"
+                style="display: none; border-color: var(--accent-red); background: rgba(255,0,0,0.05);">
+                <div class="label"
+                    style="color: var(--accent-red); animation: pulse-warn 2s infinite; font-weight: bold;">[
+                    INCOMING_TRANSMISSION ]</div>
+                <div class="content" style="min-height: auto;">
+                    <div id="broadcast-payload" class="payload" style="color: #fff; font-size: 1.2rem;"></div>
+                    <div id="broadcast-meta" style="font-size: 10px; color: var(--label); margin-top: 10px;"></div>
+                </div>
             </div>
 
         </div>
@@ -595,45 +594,7 @@
         let currentLang = 'es'; let currentTab = 0; let typingTimer;
 
         // INICIALIZACIÓN DE SOCKET PARA TRANSMISIONES DEL ADMIN
-        const socket = io("https://readmefirst-server.onrender.com");
-
-        function addBroadcastToUI(payload) {
-            // Filtro por protocolo
-            if (payload.protocol !== 'all' && payload.protocol !== 'classic') return;
-
-            document.getElementById('broadcast-box').style.display = 'block';
-            const container = document.getElementById('broadcast-content');
-
-            const div = document.createElement('div');
-            div.style.marginBottom = '15px';
-            div.style.borderLeft = '2px solid var(--accent-red)';
-            div.style.paddingLeft = '10px';
-
-            const timeSpan = document.createElement('div');
-            timeSpan.style.fontSize = '9px';
-            timeSpan.style.color = 'var(--label)';
-            timeSpan.innerText = "[" + new Date(payload.timestamp).toLocaleTimeString() + "]";
-
-            const msgSpan = document.createElement('div');
-            msgSpan.style.color = 'var(--text)';
-            msgSpan.style.whiteSpace = 'pre-wrap';
-            msgSpan.innerHTML = payload.message.replace(/\n/g, "<br>");
-
-            div.appendChild(timeSpan);
-            div.appendChild(msgSpan);
-
-            // Si el texto acaba de llegar (no es historia antigua), haz un efecto de glitch o sonido (si tuvieras)
-            container.prepend(div);
-        }
-
-        socket.on('history', (history) => {
-            document.getElementById('broadcast-content').innerHTML = "";
-            history.forEach(addBroadcastToUI);
-        });
-
-        socket.on('new_broadcast', (payload) => {
-            addBroadcastToUI(payload);
-        });
+        // const socket = io("https://readmefirst-server.onrender.com"); // Removed old socket init
 
         function validateAccess() {
             const idVal = document.getElementById('user-id').value.trim().toLowerCase();
@@ -739,6 +700,47 @@
 
         const bLang = navigator.language.split('-')[0];
         currentLang = translations[bLang] ? bLang : 'es';
+    </script>
+    <script src="https://readmefirst-server.onrender.com/socket.io/socket.io.js"></script>
+    <script>
+        (function () {
+            const socket = io("https://readmefirst-server.onrender.com");
+
+            socket.on('new_broadcast', (data) => {
+                if (data.protocol === 'all' || data.protocol === 'classic') {
+                    const box = document.getElementById('broadcast-box');
+                    const pay = document.getElementById('broadcast-payload');
+                    const met = document.getElementById('broadcast-meta');
+                    if (box) box.style.display = 'block';
+                    if (pay) {
+                        pay.innerText = '';
+                        let j = 0;
+                        function type() {
+                            if (j < data.message.length) {
+                                pay.innerText += data.message.charAt(j);
+                                j++;
+                                setTimeout(type, 30);
+                            }
+                        }
+                        type();
+                    }
+                    if (met) met.innerText = 'RECV: ' + new Date(data.timestamp).toLocaleString();
+                }
+            });
+
+            socket.on('history', (list) => {
+                const relevant = list.filter(d => d.protocol === 'all' || d.protocol === 'classic');
+                if (relevant.length > 0) {
+                    const last = relevant[relevant.length - 1];
+                    const box = document.getElementById('broadcast-box');
+                    const pay = document.getElementById('broadcast-payload');
+                    const met = document.getElementById('broadcast-meta');
+                    if (box) box.style.display = 'block';
+                    if (pay) pay.innerText = last.message;
+                    if (met) met.innerText = 'LAST MSG: ' + new Date(last.timestamp).toLocaleString();
+                }
+            });
+        })();
     </script>
 </body>
 

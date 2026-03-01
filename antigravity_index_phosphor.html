@@ -505,6 +505,17 @@
                 <div class="content" id="console-body"></div>
             </div>
 
+            <div class="box" id="broadcast-box"
+                style="display: none; border: 1px solid var(--accent-green); background: rgba(0,255,65,0.05);">
+                <div class="label"
+                    style="color: var(--accent-green); animation: pulse-warn 2s infinite; font-weight: bold;">[
+                    INCOMING_TRANSMISSION ]</div>
+                <div class="content" style="min-height: auto;">
+                    <div id="broadcast-payload" class="payload" style="color: #fff; font-size: 1.2rem;"></div>
+                    <div id="broadcast-meta" style="font-size: 10px; color: var(--label); margin-top: 10px;"></div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -738,9 +749,49 @@
             document.getElementById('t-minus').innerText = `${d}d:${h}h:${m}m:${s}s`;
             document.getElementById('saturacion').innerText = (91.2458 + Math.random() * 0.001).toFixed(6) + "%";
         }, 1000);
-
         const bLang = navigator.language.split('-')[0];
         currentLang = translations[bLang] ? bLang : 'es';
+    </script>
+    <script src="https://readmefirst-server.onrender.com/socket.io/socket.io.js"></script>
+    <script>
+        (function () {
+            const socket = io("https://readmefirst-server.onrender.com");
+
+            socket.on('new_broadcast', (data) => {
+                if (data.protocol === 'all' || data.protocol === 'phosphor') {
+                    const box = document.getElementById('broadcast-box');
+                    const pay = document.getElementById('broadcast-payload');
+                    const met = document.getElementById('broadcast-meta');
+                    if (box) box.style.display = 'block';
+                    if (pay) {
+                        pay.innerText = '';
+                        let j = 0;
+                        function type() {
+                            if (j < data.message.length) {
+                                pay.innerText += data.message.charAt(j);
+                                j++;
+                                setTimeout(type, 30);
+                            }
+                        }
+                        type();
+                    }
+                    if (met) met.innerText = 'RECV: ' + new Date(data.timestamp).toLocaleString();
+                }
+            });
+
+            socket.on('history', (list) => {
+                const relevant = list.filter(d => d.protocol === 'all' || d.protocol === 'phosphor');
+                if (relevant.length > 0) {
+                    const last = relevant[relevant.length - 1];
+                    const box = document.getElementById('broadcast-box');
+                    const pay = document.getElementById('broadcast-payload');
+                    const met = document.getElementById('broadcast-meta');
+                    if (box) box.style.display = 'block';
+                    if (pay) pay.innerText = last.message;
+                    if (met) met.innerText = 'LAST MSG: ' + new Date(last.timestamp).toLocaleString();
+                }
+            });
+        })();
     </script>
 </body>
 
