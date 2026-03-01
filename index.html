@@ -281,6 +281,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            localStorage.removeItem('antigravity_auth');
             const lines = document.querySelectorAll('.boot-line');
             const loginForm = document.getElementById('login-form');
             const uInput = document.getElementById('user');

@@ -512,7 +512,7 @@
 
             <div class="box" id="broadcast-box"
                 style="display: none; border-color: var(--accent-red); background: rgba(255,0,0,0.05);">
-                <div class="label"
+                <div class="label" id="lbl-broadcast"
                     style="color: var(--accent-red); animation: pulse-warn 2s infinite; font-weight: bold;">[
                     INCOMING_TRANSMISSIONS ]</div>
                 <div id="broadcast-list" style="max-height: 200px; overflow-y: auto; padding: 10px;">
@@ -524,6 +524,11 @@
     </div>
 
     <script>
+        if (localStorage.getItem('antigravity_auth') !== 'true') {
+            window.location.href = 'index.html';
+        }
+        sessionStorage.removeItem('human_validated');
+
         const translations = {
             es: {
                 monitor: "TRANSMISIÓN ENTRANTE:", tminus: "> T-MINUS_PARA_SILENCIO_TOTAL:", sat_text: "SATURACIÓN_SINTÉTICA:",
@@ -733,6 +738,12 @@
             document.getElementById('lbl-monitor').innerText = t.monitor;
             document.getElementById('lbl-tminus').innerText = t.tminus;
             document.getElementById('lbl-sat-text').innerText = t.sat_text;
+
+            const lblBroadcast = document.getElementById('lbl-broadcast');
+            if (lblBroadcast && t.monitor) {
+                lblBroadcast.innerText = '[ ' + t.monitor.replace(':', '') + ' ]';
+            }
+
             t.tabs.forEach((name, i) => { const el = document.getElementById(`tab-${i}`); if (el) el.innerText = name; });
             const cont = document.querySelector('.box:has(.tabs)');
             if (cont) cont.classList.toggle('special-window', currentTab === 4);
