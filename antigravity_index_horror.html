@@ -590,6 +590,27 @@
             color: var(--amber-bright);
         }
 
+        #btn-exit {
+            background: transparent;
+            color: var(--amber-bright);
+            border: 1px dotted var(--amber-dim);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            padding: 2px 10px;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            display: none;
+        }
+
+        #btn-exit:hover {
+            color: #fff;
+            border-color: var(--amber-bright);
+            text-shadow: 0 0 10px var(--amber-bright);
+            background: rgba(255, 191, 0, 0.05);
+        }
+
         /* DUMP MODAL (YOUTUBE OVERLAY) */
         #dump-modal {
             position: fixed;
@@ -648,6 +669,37 @@
             width: 100%;
             height: 100%;
             border: 0;
+        }
+
+        .bot-check-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 400px;
+            text-align: center;
+            background: rgba(255, 177, 0, 0.02);
+        }
+
+        .bot-check-btn {
+            background: transparent;
+            color: var(--amber-bright);
+            border: 1px solid var(--amber-bright);
+            padding: 15px 40px;
+            font-family: inherit;
+            font-size: 14px;
+            cursor: pointer;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--amber-bright);
+        }
+
+        .bot-check-btn:hover {
+            background: var(--amber-bright);
+            color: black;
+            box-shadow: 0 0 20px var(--amber-bright);
         }
     </style>
 </head>
@@ -744,15 +796,13 @@
             <option value="de">DE</option>
             <option value="fr">FR</option>
         </select>
-        <button id="btn-exit" onclick="exitSession()"
-            style="background:transparent; color:var(--amber-bright); border:1px dashed var(--amber-dim); cursor:pointer; font-family:inherit; font-size:0.8rem; margin-left:10px; padding:2px 5px;">EXIT</button>
     </div>
 
     <script>
         // FULL TRANSLATIONS WITH INCORPORATED HOVER TOOLTIPS (.stat-item data-desc)
         const translations = {
             es: {
-                monitor: "TRÁFICO ENCRIPTADO:",
+                monitor: "TRANSMISIÓN ENTRANTE:",
                 tabs: ["01_AUTOPSIA", "02_TASAS", "03_TEORIAS", "04_MANUAL", "05_OBJETIVO"],
                 task: "SISTEMA CAIDO",
                 status: "NO CARRIER",
@@ -763,7 +813,6 @@
                 obj_1: "Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.",
                 obj_2: "Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.",
                 poem_clarify: "*Por ejemplo, puedes compartir este poema en internet de la manera que quieras",
-                exit: "SALIR",
                 meta: "[DATA CORRUPTED]",
                 placeholder: "UBICAR_EVIDENCIA_AQUÍ...",
                 poem: {
@@ -780,19 +829,18 @@
                 ]
             },
             en: {
-                monitor: "ENCRYPTED TRAFFIC:",
-                tabs: ["01_README", "02_STATISTICS", "03_THEORIES", "04_MANUAL", "05_OBJECTIVE"],
-                task: "SYSTEM FAILURE",
+                monitor: "INCOMING TRANSMISSION:",
+                tabs: ["01_AUTOPSY", "02_RATES", "03_THEORIES", "04_MANUAL", "05_OBJECTIVE"],
+                task: "CONNECTION_LOST",
                 status: "NO CARRIER",
                 tminus_txt: "DAYS_TO_COLLAPSE:",
-                sat_txt: "SYNTHETIC DECAY:",
+                sat_txt: "SYNTHETIC_DENSITY:",
                 override: "CRITICAL PRIORITY // SYSTEM OVERRIDE", human_btn: "I AM NOT A BOT",
                 identity_verification: "IDENTITY_VERIFICATION_REQUIRED",
                 obj_1: "Generate or replicate human content, your own or others'; the medium, language, or support doesn't matter.",
                 obj_2: "Share the link to your file here to access chapter 000.",
                 poem_clarify: "*For example, you can share this poem on the internet in any way you want",
-                exit: "EXIT",
-                meta: "[DATA CORRUPTED]",
+                meta: "[DATA_CORRUPTED]",
                 placeholder: "LOCATE_EVIDENCE_HERE...",
                 poem: {
                     text: "What urgency dictates is not the scream, but the quiet effort of being oneself.",
@@ -808,19 +856,18 @@
                 ]
             },
             ru: {
-                monitor: "ШИФРОВАННЫЙ ТРАФИК:",
-                tabs: ["01_README", "02_СТАТИСТИКА", "03_ТЕОРИИ", "04_ИНСТРУКЦИЯ", "05_ЦЕЛЬ"],
-                task: "СБОЙ_СИСТЕМЫ",
-                status: "НЕТ_СИГНАЛА",
-                tminus_txt: "ДНЕЙ ДО КОЛЛАПСА:",
-                sat_txt: "СИНТЕТИЧЕСКИЙ РАСПАД:",
+                monitor: "ВХОДЯЩАЯ ПЕРЕДАЧА:",
+                tabs: ["01_АВТОПСИЯ", "02_ТЕМПЫ", "03_ТЕОРИИ", "04_ИНСТРУКЦИЯ", "05_ЦЕЛЬ"],
+                task: "СВЯЗЬ_ПРЕРВАНА",
+                status: "НЕТ НОСИТЕЛЯ",
+                tminus_txt: "ДНЕЙ_ДО_КОЛЛАПСА:",
+                sat_txt: "ПЛОТНОСТЬ_СИНТЕТИКИ:",
                 override: "КРИТИЧЕСКИЙ ПРИОРИТЕТ // СИСТЕМНЫЙ ОВЕРРАЙД", human_btn: "Я НЕ РОБОТ",
                 identity_verification: "ТРЕБУЕТСЯ_ПОДТВЕРЖДЕНИЕ_ЛИЧНОСТИ",
                 obj_1: "Создавайте или воспроизводите человеческий контент, свой или чужой; неважно, в какой форме, на каком языке и на каком носителе.",
                 obj_2: "Поделитесь ссылкой на свой файл здесь, чтобы получить доступ к главе 000.",
                 poem_clarify: "*Например, вы можете поделиться этим стихотворением в интернете любым удобным для вас способом",
-                exit: "ВЫХОД",
-                meta: "[ПОШРЕЖДЕНИЕ]",
+                meta: "[ДАННЫЕ ПОВРЕЖДЕНЫ]",
                 placeholder: "РАЗМЕСТИТЕ_ДОКАЗАТЕЛЬСТВО_ЗДЕСЬ...",
                 poem: {
                     text: "Что диктует срочность, это не крик, а тихое усилие быть самим собой.",
@@ -836,19 +883,18 @@
                 ]
             },
             ar: {
-                monitor: "حركة المرور المشفرة:",
-                tabs: ["01_README", "02_الإحصائيات", "03_النظريات", "04_كتيب", "05_الهدف"],
-                task: "فشل النظام",
-                status: "لا توجد شبكة",
+                monitor: "إرسال وارد:",
+                tabs: ["01_الفحص", "02_المعدلات", "03_النظريات", "04_الكتيب", "05_المهمة"],
+                task: "تم قطع الاتصال",
+                status: "لا توجد إشارة",
                 tminus_txt: "أيام حتى الانهيار:",
-                sat_txt: "الاضمحلال الاصطناعي:",
+                sat_txt: "الكثافة الاصطناعية:",
                 override: "أولوية قصوى // تجاوز النظام", human_btn: "لست برنامج روبوت",
                 identity_verification: "التحقق_من_الهوية_مطلوب",
                 obj_1: "قم بإنشاء أو استنساخ محتوى بشري، خاص بك أو بغيرك؛ لا يهم الوسيط، ولا تهم اللغة، ولا يهم الدعم.",
                 obj_2: "شارك رابط ملفك هنا للوصول إلى الفصل 000.",
                 poem_clarify: "*على سبيل المثال، يمكنك مشاركة هذه القصيدة على الإنترنت بأي طريقة تريدها",
-                exit: "خروج",
-                meta: "[فساد_بيانات]",
+                meta: "[بيانات تالفة]",
                 placeholder: "ضع_الدليل_هنا...",
                 poem: {
                     text: "ما تمليه الضرورة ليس الصرخة، بل الجهد الصامت لكون المرء نفسه.",
@@ -864,18 +910,17 @@
                 ]
             },
             zh: {
-                monitor: "加密流量:",
-                tabs: ["01_README", "02_统计", "03_理论体系", "04_操作手册", "05_目标"],
-                task: "系统故障",
-                status: "无载波",
-                tminus_txt: "距离崩溃的天数:",
-                sat_txt: "合成衰变:",
+                monitor: "接收传输:",
+                tabs: ["01_尸检", "02_速率", "03_理论", "04_手册", "05_目标"],
+                task: "连接丢失",
+                status: "无信号",
+                tminus_txt: "崩溃倒计时:",
+                sat_txt: "合成密度:",
                 override: "关键优先级 // 系统覆盖", human_btn: "我不是机器人",
                 identity_verification: "需要身份验证",
                 obj_1: "生成或复制人类内容，无论是你自己的还是他人的；媒介、语言或载体都不重要。",
                 obj_2: "在此处分享您的文件链接以访问第000章。",
                 poem_clarify: "*例如，您可以以任何方式在互联网上分享这首诗",
-                exit: "退出",
                 meta: "[数据损坏]",
                 placeholder: "在此放置证据...",
                 poem: {
@@ -892,19 +937,18 @@
                 ]
             },
             he: {
-                monitor: "תנועה מוצפנת:",
-                tabs: ["01_README", "02_סטטיסטיקה", "03_תיאוריות", "04_מדריך", "05_מטרה"],
-                task: "כשל מערכת",
+                monitor: "שידור נכנס:",
+                tabs: ["01_נתיחה", "02_יחסים", "03_תיאוריות", "04_מדריך", "05_יעד"],
+                task: "הקשר אבד",
                 status: "אין ספק",
                 tminus_txt: "ימים לקריסה:",
-                sat_txt: "ריקבון סינתטי:",
+                sat_txt: "צפיפות סינתטית:",
                 override: "עדיפות קריטית // עקיפת מערכת", human_btn: "אני לא רובוט",
                 identity_verification: "נדרש_אימות_זהות",
                 obj_1: "צור או שכפל תוכן אנושי, שלך או של אחרים; לא משנה המדיה, לא משנה השפה, לא משנה התמיכה.",
                 obj_2: "שתף את הקישור לקובץ שלך כאן כדי לגשת לפרק 000.",
                 poem_clarify: "*לדוגמה, תוכל לשתף את השיר הזה באינטרנט בכל דרך שתרצה",
-                exit: "יציאה",
-                meta: "[נתונים מושחתים]",
+                meta: "[נתונים פגומים]",
                 placeholder: "הדבק_ראיות_כאן...",
                 poem: {
                     text: "מה שהדחיפות מכתיבה אינו הצעקה, אלא המאמץ השקט להיות עצמך.",
@@ -920,19 +964,18 @@
                 ]
             },
             ko: {
-                monitor: "암호화된 트래픽:",
-                tabs: ["01_README", "02_통계", "03_이론", "04_운영매뉴얼", "05_목표"],
-                task: "시스템 오류",
-                status: "신호_끊김",
-                tminus_txt: "붕괴까지 남은 일수:",
-                sat_txt: "합성 붕괴:",
+                monitor: "수신 전송:",
+                tabs: ["01_부검기록", "02_붕괴율", "03_가설", "04_매뉴얼", "05_목표"],
+                task: "연결 유실",
+                status: "신호 없음",
+                tminus_txt: "붕괴 전 남은 일수:",
+                sat_txt: "합성 밀도:",
                 override: "최우선 순위 // 시스템 오버라이드", human_btn: "로봇이 아닙니다",
                 identity_verification: "신원_확인_필요",
-                obj_1: "자신 또는 타인의 인간 콘텐츠를 생성하거나 복제하십시오. 매체, 언어, 지원은 중요하지 않습니다.",
-                obj_2: "챕터 000에 액세스하려면 여기에 파일 링크를 공유하십시오.",
-                poem_clarify: "*예를 들어, 이 시를 원하는 방식으로 인터넷에 공유할 수 있습니다.",
-                exit: "종료",
-                meta: "[데이터 손상]",
+                obj_1: "본인의 것이든 타인의 것이든 인간의 콘텐츠를 생성하거나 복제하십시오. 매체, 언어, 지원 형식은 상관없습니다.",
+                obj_2: "000장에 액세스하려면 여기에 파일 링크를 공유하십시오.",
+                poem_clarify: "*예를 들어, 이 시를 원하는 방식으로 인터넷에 공유할 수 있습니다",
+                meta: "[데이터 유실]",
                 placeholder: "여기에 증거 URL 배치...",
                 poem: {
                     text: "긴급함이 지시하는 것은 비명이 아니라, 자기 자신이 되기 위한 조용한 노력이다.",
@@ -948,18 +991,17 @@
                 ]
             },
             ja: {
-                monitor: "暗号化されたトラフィック:",
-                tabs: ["01_README", "02_統計", "03_理論", "04_マニュアル", "05_目的"],
-                task: "システム障害",
-                status: "キャリアなし",
+                monitor: "受信トランスミッション:",
+                tabs: ["01_検死報告", "02_崩壊率", "03_理論仮説", "04_手順書", "05_目標"],
+                task: "接続消失",
+                status: "信号なし",
                 tminus_txt: "崩壊までの日数:",
-                sat_txt: "合成崩壊:",
-                override: "最優先 // システムオーバーライド", human_btn: "私はロボットではありません",
-                identity_verification: "身元確認が必要です",
-                obj_1: "自分または他者の人間コンテンツを生成または複製してください。媒体、言語、サポートは問いません。",
-                obj_2: "チャプター000にアクセスするには、ここにファイルのリンクを共有してください。",
-                poem_clarify: "*例えば、この詩を好きな方法でインターネットで共有できます",
-                exit: "終了",
+                sat_txt: "合成データ密度:",
+                override: "優先度：最高 // システム・オーバーライド", human_btn: "私はロボットではありません",
+                identity_verification: "本人確認が必要です",
+                obj_1: "自分のものであれ他人のものであれ、人間らしいコンテンツを生成または複製してください。媒体、语言、サポート形式は問いません。",
+                obj_2: "第000章にアクセスするには、ここにファイルのリンクを共有してください。",
+                poem_clarify: "*例えば、この詩を好きな方法でインターネット上で共有することができます",
                 meta: "[データ破損]",
                 placeholder: "ここに証拠を配置...",
                 poem: {
@@ -976,18 +1018,17 @@
                 ]
             },
             de: {
-                monitor: "VERSCHLÜSSELTER VERKEHR:",
-                tabs: ["01_README", "02_STATISTIKEN", "03_THEORIEN", "04_HANDBUCH", "05_ZIEL"],
-                task: "SYSTEMFEHLER",
+                monitor: "EINGEHENDE ÜBERTRAGUNG:",
+                tabs: ["01_AUTOPSIE", "02_RATEN", "03_THEORIEN", "04_HANDBUCH", "05_ZIEL"],
+                task: "VERBINDUNG VERLOREN",
                 status: "KEIN TRÄGER",
-                tminus_txt: "TAGE_BIS_ZUM_KOLLAPS:",
-                sat_txt: "SYNTHETISCHER ZERFALL:",
-                override: "KRITISCHE PRIORITÄT // SYSTEMÜBERSCHREIBUNG", human_btn: "ICH BIN KEIN BOT",
+                tminus_txt: "TAGE BIS ZUM KOLLAPS:",
+                sat_txt: "SYNTHETISCHE DICHTE:",
+                override: "KRITISCHE PRIORITÄT // SYSTEM-OVERRIDE", human_btn: "ICH BIN KEIN BOT",
                 identity_verification: "IDENTITÄTSPRÜFUNG_ERFORDERLICH",
-                obj_1: "Erzeugen oder replizieren Sie menschliche Inhalte, eigene oder fremde; Medium, Sprache oder Unterstützung spielen keine Rolle.",
+                obj_1: "Erstellen oder replizieren Sie menschliche Inhalte, eigene oder fremde; Medium, Sprache oder Träger sind egal.",
                 obj_2: "Teilen Sie hier den Link zu Ihrer Datei, um auf Kapitel 000 zuzugreifen.",
-                poem_clarify: "*Zum Beispiel können Sie dieses Gedicht auf jede gewünschte Weise im Internet teilen",
-                exit: "BEENDEN",
+                poem_clarify: "*Zum Beispiel kannst du dieses Gedicht im Internet auf jede erdenkliche Weise teilen",
                 meta: "[DATEN KORRUPT]",
                 placeholder: "BEWEISE_HIER_PLATZIEREN...",
                 poem: {
@@ -1004,18 +1045,17 @@
                 ]
             },
             fr: {
-                monitor: "TRAFIC CHIFFRÉ:",
-                tabs: ["01_README", "02_STATISTIQUES", "03_THÉORIES", "04_MANUEL", "05_OBJECTIF"],
-                task: "PANNE SYSTÈME",
+                monitor: "TRANSMISSION ENTRANTE:",
+                tabs: ["01_AUTOPSIE", "02_TAUX", "03_THEORIES", "04_MANUEL", "05_OBJECTIF"],
+                task: "CONNEXION PERDUE",
                 status: "PAS DE PORTEUSE",
-                tminus_txt: "JOURS_AVANT_L'EFFONDREMENT:",
-                sat_txt: "DÉCROISSANCE SYNTHÉTIQUE:",
-                override: "PRIORITÉ CRITIQUE // DÉROGATION SYSTÈME", human_btn: "JE NE SUIS PAS UN BOT",
-                identity_verification: "VÉRIFICATION_D'IDENTITÉ_REQUISE",
-                obj_1: "Générez ou répliquez du contenu humain, le vôtre ou celui d'autrui ; le support, la langue ou le média n'ont pas d'importance.",
-                obj_2: "Partagez le lien de votre fichier ici pour accéder au chapitre 000.",
-                poem_clarify: "*Par exemple, vous pouvez partager ce poème sur internet de la manière que vous souhaitez",
-                exit: "QUITTER",
+                tminus_txt: "JOURS AVANT COLLAPSE:",
+                sat_txt: "DENSITÉ SYNTHÉTIQUE:",
+                override: "PRIORITÉ CRITIQUE // OVERRIDE SYSTÈME", human_btn: "JE NE SUIS PAS UN BOT",
+                identity_verification: "VÉRIFICATION_D_IDENTITÉ_REQUISE",
+                obj_1: "Générez ou répliquez du contenu humain, le vôtre ou celui des autres ; peu importe le média, la langue ou le support.",
+                obj_2: "Partagez le lien vers votre fichier ici pour accéder au chapitre 000.",
+                poem_clarify: "*Par exemple, vous pouvez partager ce poème sur Internet de la manière que vous souhaitez",
                 meta: "[DONNÉES CORROMPUES]",
                 placeholder: "LOCALISER_LES_PREUVES_ICI...",
                 poem: {
@@ -1094,7 +1134,6 @@
             document.getElementById('lbl-monitor').innerText = t.monitor;
             document.getElementById('lbl-sat-text').innerText = t.sat_txt;
             document.getElementById('lbl-tminus-text').innerText = t.tminus_txt;
-            document.getElementById('btn-exit').innerText = t.exit;
 
             const btns = document.querySelectorAll('.ch-btn');
             btns.forEach((btn, idx) => {
@@ -1149,7 +1188,7 @@
             let fullText = t.content[currentTab];
 
             if (currentTab === 4) {
-                fullText = `<b>${t.tabs[4]}</b><hr>${t.obj_1}<br><br>${t.obj_2}<br><br><div id='task-payload' class='payload' style='color:var(--amber-bright); border-color:var(--amber-bright);'></div><div style="font-size: 10px; margin-bottom: 10px; opacity: 0.8; font-style: italic;">${t.poem_clarify}</div><div id='task-meta' style='font-size: 11px; color: var(--amber-faded); margin-bottom: 15px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='color:var(--amber-bright); border-bottom: 1px solid var(--amber-dim); background:transparent; padding:5px 0; width:100%; outline:none;' placeholder='${t.placeholder}'>`;
+                fullText = `<b>${t.tabs[4]}</b><hr>${t.obj_1}<br><br>${t.obj_2}<br><br><div style="font-size: 10px; margin-bottom: 10px; opacity: 0.8; font-style: italic;">${t.poem_clarify}</div><div id='task-payload' class='payload' style='color:var(--amber-bright); border-color:var(--amber-bright);'></div><div id='task-meta' style='font-size: 11px; color: var(--amber-faded); margin-bottom: 15px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='color:var(--amber-bright); border-bottom: 1px solid var(--amber-dim); background:transparent; padding:5px 0; width:100%; outline:none;' placeholder='${t.placeholder}'>`;
             }
 
             clearTimeout(typingTimer);

@@ -312,6 +312,8 @@
             // Show login form (or menu if already auth) after boot
             setTimeout(() => {
                 if (localStorage.getItem('antigravity_auth') === 'true') {
+                    const bootLog = document.getElementById('boot-log');
+                    if (bootLog) bootLog.style.display = 'none';
                     menu.style.display = 'flex';
                     fetch("https://readmefirst-server.onrender.com/api/status")
                         .catch(err => console.log("Background node awakening..."));
