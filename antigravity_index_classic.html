@@ -373,6 +373,8 @@
 </head>
 
 <body>
+    <!-- Añadiendo la librería de Socket.IO conectada al backend de Render -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
     <div id="dump-modal">
         <div class="modal-content">
@@ -427,6 +429,18 @@
                         <span style="font-size: 10px; color: var(--label);" id="lbl-sat-text">---</span>
                         <span id="saturacion">00.00%</span>
                     </div>
+                </div>
+            </div>
+
+            <!-- BROADCAST NETWORK -->
+            <div class="box" id="broadcast-box" style="display: none; border-color: var(--accent-red);">
+                <div class="label"
+                    style="color: var(--accent-red); font-weight: bold; background: rgba(255,51,51,0.1);">
+                    INCOMING_TRANSMISSIONS // NODE_OVERRIDE
+                </div>
+                <div class="content" id="broadcast-content"
+                    style="min-height: auto; max-height: 200px; padding: 10px 20px;">
+                    <!-- Mensajes aparecerán aquí -->
                 </div>
             </div>
 
@@ -579,6 +593,47 @@
         };
 
         let currentLang = 'es'; let currentTab = 0; let typingTimer;
+
+        // INICIALIZACIÓN DE SOCKET PARA TRANSMISIONES DEL ADMIN
+        const socket = io("https://readmefirst-server.onrender.com");
+
+        function addBroadcastToUI(payload) {
+            // Filtro por protocolo
+            if (payload.protocol !== 'all' && payload.protocol !== 'classic') return;
+
+            document.getElementById('broadcast-box').style.display = 'block';
+            const container = document.getElementById('broadcast-content');
+
+            const div = document.createElement('div');
+            div.style.marginBottom = '15px';
+            div.style.borderLeft = '2px solid var(--accent-red)';
+            div.style.paddingLeft = '10px';
+
+            const timeSpan = document.createElement('div');
+            timeSpan.style.fontSize = '9px';
+            timeSpan.style.color = 'var(--label)';
+            timeSpan.innerText = "[" + new Date(payload.timestamp).toLocaleTimeString() + "]";
+
+            const msgSpan = document.createElement('div');
+            msgSpan.style.color = 'var(--text)';
+            msgSpan.style.whiteSpace = 'pre-wrap';
+            msgSpan.innerHTML = payload.message.replace(/\n/g, "<br>");
+
+            div.appendChild(timeSpan);
+            div.appendChild(msgSpan);
+
+            // Si el texto acaba de llegar (no es historia antigua), haz un efecto de glitch o sonido (si tuvieras)
+            container.prepend(div);
+        }
+
+        socket.on('history', (history) => {
+            document.getElementById('broadcast-content').innerHTML = "";
+            history.forEach(addBroadcastToUI);
+        });
+
+        socket.on('new_broadcast', (payload) => {
+            addBroadcastToUI(payload);
+        });
 
         function validateAccess() {
             const idVal = document.getElementById('user-id').value.trim().toLowerCase();
