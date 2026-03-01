@@ -666,23 +666,8 @@
         </div>
     </div>
 
-    <!-- AUTHENTICATION OVERLAY -->
-    <div id="auth-overlay">
-        <div class="auth-box">
-            <div
-                style="font-size: 10px; color: var(--amber-bright); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
-                ACCESO RESTRINGIDO // OFFGRID_NODE
-            </div>
-            <input type="password" id="user-id" placeholder="ID_USER" autocomplete="off" spellcheck="false">
-            <input type="password" id="user-key" placeholder="ACCESS_KEY" autocomplete="off" spellcheck="false">
-            <button onclick="validateAccess()">ENTRAR</button>
-            <div id="auth-err" style="color: var(--amber-bright); font-size: 10px; margin-top: 15px; display: none;">
-                CREDENTIALS_MISMATCH
-            </div>
-        </div>
-    </div>
 
-    <div id="crt-container">
+    <div id="crt-container" style="display: flex;">
 
         <header id="main-title">READMEFIRST.TXT PROTOCOL INIT</header>
 
@@ -745,7 +730,7 @@
     </div>
 
     <!-- LANG SELECTOR -->
-    <div class="lang-selector">
+    <div class="lang-selector" style="display: flex;">
         <span>LOC:</span>
         <select id="lang-sel" onchange="setLang(this.value)">
             <option value="es">ES</option>
@@ -928,20 +913,6 @@
         let currentTab = 0;
         let typingTimer;
 
-        function validateAccess() {
-            const idVal = document.getElementById('user-id').value.trim().toLowerCase();
-            const keyVal = document.getElementById('user-key').value.trim().toLowerCase();
-            if ((idVal === 'admin' && keyVal === 'admin') || localStorage.getItem('antigravity_auth') === 'true') {
-                localStorage.setItem('antigravity_auth', 'true');
-                document.getElementById('auth-overlay').style.display = 'none';
-                document.getElementById('crt-container').style.display = 'flex';
-                document.querySelector('.lang-selector').style.display = 'flex';
-                // Resync initial lang text
-                setLang(currentLang);
-            } else {
-                document.getElementById('auth-err').style.display = 'block';
-            }
-        }
 
         // DATE COUNTDOWN LOGIC -> Target End of March 2026
         const END_DATE = new Date("March 31, 2026 23:59:59").getTime();
@@ -1122,9 +1093,11 @@
             document.getElementById('lang-sel').value = initialLang;
             setLang(initialLang);
 
-            // Auto-login if session exists
-            if (localStorage.getItem('antigravity_auth') === 'true') {
-                validateAccess();
+            // Redirigir si no hay sesión
+            if (localStorage.getItem('antigravity_auth') !== 'true') {
+                window.location.href = 'index.html';
+            } else {
+                setLang(initialLang);
             }
         };
     </script>

@@ -481,20 +481,8 @@
         </div>
     </div>
 
-    <div id="auth-overlay">
-        <div class="auth-box">
-            <div
-                style="font-size: 10px; color: var(--accent-green); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
-                ACCESO RESTRINGIDO // MONITOR_01</div>
-            <input type="password" id="user-id" placeholder="ID_USER" autocomplete="off" spellcheck="false">
-            <input type="password" id="user-key" placeholder="ACCESS_KEY" autocomplete="off" spellcheck="false">
-            <button onclick="validateAccess()">ENTRAR</button>
-            <div id="auth-err" style="color: var(--accent-green); font-size: 10px; margin-top: 15px; display: none;">
-                CREDENTIALS_MISMATCH</div>
-        </div>
-    </div>
 
-    <div id="main-ui-container">
+    <div id="main-ui-container" style="display: flex;">
         <div class="top-controls">
             <div id="lang-selector">
                 <button class="lang-btn" id="btn-es" onclick="setLang('es', this)">Español</button>
@@ -683,18 +671,6 @@
 
         let currentLang = 'es'; let currentTab = 0; let typingTimer;
 
-        function validateAccess() {
-            const idVal = document.getElementById('user-id').value.trim().toLowerCase();
-            const keyVal = document.getElementById('user-key').value.trim().toLowerCase();
-            if ((idVal === 'admin' && keyVal === 'admin') || localStorage.getItem('antigravity_auth') === 'true') {
-                localStorage.setItem('antigravity_auth', 'true');
-                document.getElementById('auth-overlay').style.display = 'none';
-                document.getElementById('main-ui-container').style.display = 'flex';
-                setLang(currentLang, document.getElementById(`btn-${currentLang}`));
-            } else {
-                document.getElementById('auth-err').style.display = 'block';
-            }
-        }
 
         function handleEvidence(e) {
             if (e.key === 'Enter') {
@@ -813,10 +789,12 @@
         const bLang = navigator.language.split('-')[0];
         currentLang = translations[bLang] ? bLang : 'es';
 
-        // Auto-login if session exists
+        // Redirigir si no hay sesión
         window.addEventListener('load', () => {
-            if (localStorage.getItem('antigravity_auth') === 'true') {
-                validateAccess();
+            if (localStorage.getItem('antigravity_auth') !== 'true') {
+                window.location.href = 'index.html';
+            } else {
+                setLang(currentLang, document.getElementById(`btn-${currentLang}`));
             }
         });
     </script>
