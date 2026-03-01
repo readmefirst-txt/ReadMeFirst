@@ -805,7 +805,8 @@
         function validateAccess() {
             const idVal = document.getElementById('user-id').value.trim().toLowerCase();
             const keyVal = document.getElementById('user-key').value.trim().toLowerCase();
-            if (idVal === 'admin' && keyVal === 'admin') {
+            if ((idVal === 'admin' && keyVal === 'admin') || localStorage.getItem('antigravity_auth') === 'true') {
+                localStorage.setItem('antigravity_auth', 'true');
                 document.getElementById('auth-overlay').style.display = 'none';
                 document.getElementById('crt-container').style.display = 'flex';
                 document.querySelector('.lang-selector').style.display = 'flex';
@@ -945,6 +946,11 @@
             const initialLang = translations[bLang] ? bLang : 'es';
             document.getElementById('lang-sel').value = initialLang;
             setLang(initialLang);
+
+            // Auto-login if session exists
+            if (localStorage.getItem('antigravity_auth') === 'true') {
+                validateAccess();
+            }
         };
     </script>
     <script src="https://readmefirst-server.onrender.com/socket.io/socket.io.js"></script>

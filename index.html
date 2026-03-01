@@ -261,8 +261,10 @@
         </div>
 
         <!-- UPLINK STATUS (SHOWN WHILE FETCHING) -->
-        <div id="uplink-status" style="display: none; flex-direction: column; gap: 10px; color: var(--amber); font-size: 1.1rem; text-shadow: 0 0 5px rgba(255, 177, 0, 0.4); margin-bottom: 2vh;">
-            <div id="uplink-text" style="white-space: pre-wrap; line-height: 1.5;">[>] INITIATING SECURE HANDSHAKE WITH CORE NODE...</div>
+        <div id="uplink-status"
+            style="display: none; flex-direction: column; gap: 10px; color: var(--amber); font-size: 1.1rem; text-shadow: 0 0 5px rgba(255, 177, 0, 0.4); margin-bottom: 2vh;">
+            <div id="uplink-text" style="white-space: pre-wrap; line-height: 1.5;">[>] INITIATING SECURE HANDSHAKE WITH
+                CORE NODE...</div>
         </div>
 
         <!-- PROTOCOL SELECTION -->
@@ -284,6 +286,16 @@
             const uInput = document.getElementById('user');
             const pInput = document.getElementById('pass');
             const authErr = document.getElementById('auth-err');
+            const menu = document.getElementById('menu');
+
+            // IMMEDIATE AUTH CHECK
+            if (localStorage.getItem('antigravity_auth') === 'true') {
+                document.getElementById('boot-log').style.display = 'none';
+                loginForm.style.display = 'none';
+                menu.style.display = 'flex';
+                // Success - Still check uplink in background if you want, or just show menu
+                return;
+            }
 
             // Simulate drawn-out boot sequence printing
             let delay = 0;
@@ -310,12 +322,12 @@
                         authErr.style.display = 'none';
                         document.getElementById('boot-log').style.display = 'none';
                         loginForm.style.display = 'none';
-                        
+
                         const uplinkStatus = document.getElementById('uplink-status');
                         const uplinkText = document.getElementById('uplink-text');
                         const menu = document.getElementById('menu');
                         uplinkStatus.style.display = 'flex';
-                        
+
                         let dotInterval = setInterval(() => {
                             if (uplinkText.innerText.indexOf('...') !== -1) {
                                 uplinkText.innerText += '.';
@@ -327,11 +339,20 @@
                             uplinkText.innerHTML = "[!!] ALERTA: NODO SECUNDARIO EN HIBERNACIÓN.<br>[>] INICIANDO PROTOCOLO DE DESPERTAR...<br>[-] NEGOCIANDO CONEXIÓN SEGURA EN SEGUNDO PLANO...<br><span style='font-size: 0.9em; opacity: 0.8;'>(Por favor, no apague el sistema, la sincronización puede tomar ~50 segundos)</span><span class='blinker'></span>";
                         }, 3000);
 
+                        // Check for existing auth
+                        if (localStorage.getItem('antigravity_auth') === 'true') {
+                            document.getElementById('boot-log').style.display = 'none';
+                            loginForm.style.display = 'none';
+                            menu.style.display = 'flex';
+                            return;
+                        }
+
                         fetch("https://readmefirst-server.onrender.com/api/status")
                             .then(response => response.json())
                             .then(data => {
                                 clearInterval(dotInterval);
                                 clearTimeout(slowTimeout);
+                                localStorage.setItem('antigravity_auth', 'true'); // PERSIST AUTH
                                 uplinkText.innerHTML = "[+] " + (data.message || "ENLACE ESTABLECIDO.") + " ACCESO CONCEDIDO.";
                                 setTimeout(() => {
                                     uplinkStatus.style.display = 'none';
@@ -341,6 +362,7 @@
                             .catch(err => {
                                 clearInterval(dotInterval);
                                 clearTimeout(slowTimeout);
+                                localStorage.setItem('antigravity_auth', 'true'); // PERSIST AUTH even on fallback
                                 uplinkText.innerHTML = "[-] ADVERTENCIA: ERROR DE CONEXIÓN AL NODO. INICIANDO FALLBACK LOCAL...";
                                 setTimeout(() => {
                                     uplinkStatus.style.display = 'none';
