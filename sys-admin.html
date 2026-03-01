@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYS_ADMIN // OVERRIDE</title>
+    <style>
+        body {
+            background-color: #050505;
+            color: #00ff41;
+            font-family: monospace;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .admin-panel {
+            background: rgba(0, 50, 0, 0.1);
+            border: 1px solid #00ff41;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            border-bottom: 1px dashed #00ff41;
+            padding-bottom: 15px;
+            text-shadow: 0 0 5px #00ff41;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background: #000;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 10px;
+            font-family: inherit;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 15px;
+            background: #00ff41;
+            color: #000;
+            border: none;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background: #fff;
+        }
+
+        #log {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #aaa;
+            min-height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="admin-panel">
+        <h1>SYS_ADMIN // DUMP INJECTOR</h1>
+        <div>
+            <label>TARGET_NODE (Protocol)</label>
+            <select id="protocol">
+                <option value="all">ALL NODES (Broadcast)</option>
+                <option value="classic">CLASSIC ONLY</option>
+                <option value="phosphor">PHOSPHOR ONLY</option>
+                <option value="horror">HORROR ONLY</option>
+            </select>
+        </div>
+
+        <div>
+            <label>PAYLOAD (Message Text)</label>
+            <textarea id="msg" placeholder="Enter transmission data..."></textarea>
+        </div>
+
+        <div>
+            <label>SYS_OVERRIDE CLARENCE CODE</label>
+            <input type="password" id="pass" placeholder="Password...">
+        </div>
+
+        <button onclick="sendBroadcast()">TRANSMIT PAYLOAD</button>
+        <div id="log">STATUS: WAITING_FOR_INPUT...</div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('admin_success', (res) => {
+            document.getElementById('log').innerText = "STATUS: " + res.status;
+            document.getElementById('log').style.color = "#00ff41";
+            document.getElementById('msg').value = ""; // clear msg
+        });
+
+        socket.on('admin_error', (res) => {
+            document.getElementById('log').innerText = "STATUS: " + res.error;
+            document.getElementById('log').style.color = "red";
+        });
+
+        function sendBroadcast() {
+            const pass = document.getElementById('pass').value.trim();
+            const msg = document.getElementById('msg').value;
+            const protocol = document.getElementById('protocol').value;
+
+            if (!pass || !msg) {
+                document.getElementById('log').innerText = "STATUS: MISSING PAYLOAD OR PASSWORD";
+                document.getElementById('log').style.color = "yellow";
+                return;
+            }
+
+            document.getElementById('log').innerText = "STATUS: TRANSMITTING...";
+            document.getElementById('log').style.color = "#aaa";
+
+            socket.emit('admin_broadcast', {
+                password: pass,
+                message: msg,
+                protocol: protocol
+            });
+        }
+    </script>
+
+</body>
+
+</html>
