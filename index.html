@@ -260,6 +260,11 @@
             <div id="auth-err">ACCESS DENIED.</div>
         </div>
 
+        <!-- UPLINK STATUS (SHOWN WHILE FETCHING) -->
+        <div id="uplink-status" style="display: none; flex-direction: column; gap: 10px; color: var(--amber); font-size: 1.1rem; text-shadow: 0 0 5px rgba(255, 177, 0, 0.4); margin-bottom: 2vh;">
+            <div id="uplink-text" style="white-space: pre-wrap; line-height: 1.5;">[>] INITIATING SECURE HANDSHAKE WITH CORE NODE...</div>
+        </div>
+
         <!-- PROTOCOL SELECTION -->
         <div class="menu" id="menu">
             <div class="menu-header">AVAILABLE PROTOCOL INTERFACES:</div>
@@ -301,11 +306,47 @@
             function checkLogin(e) {
                 if (e.key === 'Enter') {
                     if (uInput.value.trim().toLowerCase() === 'admin' && pInput.value.trim().toLowerCase() === 'admin') {
-                        // Success
+                        // Success - Start Uplink API Request
                         authErr.style.display = 'none';
                         document.getElementById('boot-log').style.display = 'none';
                         loginForm.style.display = 'none';
-                        menu.style.display = 'flex';
+                        
+                        const uplinkStatus = document.getElementById('uplink-status');
+                        const uplinkText = document.getElementById('uplink-text');
+                        const menu = document.getElementById('menu');
+                        uplinkStatus.style.display = 'flex';
+                        
+                        let dotInterval = setInterval(() => {
+                            if (uplinkText.innerText.indexOf('...') !== -1) {
+                                uplinkText.innerText += '.';
+                            }
+                        }, 500);
+
+                        // Si tarda más de 3 segundos, mostramos el mensaje de que el servidor (Render) estaba dormido
+                        let slowTimeout = setTimeout(() => {
+                            uplinkText.innerHTML = "[!!] ALERTA: NODO SECUNDARIO EN HIBERNACIÓN.<br>[>] INICIANDO PROTOCOLO DE DESPERTAR...<br>[-] NEGOCIANDO CONEXIÓN SEGURA EN SEGUNDO PLANO...<br><span style='font-size: 0.9em; opacity: 0.8;'>(Por favor, no apague el sistema, la sincronización puede tomar ~50 segundos)</span><span class='blinker'></span>";
+                        }, 3000);
+
+                        fetch("https://readmefirst-server.onrender.com/api/status")
+                            .then(response => response.json())
+                            .then(data => {
+                                clearInterval(dotInterval);
+                                clearTimeout(slowTimeout);
+                                uplinkText.innerHTML = "[+] " + (data.message || "ENLACE ESTABLECIDO.") + " ACCESO CONCEDIDO.";
+                                setTimeout(() => {
+                                    uplinkStatus.style.display = 'none';
+                                    menu.style.display = 'flex';
+                                }, 1500);
+                            })
+                            .catch(err => {
+                                clearInterval(dotInterval);
+                                clearTimeout(slowTimeout);
+                                uplinkText.innerHTML = "[-] ADVERTENCIA: ERROR DE CONEXIÓN AL NODO. INICIANDO FALLBACK LOCAL...";
+                                setTimeout(() => {
+                                    uplinkStatus.style.display = 'none';
+                                    menu.style.display = 'flex';
+                                }, 2500);
+                            });
                     } else {
                         // Fail
                         authErr.style.display = 'block';
