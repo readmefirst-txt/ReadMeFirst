@@ -299,19 +299,6 @@
             position: relative;
         }
 
-        .objective-header {
-            background: var(--accent-green);
-            color: #000;
-            font-size: 11px;
-            font-weight: 900;
-            padding: 8px 15px;
-            text-align: center;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            width: 100%;
-            box-sizing: border-box;
-            border-bottom: 2px solid #000;
-        }
 
         .bot-check-container {
             background: var(--accent-green);
@@ -751,9 +738,8 @@
         function showHumanCheck() {
             const body = document.getElementById('console-body');
             const bt = translations[currentLang] || translations['es'];
-            const header = `<div class="objective-header">${bt.override}</div>`;
 
-            body.innerHTML = header + `
+            body.innerHTML = `
                 <div class="bot-check-container">
                     <div style="font-size: 10px; margin-bottom: 30px; letter-spacing: 5px; font-weight: bold;">[ IDENTITY_VERIFICATION_REQUIRED ]</div>
                     <button class="bot-check-btn" onclick="validateHuman()">${bt.human_btn}</button>
@@ -780,7 +766,6 @@
             let headerHTML = "";
 
             if (currentTab === 4) {
-                headerHTML = `<div class="objective-header">${t.override}</div>`;
                 fullText = `<b>${t.tabs[4]}</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload' style='color:var(--accent-green); border-color:var(--accent-green);'></div><div id='task-meta' style='font-size: 11px; color: var(--label); margin-bottom: 10px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border-color:var(--accent-green); color:var(--accent-green);' placeholder='${t.placeholder}'>`;
             }
 

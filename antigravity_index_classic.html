@@ -255,30 +255,17 @@
         }
 
         .special-window {
-            border: 1px solid #00ff41 !important;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--accent-red) !important;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.1);
         }
 
         .special-window .tab.active-tab {
-            color: #00ff41 !important;
+            color: var(--accent-red) !important;
         }
 
-        .objective-header {
-            background: #00ff41;
-            color: #000;
-            font-size: 11px;
-            font-weight: 900;
-            padding: 8px 15px;
-            text-align: center;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            width: 100%;
-            box-sizing: border-box;
-            border-bottom: 2px solid #000;
-        }
 
         .bot-check-container {
-            background: #00ff41;
+            background: var(--accent-red);
             color: #000;
             width: 100%;
             min-height: 100%;
@@ -294,8 +281,8 @@
 
         .bot-check-btn {
             background: #000;
-            color: #00ff41;
-            border: 1px solid #00ff41;
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
             padding: 12px 30px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
@@ -306,13 +293,13 @@
             transition: all 0.3s cubic-bezier(0.4, 1, 0.4, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.1);
         }
 
         .bot-check-btn:hover {
             color: #000;
-            background: #00ff41;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+            background: var(--accent-red);
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.3);
             transform: translateY(-2px);
         }
 
@@ -397,8 +384,8 @@
         }
 
         .special-window {
-            border: 2px solid #00ff41 !important;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            border: 2px solid var(--accent-red) !important;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.2);
             position: relative;
             overflow: hidden;
             animation: pulse-border 2s infinite;
@@ -410,7 +397,7 @@
 
         @keyframes pulse-border {
             0% {
-                border-color: #00ff41;
+                border-color: var(--accent-red);
             }
 
             50% {
@@ -418,7 +405,7 @@
             }
 
             100% {
-                border-color: #00ff41;
+                border-color: var(--accent-red);
             }
         }
     </style>
@@ -702,9 +689,8 @@
         function showHumanCheck() {
             const body = document.getElementById('console-body');
             const bt = translations[currentLang] || translations['es'];
-            const header = `<div class="objective-header">${bt.override}</div>`;
 
-            body.innerHTML = header + `
+            body.innerHTML = `
                 <div class="bot-check-container">
                     <div style="font-size: 10px; margin-bottom: 30px; letter-spacing: 5px; font-weight: bold;">[ IDENTITY_VERIFICATION_REQUIRED ]</div>
                     <button class="bot-check-btn" onclick="validateHuman()">${bt.human_btn}</button>
@@ -731,8 +717,7 @@
             let headerHTML = "";
 
             if (currentTab === 4) {
-                headerHTML = `<div class="objective-header">${t.override}</div>`;
-                fullText = `<b>${t.tabs[4]}</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload' style='color:#00ff41; border-color:#00ff41;'></div><div id='task-meta' style='font-size: 11px; color: var(--label); margin-bottom: 10px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border-color:#00ff41; color:#00ff41;' placeholder='${t.placeholder}'>`;
+                fullText = `<b>${t.tabs[4]}</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload' style='color:var(--accent-red); border-color:var(--accent-red);'></div><div id='task-meta' style='font-size: 11px; color: var(--label); margin-bottom: 10px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border-color:var(--accent-red); color:var(--accent-red);' placeholder='${t.placeholder}'>`;
             }
 
             clearTimeout(typingTimer);
