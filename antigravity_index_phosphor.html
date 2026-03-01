@@ -865,15 +865,32 @@
         }
 
         setInterval(() => {
-            const target = new Date("March 24, 2026 00:00:00").getTime();
+            const startDate = new Date("2026-02-20T00:00:00Z").getTime();
+            const targetDate = new Date("2027-04-02T03:14:00Z").getTime();
             const now = Date.now();
-            const diff = target - now;
-            const d = Math.floor(diff / 86400000);
-            const h = Math.floor((diff % 86400000) / 3600000);
-            const m = Math.floor((diff % 3600000) / 60000);
-            const s = Math.floor((diff % 60000) / 1000);
-            document.getElementById('t-minus').innerText = `${d}d:${h}h:${m}m:${s}s`;
-            document.getElementById('saturacion').innerText = (91.2458 + Math.random() * 0.001).toFixed(6) + "%";
+            const diff = targetDate - now;
+
+            if (diff > 0) {
+                const d = Math.floor(diff / 86400000).toString().padStart(3, '0');
+                const h = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+                const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+                const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+                document.getElementById('t-minus').innerText = `${d}d:${h}h:${m}m:${s}s`;
+            } else {
+                document.getElementById('t-minus').innerText = "000d:00h:00m:00s";
+            }
+
+            let currentPercent = 50.0;
+            if (now >= targetDate) {
+                currentPercent = 72.4;
+            } else if (now > startDate) {
+                const totalDuration = targetDate - startDate;
+                const elapsed = now - startDate;
+                const progress = elapsed / totalDuration;
+                currentPercent = 50.0 + (progress * (72.4 - 50.0));
+            }
+            currentPercent += (Math.random() * 0.005);
+            document.getElementById('saturacion').innerText = currentPercent.toFixed(6) + "%";
         }, 1000);
         const bLang = navigator.language.split('-')[0];
         currentLang = translations[bLang] ? bLang : 'es';

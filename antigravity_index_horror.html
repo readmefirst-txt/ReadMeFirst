@@ -1083,8 +1083,8 @@
         let typingTimer;
 
 
-        // DATE COUNTDOWN LOGIC -> Target End of March 2026
-        const END_DATE = new Date("March 31, 2026 23:59:59").getTime();
+        // DATE COUNTDOWN LOGIC -> Point of No Return
+        const END_DATE = new Date("2027-04-02T03:14:00Z").getTime();
 
         setInterval(() => {
             const now = new Date().getTime();
@@ -1233,7 +1233,21 @@
 
         // Minimal Glitches (Numeric only)
         setInterval(() => {
-            let decay = 98.7 + (Math.random() * 0.2);
+            const startDate = new Date("2026-02-20T00:00:00Z").getTime();
+            const targetDate = new Date("2027-04-02T03:14:00Z").getTime();
+            const now = Date.now();
+            let currentPercent = 50.0;
+
+            if (now >= targetDate) {
+                currentPercent = 72.4;
+            } else if (now > startDate) {
+                const totalDuration = targetDate - startDate;
+                const elapsed = now - startDate;
+                const progress = elapsed / totalDuration;
+                currentPercent = 50.0 + (progress * (72.4 - 50.0));
+            }
+
+            let decay = currentPercent + (Math.random() * 0.2);
             document.getElementById('saturacion').innerText = decay.toFixed(2) + "%";
         }, 800);
 
