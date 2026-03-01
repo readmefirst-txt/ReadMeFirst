@@ -710,12 +710,6 @@
             </div>
         </div>
 
-        <!-- EVIDENCE INPUT COMPACT BAR -->
-        <div class="evidence-line">
-            <span>></span>
-            <input type="text" id="input-ev" placeholder="PEGAR_EVIDENCIA_AQUI" onkeypress="handleEvidence(event)"
-                autocomplete="off" spellcheck="false">
-        </div>
 
         <!-- ROW 3: BOT INTRUSION SCANNER -->
         <div class="scanner-box" id="bot-scanner">
@@ -1045,7 +1039,7 @@
 
             if (currentTab === 4) {
                 headerHTML = `<div class="objective-header">${bt.override}</div>`;
-                fullText = `<b>${bt.tabs[4]}</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload' style='color:var(--amber-bright); border-color:var(--amber-bright);'></div><div id='task-meta' style='font-size: 11px; color: #ffb000; margin-bottom: 10px;'></div>`;
+                fullText = `<b>${bt.tabs[4]}</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload' style='color:var(--amber-bright); border-color:var(--amber-bright);'></div><div id='task-meta' style='font-size: 11px; color: var(--amber-dim); margin-bottom: 20px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border:1px solid var(--amber-bright); background:transparent; color:var(--amber-bright); padding:10px; width:100%; outline:none;' placeholder='${bt.placeholder}'>`;
             }
 
             clearTimeout(typingTimer);

@@ -403,28 +403,21 @@
             animation: pulse-border 2s infinite;
         }
 
-        .special-window::before {
-            content: "PRIORIDAD CR\00cdTICA // OVERRIDE SISTEMA";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: var(--accent-red);
-            color: #000;
-            font-size: 10px;
-            font-weight: bold;
-            text-align: center;
-            padding: 2px 0;
-            z-index: 10;
+        .special-window {
+            border: 2px solid #00ff41 !important;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: pulse-border 2s infinite;
         }
 
         .special-window .content {
-            padding-top: 25px !important;
+            padding-top: 0px !important;
         }
 
         @keyframes pulse-border {
             0% {
-                border-color: var(--accent-red);
+                border-color: #00ff41;
             }
 
             50% {
@@ -432,7 +425,7 @@
             }
 
             100% {
-                border-color: var(--accent-red);
+                border-color: #00ff41;
             }
         }
     </style>
@@ -746,7 +739,7 @@
 
             if (currentTab === 4) {
                 headerHTML = `<div class="objective-header">${t.override}</div>`;
-                fullText = `<b>${t.task}</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload' style='color:#00ff41; border-color:#00ff41;'></div><div id='task-meta' style='font-size: 11px; color: var(--label); margin-bottom: 10px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border-color:#00ff41; color:#00ff41;' placeholder='${t.placeholder}'>`;
+                fullText = `<b>${t.tabs[4]}</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload' style='color:#00ff41; border-color:#00ff41;'></div><div id='task-meta' style='font-size: 11px; color: var(--label); margin-bottom: 10px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border-color:#00ff41; color:#00ff41;' placeholder='${t.placeholder}'>`;
             }
 
             clearTimeout(typingTimer);
