@@ -293,26 +293,27 @@
         }
 
         .bot-check-btn {
-            background: transparent;
-            color: #000;
-            border: 4px solid #000;
-            padding: 25px 50px;
+            background: #000;
+            color: #00ff41;
+            border: 1px solid #00ff41;
+            padding: 12px 30px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 24px;
-            font-weight: 900;
+            font-size: 13px;
+            font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 4px;
+            transition: all 0.3s cubic-bezier(0.4, 1, 0.4, 1);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
         }
 
         .bot-check-btn:hover {
-            background: #000;
-            color: #00ff41;
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            color: #000;
+            background: #00ff41;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+            transform: translateY(-2px);
         }
 
         .bot-check-btn:active {
