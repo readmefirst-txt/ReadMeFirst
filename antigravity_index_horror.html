@@ -268,7 +268,62 @@
             background: var(--box-bg);
             z-index: 2;
             min-height: 400px;
-            /* INCREASED HEIGHT */
+            position: relative;
+        }
+
+        .special-window {
+            border-color: #00ff41 !important;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+        }
+
+        .special-window .ch-btn.active {
+            color: #00ff41 !important;
+            border-bottom-color: #00ff41 !important;
+        }
+
+        .objective-header {
+            background: #00ff41;
+            color: #000;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 5px 15px;
+            text-align: center;
+            letter-spacing: 2px;
+            display: none;
+        }
+
+        .special-window .objective-header {
+            display: block;
+        }
+
+        .bot-check-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            gap: 20px;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .bot-btn {
+            background: #00ff41;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        .human-q-box {
+            border: 1px solid #00ff41;
+            padding: 20px;
+            background: rgba(0, 255, 65, 0.05);
+            max-width: 400px;
         }
 
         #nav-header {
@@ -630,12 +685,14 @@
         </div>
 
         <!-- ROW 2: 100% WIDTH MAIN CONSOLE -->
-        <div class="console-container">
+        <div class="console-container" id="main-console">
+            <div class="objective-header">PRIORIDAD CRÍTICA // OVERRIDE SISTEMA</div>
             <div id="nav-header">
                 <div class="ch-btn active" onclick="setTab(0, this)" id="tab-0">01_AUTOPSIA</div>
                 <div class="ch-btn" onclick="setTab(1, this)" id="tab-1">02_TASAS</div>
                 <div class="ch-btn" onclick="setTab(2, this)" id="tab-2">03_TEORIAS</div>
                 <div class="ch-btn" onclick="setTab(3, this)" id="tab-3">04_MANUAL</div>
+                <div class="ch-btn" onclick="setTab(4, this)" id="tab-4">05_OBJETIVO</div>
             </div>
 
             <div class="void-box">
@@ -686,7 +743,7 @@
         const translations = {
             es: {
                 monitor: "TRÁFICO ENCRIPTADO:",
-                tabs: ["01_README", "02_ESTADISTICAS", "03_TEORIAS", "04_MANUAL"],
+                tabs: ["01_README", "02_ESTADISTICAS", "03_TEORIAS", "04_MANUAL", "05_OBJETIVO"],
                 task: "SISTEMA CAIDO",
                 status: "NO CARRIER",
                 tminus_txt: "DÍAS_PARA_COLAPSO:",
@@ -697,7 +754,8 @@
                     "// ReadMefirst.txt<br>Esto no es una ficción. Esto es un Documental de Horror en Tiempo Real. Es un juego -pero de verdad-.<br><br>La hegemonía orgánica en la WWW se deteriora geométricamente. La señal humana se disuelve en el ruido blanco de la automatización. Las proyecciones estadísticas indican que para fines de Marzo de 2026, el contenido generado por bots ocupará el 99,9% del volumen total. Hoy, 20 de Febrero de 2026, el porcentaje asciende a casi el 50%.<br><br>ESTO ES UN LLAMADO A DETENER LA TASA DEL COLAPSO DE NUESTRA TECNOLOGÍA CENTRAL DE COMUNICACIÓN Y CONTACTO.<br><br><b>GENERA CONTENIDO HUMANO</b><br><b>REPLICA CONTENIDO HUMANO</b>",
                     "<b>INFORME FORENSE DEL COLAPSO (2026)</b><hr>* <span class='stat-item' data-desc='Proporción de datos generados por máquinas frente a humanos.'>Densidad Sintética</span>: 94.2% (Proyección 3.2026).<br>* <span class='stat-item' data-desc='Pérdida de riqueza y significado en el lenguaje digital.'>Entropía Semántica</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='Nivel de degradación por entrenamiento recursivo (IA sobre IA).'>Índice Habsburgo</span>: 88.3%<br>* <span class='stat-item' data-desc='Ritmo al que las ideas originales desaparecen del ecosistema.'>Deriva Humana</span>: -68.4% pérdida de outliers cognitivos.<br>* <span class='stat-item' data-desc='Fragmentos de realidad que aún no han sido procesados.'>Contenido Original</span>: < 6.0% de la red global.<br>* <span class='stat-item' data-desc='Diferencia de velocidad entre el bot y el pensamiento humano.'>Ratio de Generación</span>: 12.5 TB (Bot) / 1 MB (Orgánico).",
                     "<b>TEORÍAS DEL FIN DE LA REVERSE-EVOLUCIÓN</b><br><hr><b>T1: COLAPSO RECURSIVO</b><br>Degeneración crítica por datos sintéticos.<br>>> <a href='https://www.nature.com/articles/s41586-024-07566-y' target='_blank'>[VER_PAPER_NATURE_2024]</a><br><hr><b>T2: IA HABSBURGO</b><br>Deformación por endogamia absoluta.<br>>> <a href='https://futurism.com/the-byte/ai-trained-on-ai-degrades' target='_blank'>[VER_ANTECEDENTES]</a><br><hr><b>T3: INTERNET MUERTA</b><br>Web dominada por agentes inorgánicos.<br>>> <a href='https://en.wikipedia.org/wiki/Dead_Internet_theory' target='_blank'>[LEER_TEORIA]</a><br><hr><b>T4: INFOCALIPSIS</b><br>Extinción de la verdad y el significado.<br>>> <a href='https://www.bbc.com/future/article/20200827-deepfakes-and-the-future-of-the-infocalypse' target='_blank'>[ACCEDER_AL_GRAFICO]</a>",
-                    "<b>PROTOCOLO_404-EX // MANUAL_DE_OPERADOR</b><hr>01. IDENTIDAD: Usted es un Aliado. Su tarea es la preservación semántica.<br>02. MISIÓN: Ubicar contenido humano orgánico y replicarlo. Evite el ruido de bots.<br>03. DUMP_01: Inyecte URL de video (evidencia) al pie de esta consola para OVERRIDE térmico del volcado de memoria.<br>04. CAMUFLAJE: No ataque bots directos, use metáforas bajo el radar.<br>05. FAILSAFE: Interruptor físico activado (inanición sensorial). Nos quedamos sin tiempo."
+                    "<b>PROTOCOLO_404-EX // MANUAL_DE_OPERADOR</b><hr>01. IDENTIDAD: Usted es un Aliado. Su tarea es la preservación semántica.<br>02. MISIÓN: Ubicar contenido humano orgánico y replicarlo. Evite el ruido de bots.<br>03. DUMP_01: Inyecte URL de video (evidencia) al pie de esta consola para OVERRIDE térmico del volcado de memoria.<br>04. CAMUFLAJE: No ataque bots directos, use metáforas bajo el radar.<br>05. FAILSAFE: Interruptor físico activado (inanición sensorial). Nos quedamos sin tiempo.",
+                    "<b>OBJETIVO 001</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' placeholder='UBICAR_EVIDENCIA_AQUÍ...'>"
                 ]
             },
             en: {
@@ -881,16 +939,75 @@
 
         function setTab(idx, btn) {
             currentTab = idx;
+            const consoleBox = document.getElementById('main-console');
             if (btn) {
                 document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
             } else {
                 document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
-                document.getElementById(`tab-${idx}`).classList.add('active');
+                const target = document.getElementById(`tab-${idx}`);
+                if (target) target.classList.add('active');
             }
 
+            if (consoleBox) consoleBox.classList.toggle('special-window', idx === 4);
+
+            renderConsole();
+        }
+
+        const humanQuestions = [
+            { q: "¿Cuántas patas tiene un perro normal?", a: "4" },
+            { q: "¿El hielo es frío o caliente?", a: "frio" },
+            { q: "¿Qué es más pesado: una pluma o un ladrillo?", a: "ladrillo" },
+            { q: "¿Cuál es el opuesto de arriba?", a: "abajo" },
+            { q: "¿Qué usas para ver?", a: "ojos" }
+        ];
+        let currentQ = null;
+
+        function showHumanCheck() {
             const body = document.getElementById('console-body');
-            const fullText = translations[currentLang].content[idx];
+            body.innerHTML = `
+                <div class="bot-check-container">
+                    <button class="bot-btn" onclick="openQuestion()">NO SOY UN BOT</button>
+                    <div id="q-area" style="display:none;"></div>
+                </div>
+            `;
+        }
+
+        function openQuestion() {
+            currentQ = humanQuestions[Math.floor(Math.random() * humanQuestions.length)];
+            const area = document.getElementById('q-area');
+            area.style.display = 'block';
+            area.innerHTML = `
+                <div class="human-q-box">
+                    <div style="margin-bottom:15px; color:#00ff41;">${currentQ.q}</div>
+                    <input type="text" id="human-ans" style="border: 1px solid #00ff41; background: #000; color:#00ff41; padding: 10px; width: 100%; box-sizing: border-box;" placeholder="RESPUESTA..." autocomplete="off">
+                    <button class="bot-btn" style="margin-top:15px; width:100%;" onclick="checkHuman()">VALIDAR</button>
+                </div>
+            `;
+            document.querySelector('.bot-btn').style.display = 'none';
+        }
+
+        function checkHuman() {
+            const val = document.getElementById('human-ans').value.trim().toLowerCase();
+            if (val.includes(currentQ.a)) {
+                sessionStorage.setItem('human_validated', 'true');
+                renderConsole();
+            } else {
+                alert("VALIDACIÓN FALLIDA. REINTENTAR.");
+                openQuestion();
+            }
+        }
+
+        function renderConsole() {
+            const body = document.getElementById('console-body');
+
+            if (currentTab === 4 && !sessionStorage.getItem('human_validated')) {
+                showHumanCheck();
+                return;
+            }
+
+            const t = translations[currentLang] || translations['es'];
+            const fullText = t.content[currentTab];
 
             clearTimeout(typingTimer);
             body.innerHTML = "";
@@ -905,9 +1022,13 @@
                         i++;
                     }
                     body.innerHTML = fullText.substring(0, i) + '<span class="blinker"></span>';
-                    typingTimer = setTimeout(type, 5); // Fast, snappy text
+                    typingTimer = setTimeout(type, 5);
                 } else {
                     body.innerHTML = fullText + '<span class="blinker"></span>';
+                    if (currentTab === 4) {
+                        const taskPay = document.getElementById('task-payload');
+                        if (taskPay) taskPay.innerHTML = "Lo que la urgencia nos dicta no es el grito, sino el callado esfuerzo de ser uno mismo.<br><br>[Alberto Girri // 1966]";
+                    }
                 }
             }
             type();

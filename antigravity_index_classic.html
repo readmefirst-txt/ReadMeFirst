@@ -251,6 +251,60 @@
             font-size: 13px;
             overflow-y: auto;
             max-height: 600px;
+            position: relative;
+        }
+
+        .special-window {
+            border: 1px solid #00ff41 !important;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        }
+
+        .special-window .tab.active-tab {
+            color: #00ff41 !important;
+        }
+
+        .objective-header {
+            background: #00ff41;
+            color: #000;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 5px 15px;
+            text-align: center;
+            letter-spacing: 2px;
+            display: none;
+        }
+
+        .special-window .objective-header {
+            display: block;
+        }
+
+        .bot-check-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .bot-btn {
+            background: #00ff41;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-family: inherit;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        .human-q-box {
+            border: 1px solid #00ff41;
+            padding: 20px;
+            background: rgba(0, 255, 65, 0.05);
+            max-width: 400px;
         }
 
         #t-minus {
@@ -433,6 +487,7 @@
             </div>
 
             <div class="box">
+                <div class="objective-header">PRIORIDAD CRÍTICA // OVERRIDE SISTEMA</div>
                 <div class="tabs">
                     <div class="tab active-tab" onclick="setTab(0)" id="tab-0">README</div>
                     <div class="tab" onclick="setTab(1)" id="tab-1">---</div>
@@ -647,10 +702,64 @@
             renderConsole();
         }
 
+        const humanQuestions = [
+            { q: "¿Cuántas patas tiene un perro normal?", a: "4" },
+            { q: "¿El hielo es frío o caliente?", a: "frio" },
+            { q: "¿Qué es más pesado: una pluma o un ladrillo?", a: "ladrillo" },
+            { q: "¿Cuál es el opuesto de arriba?", a: "abajo" },
+            { q: "¿Qué usas para ver?", a: "ojos" }
+        ];
+        let currentQ = null;
+
+        function showHumanCheck() {
+            const body = document.getElementById('console-body');
+            body.innerHTML = `
+                <div class="bot-check-container">
+                    <button class="bot-btn" onclick="openQuestion()">NO SOY UN BOT</button>
+                    <div id="q-area" style="display:none;"></div>
+                </div>
+            `;
+        }
+
+        function openQuestion() {
+            currentQ = humanQuestions[Math.floor(Math.random() * humanQuestions.length)];
+            const area = document.getElementById('q-area');
+            area.style.display = 'block';
+            area.innerHTML = `
+                <div class="human-q-box">
+                    <div style="margin-bottom:15px; color:#00ff41;">${currentQ.q}</div>
+                    <input type="text" id="human-ans" style="border-color:#00ff41; color:#00ff41;" placeholder="RESPUESTA..." autocomplete="off">
+                    <button class="bot-btn" style="margin-top:15px; width:100%;" onclick="checkHuman()">VALIDAR</button>
+                </div>
+            `;
+            document.querySelector('.bot-btn').style.display = 'none';
+        }
+
+        function checkHuman() {
+            const val = document.getElementById('human-ans').value.trim().toLowerCase();
+            if (val.includes(currentQ.a)) {
+                sessionStorage.setItem('human_validated', 'true');
+                renderConsole();
+            } else {
+                alert("VALIDACIÓN FALLIDA. REINTENTAR.");
+                openQuestion();
+            }
+        }
+
         function renderConsole() {
             const body = document.getElementById('console-body');
+
+            if (currentTab === 4 && !sessionStorage.getItem('human_validated')) {
+                showHumanCheck();
+                return;
+            }
+
             const t = translations[currentLang] || translations['es'];
-            const fullText = t.content[currentTab];
+            let fullText = t.content[currentTab];
+
+            if (currentTab === 4) {
+                fullText = `<b>OBJETIVO 001</b><hr>Genera o replica contenido humano propio o ajeno; no importa el medio, no importa el lenguaje, no importa el soporte.<br><br>Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.<br><br><div id='task-payload' class='payload' style='color:#00ff41; border-color:#00ff41;'></div><div id='task-meta' style='font-size: 11px; color: var(--label); margin-bottom: 10px;'></div><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border-color:#00ff41; color:#00ff41;' placeholder='PEGAR_URL_DE_EVIDENCIA'>`;
+            }
 
             clearTimeout(typingTimer);
             body.innerHTML = "";
@@ -671,7 +780,6 @@
                         const t = translations[currentLang] || translations['es'];
                         document.getElementById('task-payload').innerHTML = t.poem.text;
                         document.getElementById('task-meta').innerText = `[${t.poem.author} // ${t.poem.date}]`;
-                        document.getElementById('input-ev').placeholder = t.placeholder;
                     }
                 }
             }
