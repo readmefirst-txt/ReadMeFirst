@@ -701,6 +701,64 @@
             color: black;
             box-shadow: 0 0 20px var(--amber-bright);
         }
+
+        @media (max-width: 768px) {
+            .grid-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .clock-container,
+            .metrics-sidebar {
+                width: 100%;
+                flex: none;
+            }
+
+            .t-minus {
+                font-size: 1.6rem;
+                letter-spacing: 1px;
+            }
+
+            #nav-header {
+                flex-wrap: wrap;
+            }
+
+            .ch-btn {
+                flex: none;
+                width: 50%;
+                border-bottom: 1px solid var(--amber-dim);
+                border-right: 1px solid var(--amber-dim);
+                font-size: 0.9rem;
+                box-sizing: border-box;
+            }
+
+            .ch-btn:nth-child(even) {
+                border-right: none;
+            }
+
+            .console-container {
+                min-height: 350px;
+            }
+
+            .void-box {
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+
+            .lang-selector {
+                position: relative;
+                top: 0;
+                right: 0;
+                justify-content: center;
+                margin: 10px 0;
+                display: flex;
+            }
+
+            header {
+                font-size: 0.9rem;
+                letter-spacing: 2px;
+            }
+        }
     </style>
 </head>
 

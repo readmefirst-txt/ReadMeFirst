@@ -518,6 +518,38 @@
             color: black;
             box-shadow: var(--glow);
         }
+
+        @media (max-width: 600px) {
+            #lang-selector {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .lang-btn {
+                padding: 10px 2px;
+                font-size: 8px;
+            }
+
+            .mode-btn {
+                padding: 8px 10px;
+                font-size: 8px;
+                min-width: calc(50% - 5px);
+            }
+
+            #t-minus {
+                font-size: 1.8rem;
+            }
+
+            .content {
+                padding: 15px;
+                min-height: 350px;
+                font-size: 12px;
+            }
+
+            .tab {
+                padding: 10px 8px;
+                font-size: 9px;
+            }
+        }
     </style>
 </head>
 
