@@ -396,7 +396,6 @@
             border: 2px solid var(--accent-red) !important;
             box-shadow: 0 0 15px rgba(255, 51, 51, 0.2);
             position: relative;
-            overflow: hidden;
             animation: pulse-border 2s infinite;
         }
 
@@ -404,34 +403,26 @@
             padding-top: 0px !important;
         }
 
-        .bot-check-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            min-height: 400px;
-            text-align: center;
-            background: rgba(255, 0, 0, 0.02);
+        .special-window.content {
+            padding-top: 25px !important;
         }
 
-        .bot-check-btn {
-            background: transparent;
-            color: var(--accent-red);
-            border: 1px solid var(--accent-red);
-            padding: 15px 40px;
-            font-family: inherit;
-            font-size: 14px;
-            cursor: pointer;
-            letter-spacing: 3px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
+        @keyframes pulse-tab-anim {
+
+            0%,
+            100% {
+                color: var(--accent-red);
+                opacity: 1;
+            }
+
+            50% {
+                color: var(--label);
+                opacity: 0.6;
+            }
         }
 
-        .bot-check-btn:hover {
-            background: var(--accent-red);
-            color: white;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        #tab-4 {
+            animation: pulse-tab-anim 1s infinite alternate;
         }
 
         @keyframes pulse-border {
@@ -743,7 +734,7 @@
             }
 
             t.tabs.forEach((name, i) => { const el = document.getElementById(`tab-${i}`); if (el) el.innerText = name; });
-            const cont = document.querySelector('.box:has(.tabs)');
+            const cont = document.getElementById('console-body');
             if (cont) cont.classList.toggle('special-window', currentTab === 4);
             // Assuming an exit button with id 'btn-exit' exists in the HTML
             const exitBtn = document.getElementById('btn-exit');
@@ -754,7 +745,7 @@
         function setTab(idx) {
             currentTab = idx;
             document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active-tab', i === idx));
-            const cont = document.querySelector('.box:has(.tabs)');
+            const cont = document.getElementById('console-body');
             if (cont) cont.classList.toggle('special-window', idx === 4);
             renderConsole();
         }
