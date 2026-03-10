@@ -118,17 +118,21 @@
         }
 
         /* HEADER */
-        header {
-            text-align: center;
-            font-size: 1.1rem;
-            /* SHRUNK */
-            letter-spacing: 5px;
-            padding: 2px;
-            margin-bottom: 0;
+        /* HEADER */
+        #main-title {
+            text-align: left;
+            font-size: 0.7rem;
             color: var(--amber-dim);
+            letter-spacing: 3px;
+            padding: 10px 15px;
+            margin-bottom: 0px;
             border-bottom: 1px solid var(--amber-dim);
             border-top: 1px solid var(--amber-dim);
             z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
 
         /* ROW 1: THE CLOCK & METRICS */
@@ -215,7 +219,23 @@
         }
 
         .lang-selector {
-            display: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.7rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 8px;
+            border: 1px solid var(--amber-dim);
+        }
+
+        .lang-selector select {
+            background: transparent;
+            color: var(--amber);
+            border: none;
+            font-family: inherit;
+            font-size: 0.7rem;
+            cursor: pointer;
+            outline: none;
         }
 
         .t-minus span {
@@ -239,7 +259,6 @@
             flex-direction: column;
             justify-content: center;
             gap: 2px;
-            position: relative;
         }
 
         .m-item {
@@ -792,7 +811,25 @@
 
     <div id="crt-container" style="display: flex;">
 
-        <header id="main-title">READMEFIRST.TXT PROTOCOL INIT</header>
+        <header id="main-title">
+            <span>READMEFIRST.TXT PROTOCOL INIT</span>
+            <!-- LANG SELECTOR RELOCATED TO HEADER -->
+            <div class="lang-selector">
+                <span>LOC:</span>
+                <select id="lang-sel" onchange="setLang(this.value)">
+                    <option value="es">ES</option>
+                    <option value="en">EN</option>
+                    <option value="ru">RU</option>
+                    <option value="ar">AR</option>
+                    <option value="zh">ZH</option>
+                    <option value="he">HE</option>
+                    <option value="ko">KO</option>
+                    <option value="ja">JA</option>
+                    <option value="de">DE</option>
+                    <option value="fr">FR</option>
+                </select>
+            </div>
+        </header>
 
         <!-- ROW 1: THE CLOCK & METRICS -->
         <div class="grid-row">
@@ -804,22 +841,6 @@
             </div>
 
             <div class="box metrics-sidebar">
-                <!-- LANG SELECTOR INTEGRATED -->
-                <div class="lang-selector">
-                    <span>LOC:</span>
-                    <select id="lang-sel" onchange="setLang(this.value)">
-                        <option value="es">ES</option>
-                        <option value="en">EN</option>
-                        <option value="ru">RU</option>
-                        <option value="ar">AR</option>
-                        <option value="zh">ZH</option>
-                        <option value="he">HE</option>
-                        <option value="ko">KO</option>
-                        <option value="ja">JA</option>
-                        <option value="de">DE</option>
-                        <option value="fr">FR</option>
-                    </select>
-                </div>
                 <div class="m-item">
                     <span class="m-title-text" id="lbl-sat-text">SYNTHETIC DECAY:</span><br>
                     <span class="m-value" id="saturacion">98.7%</span>
