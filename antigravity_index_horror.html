@@ -1385,6 +1385,7 @@
             document.getElementById('lang-sel').value = initialLang;
             setLang(initialLang);
 
+            /*
             // Redirigir si no hay sesión
             if (localStorage.getItem('antigravity_auth') !== 'true') {
                 window.location.href = 'index.html';
@@ -1392,6 +1393,9 @@
                 setLang(initialLang);
                 setTab(0); // Force README tab on start
             }
+            */
+            setLang(initialLang);
+            setTab(0); // Force README tab on start
         };
     </script>
     <script src="https://readmefirst-server.onrender.com/socket.io/socket.io.js"></script>
