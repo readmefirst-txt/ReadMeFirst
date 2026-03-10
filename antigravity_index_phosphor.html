@@ -300,6 +300,27 @@
             position: relative;
         }
 
+        @media (max-width: 600px) {
+            #main-ui-container {
+                align-items: flex-start;
+                padding: 10px;
+            }
+
+            .top-controls {
+                margin-bottom: 10px;
+            }
+
+            #lang-selector {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .mode-btn {
+                min-width: 0;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+
 
         .bot-check-container {
             background: var(--accent-green);

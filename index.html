@@ -250,21 +250,23 @@
             .container {
                 width: 100%;
                 max-width: 600px;
-                margin: auto;
+                margin: 0;
                 gap: 15px;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start;
+                padding-left: 10px;
             }
 
             .menu {
-                padding: 20px 15px;
-                text-align: center;
-                align-items: center;
+                padding: 20px 0;
+                text-align: left;
+                align-items: flex-start;
                 width: 100%;
                 box-sizing: border-box;
                 gap: 10px;
-                /* Tighter gap on small mobile */
+                border-left: 1px solid var(--accent);
+                padding-left: 15px;
             }
 
             .menu a {
@@ -277,7 +279,7 @@
 
             .menu-header {
                 font-size: 0.8rem;
-                text-align: center;
+                text-align: left;
                 width: 100%;
             }
 
@@ -292,10 +294,12 @@
             }
 
             .input-group {
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
-                gap: 5px;
-                text-align: center;
+                gap: 10px;
+                text-align: left;
+                width: 100%;
+                justify-content: flex-start;
             }
 
             .input-group label {

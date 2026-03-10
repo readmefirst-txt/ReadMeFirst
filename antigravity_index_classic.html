@@ -260,6 +260,21 @@
             position: relative;
         }
 
+        @media (max-width: 600px) {
+            #main-ui-container {
+                align-items: flex-start;
+                padding: 10px;
+            }
+
+            .top-controls {
+                margin-bottom: 10px;
+            }
+
+            #lang-selector {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
         .special-window {
             border: 1px solid var(--accent-red) !important;
             box-shadow: 0 0 15px rgba(255, 51, 51, 0.1);

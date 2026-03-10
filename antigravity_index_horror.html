@@ -123,15 +123,19 @@
             font-size: 0.7rem;
             color: var(--amber-dim);
             letter-spacing: 3px;
-            padding: 8px 15px;
+            padding: 4px 15px;
+            /* Tighter vertical padding */
             margin-bottom: 0px;
             border-bottom: 1px solid var(--amber-dim);
             border-top: 1px solid var(--amber-dim);
             z-index: 2;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             width: 100%;
+            height: 35px;
+            /* Fixed height for consistency */
+            flex-shrink: 0;
         }
 
         /* ROW 1: THE CLOCK & METRICS */
@@ -227,21 +231,22 @@
         }
 
         .lang-selector span {
-            color: var(--amber-dim);
+            color: var(--amber-bright);
+            /* BRIGHTER FOR BETTER VISIBILITY */
             font-size: 0.65rem;
             letter-spacing: 1px;
+            opacity: 0.8;
         }
 
         .lang-selector select {
             background: transparent;
             color: var(--amber-bright);
             border: 1px solid var(--amber-dim);
-            /* Border only on the select itself for better integration */
             font-family: inherit;
             font-size: 0.7rem;
             cursor: pointer;
             outline: none;
-            padding: 2px 5px;
+            padding: 1px 4px;
             appearance: none;
             /* remove default arrow to look more "terminal" */
         }
@@ -774,7 +779,7 @@
 
             .lang-selector {
                 position: static;
-                justify-content: flex-end;
+                justify-content: flex-start;
                 margin: 0;
                 display: flex;
                 width: auto;
@@ -784,12 +789,18 @@
             }
 
             .lang-selector span {
-                font-size: 0.6rem;
+                font-size: 0.65rem;
+                color: var(--amber-bright);
+                opacity: 1;
+                /* More visible */
             }
 
             .lang-selector select {
-                font-size: 0.7rem;
-                padding: 2px;
+                font-size: 0.75rem;
+                padding: 1px 2px;
+                border-color: var(--amber-bright);
+                color: var(--amber-bright);
+                background: rgba(0, 0, 0, 0.8);
             }
 
             header {
