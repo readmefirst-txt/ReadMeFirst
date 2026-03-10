@@ -123,18 +123,18 @@
             font-size: 0.7rem;
             color: var(--amber-dim);
             letter-spacing: 3px;
-            padding: 4px 15px;
-            /* Tighter vertical padding */
+            padding: 8px 15px;
             margin-bottom: 0px;
-            border-bottom: 1px solid var(--amber-dim);
-            border-top: 1px solid var(--amber-dim);
+            border-bottom: 2px solid var(--amber-dim);
+            border-top: 2px solid var(--amber-dim);
             z-index: 2;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-end;
+            /* Align selector to the right since text is gone */
             width: 100%;
-            height: 35px;
-            /* Fixed height for consistency */
+            height: 50px;
+            /* ENLARGED */
             flex-shrink: 0;
         }
 
@@ -224,29 +224,33 @@
         .lang-selector {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.7rem;
+            gap: 12px;
+            font-size: 1rem;
+            /* ENLARGED */
             padding: 0;
             height: fit-content;
         }
 
         .lang-selector span {
             color: var(--amber-bright);
-            /* BRIGHTER FOR BETTER VISIBILITY */
-            font-size: 0.65rem;
-            letter-spacing: 1px;
-            opacity: 0.8;
+            font-size: 0.9rem;
+            /* ENLARGED */
+            letter-spacing: 2px;
+            opacity: 1;
+            font-weight: bold;
         }
 
         .lang-selector select {
-            background: transparent;
+            background: rgba(0, 0, 0, 0.6);
             color: var(--amber-bright);
-            border: 1px solid var(--amber-dim);
+            border: 2px solid var(--amber-dim);
+            /* THICKER BORDER */
             font-family: inherit;
-            font-size: 0.7rem;
+            font-size: 1rem;
+            /* ENLARGED */
             cursor: pointer;
             outline: none;
-            padding: 1px 4px;
+            padding: 4px 8px;
             appearance: none;
             /* remove default arrow to look more "terminal" */
         }
@@ -836,8 +840,7 @@
     <div id="crt-container" style="display: flex;">
 
         <header id="main-title">
-            <span>READMEFIRST.TXT PROTOCOL INIT</span>
-            <!-- LANG SELECTOR RELOCATED TO HEADER -->
+            <!-- REDUNDANT TEXT REMOVED -->
             <div class="lang-selector">
                 <span>LOC:</span>
                 <select id="lang-sel" onchange="setLang(this.value)">
