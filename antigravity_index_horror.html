@@ -118,13 +118,12 @@
         }
 
         /* HEADER */
-        /* HEADER */
         #main-title {
             text-align: left;
             font-size: 0.7rem;
             color: var(--amber-dim);
             letter-spacing: 3px;
-            padding: 10px 15px;
+            padding: 8px 15px;
             margin-bottom: 0px;
             border-bottom: 1px solid var(--amber-dim);
             border-top: 1px solid var(--amber-dim);
@@ -221,21 +220,30 @@
         .lang-selector {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             font-size: 0.7rem;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 2px 8px;
-            border: 1px solid var(--amber-dim);
+            padding: 0;
+            height: fit-content;
+        }
+
+        .lang-selector span {
+            color: var(--amber-dim);
+            font-size: 0.65rem;
+            letter-spacing: 1px;
         }
 
         .lang-selector select {
             background: transparent;
-            color: var(--amber);
-            border: none;
+            color: var(--amber-bright);
+            border: 1px solid var(--amber-dim);
+            /* Border only on the select itself for better integration */
             font-family: inherit;
             font-size: 0.7rem;
             cursor: pointer;
             outline: none;
+            padding: 2px 5px;
+            appearance: none;
+            /* remove default arrow to look more "terminal" */
         }
 
         .t-minus span {
@@ -766,17 +774,22 @@
 
             .lang-selector {
                 position: static;
-                justify-content: center;
-                margin: 15px auto;
+                justify-content: flex-end;
+                margin: 0;
                 display: flex;
-                width: 100%;
-                order: -1;
-                /* Move above everything else if needed, but static in flow is safer */
+                width: auto;
+                border: none;
+                background: transparent;
+                padding: 0;
             }
 
-            select {
-                font-size: 1rem;
-                padding: 5px 10px;
+            .lang-selector span {
+                font-size: 0.6rem;
+            }
+
+            .lang-selector select {
+                font-size: 0.7rem;
+                padding: 2px;
             }
 
             header {
