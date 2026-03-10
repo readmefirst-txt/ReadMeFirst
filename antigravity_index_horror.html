@@ -117,26 +117,6 @@
             z-index: 2;
         }
 
-        /* HEADER */
-        #main-title {
-            text-align: left;
-            font-size: 0.7rem;
-            color: var(--amber-dim);
-            letter-spacing: 3px;
-            padding: 8px 15px;
-            margin-bottom: 0px;
-            border-bottom: 2px solid var(--amber-dim);
-            border-top: 2px solid var(--amber-dim);
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            /* Align selector to the right since text is gone */
-            width: 100%;
-            height: 50px;
-            /* ENLARGED */
-            flex-shrink: 0;
-        }
 
         /* ROW 1: THE CLOCK & METRICS */
         .clock-container {
@@ -221,39 +201,6 @@
             display: none;
         }
 
-        .lang-selector {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1rem;
-            /* ENLARGED */
-            padding: 0;
-            height: fit-content;
-        }
-
-        .lang-selector span {
-            color: var(--amber-bright);
-            font-size: 0.9rem;
-            /* ENLARGED */
-            letter-spacing: 2px;
-            opacity: 1;
-            font-weight: bold;
-        }
-
-        .lang-selector select {
-            background: rgba(0, 0, 0, 0.6);
-            color: var(--amber-bright);
-            border: 2px solid var(--amber-dim);
-            /* THICKER BORDER */
-            font-family: inherit;
-            font-size: 1rem;
-            /* ENLARGED */
-            cursor: pointer;
-            outline: none;
-            padding: 4px 8px;
-            appearance: none;
-            /* remove default arrow to look more "terminal" */
-        }
 
         .t-minus span {
             font-size: 1.2rem;
@@ -593,30 +540,56 @@
             color: var(--amber-bright);
         }
 
-        .lang-selector {
-            position: absolute;
-            top: 5px;
-            right: 15px;
-            z-index: 100;
+        #main-title {
+            width: 100%;
+            height: 60px;
+            /* Fixed height for consistent centering */
+            border-top: 2px solid var(--amber-dim);
+            border-bottom: 2px solid var(--amber-dim);
+            margin-bottom: 20px;
             display: flex;
-            gap: 5px;
             align-items: center;
+            /* Perfect vertical centering */
+            justify-content: flex-end;
+            position: relative;
+            padding: 0;
+            /* Reset padding to use height for centering */
+        }
+
+        /* Mobile Safeguard */
+        #main-title>*:not(.lang-selector) {
+            display: none !important;
+        }
+
+        .lang-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            color: var(--amber-bright);
+            padding-right: 15px;
+            margin: 0;
+            /* Reset margins */
         }
 
         .lang-selector span {
-            font-size: 0.8rem;
-            color: var(--amber-dim);
+            margin: 0;
+            line-height: normal;
         }
 
-        select {
-            background: #000;
+        .lang-selector select {
+            background: black;
             color: var(--amber-bright);
             border: 1px solid var(--amber-dim);
             font-family: inherit;
-            font-size: 0.9rem;
-            padding: 2px 5px;
-            outline: none;
+            font-size: 1rem;
+            padding: 4px 8px;
             cursor: pointer;
+            outline: none;
+            margin: 0;
+            /* Reset margins */
+            height: auto;
+            line-height: normal;
         }
 
         select option {
@@ -737,6 +710,17 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                align-items: flex-start;
+                /* Left alignment */
+                padding: 10px 15px;
+            }
+
+            .container {
+                width: 100%;
+                margin: 0;
+            }
+
             .grid-row {
                 flex-direction: column;
                 gap: 8px;

@@ -540,7 +540,22 @@
             box-shadow: var(--glow);
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            body {
+                align-items: flex-start;
+                padding: 10px 15px;
+            }
+
+            #main-ui-container {
+                align-items: flex-start;
+            }
+
+            #container,
+            .top-controls {
+                width: 100%;
+                max-width: none;
+            }
+
             #lang-selector {
                 grid-template-columns: repeat(5, 1fr);
             }
