@@ -453,29 +453,26 @@
             animation: pulse-border-green 2s infinite;
         }
 
-        .special-window::before {
-            content: "PRIORIDAD CR\00cdTICA // OVERRIDE SISTEMA";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: var(--accent-green);
-            color: #000;
-            font-size: 10px;
-            font-weight: bold;
-            text-align: center;
-            padding: 2px 0;
-            z-index: 10;
-        }
-
-        .special-window.content {
-            padding-top: 25px !important;
-        }
-
         @keyframes pulse-tab-anim {
-            0%, 100% { color: var(--accent-green); text-shadow: var(--glow); opacity: 1; }
-            50% { color: var(--label); text-shadow: none; opacity: 0.6; }
+
+            0%,
+            100% {
+                background: rgba(0, 255, 65, 0.8);
+                color: #000;
+                text-shadow: none;
+                opacity: 1;
+                border-color: var(--accent-green);
+            }
+
+            50% {
+                background: transparent;
+                color: var(--accent-green);
+                text-shadow: var(--glow);
+                opacity: 0.6;
+                border-color: transparent;
+            }
         }
+
         #tab-4 {
             animation: pulse-tab-anim 1s infinite alternate;
         }

@@ -399,25 +399,22 @@
             animation: pulse-border 2s infinite;
         }
 
-        .special-window .content {
-            padding-top: 0px !important;
-        }
-
-        .special-window.content {
-            padding-top: 25px !important;
-        }
-
         @keyframes pulse-tab-anim {
 
             0%,
             100% {
-                color: var(--accent-red);
+                background: rgba(255, 51, 51, 0.8);
+                color: #000;
                 opacity: 1;
+                border-color: var(--accent-red);
+                text-shadow: none;
             }
 
             50% {
-                color: var(--label);
+                background: transparent;
+                color: var(--accent-red);
                 opacity: 0.6;
+                border-color: transparent;
             }
         }
 
