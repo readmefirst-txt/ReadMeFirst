@@ -402,24 +402,23 @@
         @keyframes pulse-tab-anim {
 
             0%,
-            100% {
+            49% {
                 background: rgba(255, 51, 51, 0.8);
                 color: #000;
-                opacity: 1;
                 border-color: var(--accent-red);
                 text-shadow: none;
             }
 
-            50% {
+            50%,
+            100% {
                 background: transparent;
                 color: var(--accent-red);
-                opacity: 0.6;
                 border-color: transparent;
             }
         }
 
         #tab-4 {
-            animation: pulse-tab-anim 1s infinite alternate;
+            animation: pulse-tab-anim 1s infinite;
         }
 
         @keyframes pulse-border {

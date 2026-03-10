@@ -456,25 +456,24 @@
         @keyframes pulse-tab-anim {
 
             0%,
-            100% {
+            49% {
                 background: rgba(0, 255, 65, 0.8);
                 color: #000;
                 text-shadow: none;
-                opacity: 1;
                 border-color: var(--accent-green);
             }
 
-            50% {
+            50%,
+            100% {
                 background: transparent;
                 color: var(--accent-green);
                 text-shadow: var(--glow);
-                opacity: 0.6;
                 border-color: transparent;
             }
         }
 
         #tab-4 {
-            animation: pulse-tab-anim 1s infinite alternate;
+            animation: pulse-tab-anim 1s infinite;
         }
 
         @keyframes pulse-border-green {
