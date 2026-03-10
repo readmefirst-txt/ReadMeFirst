@@ -226,6 +226,49 @@
                 opacity: 0;
             }
         }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+                overflow-y: auto;
+                /* Allow scroll on small screens if content overflows */
+            }
+
+            .container {
+                max-width: 100%;
+                gap: 15px;
+            }
+
+            .menu {
+                padding: 20px 10px;
+                align-items: center;
+                text-align: center;
+            }
+
+            .boot-log {
+                font-size: 0.9rem;
+            }
+
+            .input-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .input-group label {
+                width: auto;
+            }
+
+            .input-group span {
+                display: none;
+                /* Hide the separator on mobile to save space */
+            }
+
+            input {
+                width: 100%;
+                border-bottom: 1px solid var(--dim);
+            }
+        }
     </style>
 </head>
 

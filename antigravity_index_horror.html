@@ -746,17 +746,30 @@
             }
 
             .lang-selector {
-                position: relative;
-                top: 0;
-                right: 0;
+                position: static;
                 justify-content: center;
-                margin: 10px 0;
+                margin: 15px auto;
                 display: flex;
+                width: 100%;
+                order: -1;
+                /* Move above everything else if needed, but static in flow is safer */
+            }
+
+            select {
+                font-size: 1rem;
+                padding: 5px 10px;
             }
 
             header {
                 font-size: 0.9rem;
                 letter-spacing: 2px;
+                padding: 10px 5px;
+            }
+
+            .console-container {
+                min-height: 350px;
+                width: 100%;
+                box-sizing: border-box;
             }
         }
     </style>
