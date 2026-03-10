@@ -239,7 +239,7 @@
             flex-direction: column;
             justify-content: center;
             gap: 2px;
-            /* TIGHTENED GAP */
+            position: relative;
         }
 
         .m-item {
@@ -557,12 +557,10 @@
             color: var(--amber-bright);
         }
 
-        /* LANG SELECTOR */
         .lang-selector {
             position: absolute;
             top: 5px;
-            /* HIGHER UP */
-            right: 25px;
+            right: 15px;
             z-index: 100;
             display: flex;
             gap: 5px;
@@ -724,15 +722,17 @@
             }
 
             .ch-btn {
-                flex: none;
-                width: 50%;
+                flex: 1;
+                width: 20%;
                 border-bottom: 1px solid var(--amber-dim);
                 border-right: 1px solid var(--amber-dim);
-                font-size: 0.9rem;
+                font-size: 0.75rem;
+                padding: 10px 2px;
                 box-sizing: border-box;
+                text-align: center;
             }
 
-            .ch-btn:nth-child(even) {
+            .ch-btn:last-child {
                 border-right: none;
             }
 
@@ -804,6 +804,22 @@
             </div>
 
             <div class="box metrics-sidebar">
+                <!-- LANG SELECTOR INTEGRATED -->
+                <div class="lang-selector">
+                    <span>LOC:</span>
+                    <select id="lang-sel" onchange="setLang(this.value)">
+                        <option value="es">ES</option>
+                        <option value="en">EN</option>
+                        <option value="ru">RU</option>
+                        <option value="ar">AR</option>
+                        <option value="zh">ZH</option>
+                        <option value="he">HE</option>
+                        <option value="ko">KO</option>
+                        <option value="ja">JA</option>
+                        <option value="de">DE</option>
+                        <option value="fr">FR</option>
+                    </select>
+                </div>
                 <div class="m-item">
                     <span class="m-title-text" id="lbl-sat-text">SYNTHETIC DECAY:</span><br>
                     <span class="m-value" id="saturacion">98.7%</span>
@@ -852,22 +868,7 @@
 
     </div>
 
-    <!-- LANG SELECTOR -->
-    <div class="lang-selector" style="display: flex;">
-        <span>LOC:</span>
-        <select id="lang-sel" onchange="setLang(this.value)">
-            <option value="es">ES</option>
-            <option value="en">EN</option>
-            <option value="ru">RU</option>
-            <option value="ar">AR</option>
-            <option value="zh">ZH</option>
-            <option value="he">HE</option>
-            <option value="ko">KO</option>
-            <option value="ja">JA</option>
-            <option value="de">DE</option>
-            <option value="fr">FR</option>
-        </select>
-    </div>
+
 
     <script>
         if (localStorage.getItem('antigravity_auth') !== 'true') {
@@ -879,7 +880,7 @@
         const translations = {
             es: {
                 monitor: "TRANSMISIÓN ENTRANTE:",
-                tabs: ["01_AUTOPSIA", "02_TASAS", "03_TEORIAS", "04_MANUAL", "05_OBJETIVO"],
+                tabs: ["AUTOPSIA", "TASAS", "TEORIAS", "MANUAL", "OBJETIVO"],
                 task: "SISTEMA CAIDO",
                 status: "NO CARRIER",
                 tminus_txt: "PUNTO_DE_NO_RETORNO:",
@@ -906,7 +907,7 @@
             },
             en: {
                 monitor: "INCOMING TRANSMISSION:",
-                tabs: ["01_AUTOPSY", "02_RATES", "03_THEORIES", "04_MANUAL", "05_OBJECTIVE"],
+                tabs: ["AUTOPSY", "RATES", "THEORIES", "MANUAL", "OBJECTIVE"],
                 task: "CONNECTION_LOST",
                 status: "NO CARRIER",
                 tminus_txt: "DAYS_TO_COLLAPSE:",
@@ -933,7 +934,7 @@
             },
             ru: {
                 monitor: "ВХОДЯЩАЯ ПЕРЕДАЧА:",
-                tabs: ["01_АВТОПСИЯ", "02_ТЕМПЫ", "03_ТЕОРИИ", "04_ИНСТРУКЦИЯ", "05_ЦЕЛЬ"],
+                tabs: ["АВТОПСИЯ", "ТЕМПЫ", "ТЕОРИИ", "ИНСТРУКЦИЯ", "ЦЕЛЬ"],
                 task: "СВЯЗЬ_ПРЕРВАНА",
                 status: "НЕТ НОСИТЕЛЯ",
                 tminus_txt: "ТОЧКА_НЕВОЗВРАТА:",
@@ -960,7 +961,7 @@
             },
             ar: {
                 monitor: "إرسال وارد:",
-                tabs: ["01_الفحص", "02_المعدلات", "03_النظريات", "04_الكتيب", "05_المهمة"],
+                tabs: ["الفحص", "المعدلات", "النظريات", "الكتيب", "المهمة"],
                 task: "تم قطع الاتصال",
                 status: "لا توجد إشارة",
                 tminus_txt: "أيام حتى الانهيار:",
@@ -987,7 +988,7 @@
             },
             zh: {
                 monitor: "接收传输:",
-                tabs: ["01_尸检", "02_速率", "03_理论", "04_手册", "05_目标"],
+                tabs: ["尸检", "速率", "理论", "手册", "目标"],
                 task: "连接丢失",
                 status: "无信号",
                 tminus_txt: "崩溃倒计时:",
@@ -1014,7 +1015,7 @@
             },
             he: {
                 monitor: "שידור נכנס:",
-                tabs: ["01_נתיחה", "02_יחסים", "03_תיאוריות", "04_מדריך", "05_יעד"],
+                tabs: ["נתיחה", "יחסים", "תיאוריות", "מדריך", "יעד"],
                 task: "הקשר אבד",
                 status: "אין ספק",
                 tminus_txt: "ימים לקריסה:",
@@ -1041,7 +1042,7 @@
             },
             ko: {
                 monitor: "수신 전송:",
-                tabs: ["01_부검기록", "02_붕괴율", "03_가설", "04_매뉴얼", "05_목표"],
+                tabs: ["부검기록", "붕괴율", "가설", "매뉴얼", "목표"],
                 task: "연결 유실",
                 status: "신호 없음",
                 tminus_txt: "붕괴 전 남은 일수:",
@@ -1068,7 +1069,7 @@
             },
             ja: {
                 monitor: "受信トランスミッション:",
-                tabs: ["01_検死報告", "02_崩壊率", "03_理論仮説", "04_手順書", "05_目標"],
+                tabs: ["検死報告", "崩壊率", "理論仮説", "手順書", "目標"],
                 task: "接続消失",
                 status: "信号なし",
                 tminus_txt: "帰還不能点:",
@@ -1095,7 +1096,7 @@
             },
             de: {
                 monitor: "EINGEHENDE ÜBERTRAGUNG:",
-                tabs: ["01_AUTOPSIE", "02_RATEN", "03_THEORIEN", "04_HANDBUCH", "05_ZIEL"],
+                tabs: ["AUTOPSIE", "RATEN", "THEORIEN", "HANDBUCH", "ZIEL"],
                 task: "VERBINDUNG VERLOREN",
                 status: "KEIN TRÄGER",
                 tminus_txt: "TAGE BIS ZUM KOLLAPS:",
