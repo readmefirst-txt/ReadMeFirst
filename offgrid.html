@@ -908,34 +908,52 @@
                 box-sizing: border-box;
             }
         }
-            /* CUSTOM SCROLLBAR FOR BROADCAST */
-            #comms-list::-webkit-scrollbar {
-                width: 6px;
+            /* CENTRAL LOADER */
+            .central-loader-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                min-height: 300px;
             }
-            #comms-list::-webkit-scrollbar-track {
+            .mini-bar-container {
+                width: 150px;
+                height: 1px;
                 background: rgba(255, 176, 0, 0.05);
-                border: 1px solid rgba(255, 176, 0, 0.1);
+                border: 1px solid rgba(255, 176, 0, 0.2);
+                position: relative;
+                overflow: hidden;
             }
-            #comms-list::-webkit-scrollbar-thumb {
+            .mini-bar {
+                width: 0%;
+                height: 100%;
                 background: var(--amber-bright);
-                box-shadow: 0 0 5px var(--amber-glow);
+                box-shadow: 0 0 10px var(--amber-glow);
+                transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .loader-force {
+                margin-top: 20px;
+                background: transparent;
+                border: 1px solid var(--amber-dim);
+                color: var(--amber-dim);
+                padding: 5px 10px;
+                font-family: inherit;
+                font-size: 9px;
+                cursor: pointer;
+                display: none;
+                text-transform: uppercase;
+                transition: all 0.3s;
+            }
+            .loader-force:hover {
+                border-color: var(--amber-bright);
+                color: var(--amber-bright);
             }
     </style>
 </head>
 
 <body>
-    <!-- SYSTEM LOADER -->
-    <div id="system-loader">
-        <div class="loader-scanline"></div>
-        <div class="loader-content">
-            <div class="loader-title" id="loader-title">OFFGRID_COMM_WAKEUP</div>
-            <div class="loader-bar-container">
-                <div class="loader-bar" id="loader-bar"></div>
-            </div>
-            <div class="loader-status" id="loader-status">PATCHING_REMOTE_SERVERS...</div>
-            <center><button class="loader-force" id="loader-force" onclick="hideLoader()">[ FORCE_BYPASS ]</button></center>
-        </div>
-    </div>
+
 
     <!-- YOUTUBE DUMP MODAL -->
     <div id="dump-modal">
@@ -1518,7 +1536,7 @@
             // Automatic Language by IP
 
             setLang(currentLang);
-            setTab(0);
+            startCentralLoading();
         };
     </script>
     <script src="https://readmefirst-server.onrender.com/socket.io/socket.io.js"></script>
@@ -1527,36 +1545,40 @@
         (function () {
             const socketHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : "https://readmefirst-server.onrender.com";
             
-            // Loader Logic
-            const loaderBar = document.getElementById('loader-bar');
-            const loaderStatus = document.getElementById('loader-status');
-            const loaderForce = document.getElementById('loader-force');
-            let progress = 0;
+            window.startCentralLoading = function() {
+                const body = document.getElementById('console-body');
+                if (!body) return;
+                body.innerHTML = `
+                    <div class="central-loader-container">
+                        <div class="mini-bar-container">
+                            <div class="mini-bar" id="central-bar"></div>
+                        </div>
+                        <button class="loader-force" id="central-force" onclick="window.finishLoading()">[ BYPASS ]</button>
+                    </div>
+                `;
+                
+                let progress = 0;
+                window.centralInterval = setInterval(() => {
+                    if (progress < 95) {
+                        progress += (95 - progress) * 0.05;
+                        const bar = document.getElementById('central-bar');
+                        if (bar) bar.style.width = progress + '%';
+                    }
+                }, 400);
 
-            const progressInterval = setInterval(() => {
-                if (progress < 90) {
-                    progress += (90 - progress) * 0.1;
-                    if (loaderBar) loaderBar.style.width = progress + '%';
-                }
-            }, 500);
+                setTimeout(() => {
+                    const btn = document.getElementById('central-force');
+                    if (btn) btn.style.display = 'block';
+                }, 8000);
+            };
 
-            setTimeout(() => {
-                if (loaderForce) loaderForce.style.display = 'block';
-                if (loaderStatus) loaderStatus.innerText = 'SIGNAL_LATENCY_DETECTED // RE-ROUTING_PACKETS';
-            }, 10000);
-
-            window.hideLoader = function() {
-                const loader = document.getElementById('system-loader');
-                if (loader) {
-                    if (loaderBar) loaderBar.style.width = '100%';
-                    if (loaderStatus) loaderStatus.innerText = 'OFFGRID_READY';
-                    setTimeout(() => {
-                        loader.style.opacity = '0';
-                        setTimeout(() => {
-                            loader.style.visibility = 'hidden';
-                        }, 800);
-                    }, 500);
-                }
+            window.finishLoading = function() {
+                clearInterval(window.centralInterval);
+                const bar = document.getElementById('central-bar');
+                if (bar) bar.style.width = '100%';
+                setTimeout(() => {
+                    setTab(0);
+                }, 300);
             };
 
             const socket = io(socketHost);
@@ -1581,8 +1603,8 @@
 
             socket.on('connect', () => {
                 console.log('Connected to backend');
-                clearInterval(progressInterval);
-                hideLoader();
+                clearInterval(window.centralInterval);
+                window.finishLoading();
             });
 
             let msgHistory = [];

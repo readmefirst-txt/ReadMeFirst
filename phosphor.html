@@ -599,116 +599,53 @@
             box-shadow: 0 0 5px var(--accent-green);
         }
 
-        /* SYSTEM LOADER */
-        #system-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            z-index: 20000;
+        /* CENTRAL LOADER */
+        .central-loader-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s;
+            height: 100%;
+            min-height: 300px;
         }
-
-        .loader-content {
-            width: 90%;
-            max-width: 400px;
-        }
-
-        .loader-title {
-            font-size: 14px;
-            color: var(--accent-green);
-            margin-bottom: 20px;
-            letter-spacing: 4px;
-            font-weight: bold;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        .loader-bar-container {
-            width: 100%;
+        .mini-bar-container {
+            width: 150px;
             height: 2px;
-            background: #111;
-            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(0, 255, 65, 0.2);
         }
-
-        .loader-bar {
+        .mini-bar {
             width: 0%;
             height: 100%;
             background: var(--accent-green);
-            box-shadow: 0 0 15px var(--accent-green);
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px var(--accent-green);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .loader-status {
-            font-size: 9px;
-            color: var(--label);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-align: center;
-            height: 12px;
-        }
-
         .loader-force {
-            margin-top: 30px;
+            margin-top: 20px;
             background: transparent;
             border: 1px solid var(--border);
             color: var(--label);
-            padding: 8px 15px;
+            padding: 5px 10px;
             font-family: inherit;
-            font-size: 10px;
+            font-size: 9px;
             cursor: pointer;
             display: none;
             text-transform: uppercase;
             transition: all 0.3s;
         }
-
         .loader-force:hover {
             border-color: var(--accent-green);
             color: var(--accent-green);
-            background: rgba(0, 255, 65, 0.05);
-        }
-
-        @keyframes scanline-loader {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        .loader-scanline {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(0, 255, 65, 0.1), transparent);
-            animation: scanline-loader 4s linear infinite;
-            pointer-events: none;
         }
 
     </style>
 </head>
 
 <body>
-    <!-- SYSTEM LOADER -->
-    <div id="system-loader">
-        <div class="loader-scanline"></div>
-        <div class="loader-content">
-            <div class="loader-title" id="loader-title">PHOSPHOR_BOOT_SEQUENCE</div>
-            <div class="loader-bar-container">
-                <div class="loader-bar" id="loader-bar"></div>
-            </div>
-            <div class="loader-status" id="loader-status">CONNECTING_TO_BACKEND_SERVICES...</div>
-            <center><button class="loader-force" id="loader-force" onclick="hideLoader()">[ FORCE_BYPASS ]</button></center>
-        </div>
-    </div>
+
 
     <div id="dump-modal">
         <div class="modal-content">
@@ -1106,7 +1043,7 @@
                 window.location.href = 'index.html';
             } else {
                 setLang(currentLang, document.getElementById(`btn-${currentLang}`));
-                setTab(0); // Force README tab on start
+                startCentralLoading();
             }
         });
     </script>
@@ -1116,36 +1053,40 @@
         (function () {
             const socketHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : "https://readmefirst-server.onrender.com";
             
-            // Loader Logic
-            const loaderBar = document.getElementById('loader-bar');
-            const loaderStatus = document.getElementById('loader-status');
-            const loaderForce = document.getElementById('loader-force');
-            let progress = 0;
+            window.startCentralLoading = function() {
+                const body = document.getElementById('console-body');
+                if (!body) return;
+                body.innerHTML = `
+                    <div class="central-loader-container">
+                        <div class="mini-bar-container">
+                            <div class="mini-bar" id="central-bar"></div>
+                        </div>
+                        <button class="loader-force" id="central-force" onclick="window.finishLoading()">[ BYPASS ]</button>
+                    </div>
+                `;
+                
+                let progress = 0;
+                window.centralInterval = setInterval(() => {
+                    if (progress < 95) {
+                        progress += (95 - progress) * 0.05;
+                        const bar = document.getElementById('central-bar');
+                        if (bar) bar.style.width = progress + '%';
+                    }
+                }, 400);
 
-            const progressInterval = setInterval(() => {
-                if (progress < 90) {
-                    progress += (90 - progress) * 0.1;
-                    if (loaderBar) loaderBar.style.width = progress + '%';
-                }
-            }, 500);
+                setTimeout(() => {
+                    const btn = document.getElementById('central-force');
+                    if (btn) btn.style.display = 'block';
+                }, 8000);
+            };
 
-            setTimeout(() => {
-                if (loaderForce) loaderForce.style.display = 'block';
-                if (loaderStatus) loaderStatus.innerText = 'RENDER_LATENCY_DETECTED // BACKEND_WAKING_UP';
-            }, 10000);
-
-            window.hideLoader = function() {
-                const loader = document.getElementById('system-loader');
-                if (loader) {
-                    if (loaderBar) loaderBar.style.width = '100%';
-                    if (loaderStatus) loaderStatus.innerText = 'CORE_SYSTEM_READY';
-                    setTimeout(() => {
-                        loader.style.opacity = '0';
-                        setTimeout(() => {
-                            loader.style.visibility = 'hidden';
-                        }, 800);
-                    }, 500);
-                }
+            window.finishLoading = function() {
+                clearInterval(window.centralInterval);
+                const bar = document.getElementById('central-bar');
+                if (bar) bar.style.width = '100%';
+                setTimeout(() => {
+                    setTab(0);
+                }, 300);
             };
 
             const socket = io(socketHost);
@@ -1169,8 +1110,8 @@
 
             socket.on('connect', () => {
                 console.log('Connected to backend');
-                clearInterval(progressInterval);
-                hideLoader();
+                clearInterval(window.centralInterval);
+                window.finishLoading();
             });
 
             let msgHistory = [];
