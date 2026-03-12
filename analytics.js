@@ -4,7 +4,13 @@
  */
 
 (function() {
-    const socket = typeof io !== 'undefined' ? io() : null;
+    const RENDER_SERVER = "https://readmefirst-server.onrender.com";
+    // Use current origin if on localhost or Render, otherwise use absolute Render URL
+    const socketUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.includes('onrender.com')) 
+        ? undefined 
+        : RENDER_SERVER;
+    
+    const socket = typeof io !== 'undefined' ? io(socketUrl) : null;
     let geoData = { region: 'Unknown' };
 
     // Initialize geo detection
