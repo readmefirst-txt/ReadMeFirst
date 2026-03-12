@@ -1115,7 +1115,7 @@
                 window.finishLoading();
             });
 
-            let msgHistory = [];
+            let msgHistory = JSON.parse(localStorage.getItem('broadcast_history_phosphor') || '[]');
 
             function renderMessages() {
                 const list = document.getElementById('broadcast-list');
@@ -1123,6 +1123,7 @@
                 if (!list || !box) return;
 
                 if (msgHistory.length > 0) box.style.display = 'block';
+                else box.style.display = 'none';
                 list.innerHTML = '';
 
                 msgHistory.forEach((data, index) => {
@@ -1153,23 +1154,31 @@
                 list.scrollTop = list.scrollHeight;
             }
 
+            // Initial render
+            renderMessages();
+
             socket.on('new_broadcast', (data) => {
                 if (data.protocol === 'all' || data.protocol === 'phosphor') {
                     data.isNew = true;
                     msgHistory.push(data);
                     if (msgHistory.length > 5) msgHistory.shift();
+                    localStorage.setItem('broadcast_history_phosphor', JSON.stringify(msgHistory));
                     renderMessages();
                 }
             });
 
             socket.on('history', (list) => {
                 const relevant = list.filter(d => d.protocol === 'all' || d.protocol === 'phosphor');
-                msgHistory = relevant.slice(-5);
-                renderMessages();
+                if (relevant.length > 0) {
+                    msgHistory = relevant.slice(-5).map(m => ({ ...m, isNew: false }));
+                    localStorage.setItem('broadcast_history_phosphor', JSON.stringify(msgHistory));
+                    renderMessages();
+                }
             });
 
             socket.on('clear_broadcasts', () => {
                 msgHistory = [];
+                localStorage.removeItem('broadcast_history_phosphor');
                 const box = document.getElementById('broadcast-box');
                 if (box) box.style.display = 'none';
                 renderMessages();
