@@ -904,7 +904,7 @@
             <div class="label" id="lbl-broadcast"
                 style="color: var(--amber-bright); animation: slow-pulse 2s infinite alternate; font-weight: bold; font-size: 1rem; margin-bottom: 5px; border-bottom: 1px dotted var(--amber-bright);">
                 [ INCOMING TRANSMISSIONS ]</div>
-            <div id="comms-list" style="max-height: 200px; overflow-y: auto; padding: 10px;">
+            <div id="comms-list" style="max-height: 80px; overflow-y: auto; padding: 10px;">
                 <!-- Mensajes aparecerán aquí -->
             </div>
         </div>
@@ -1453,14 +1453,14 @@
                 if (data.protocol === 'all' || data.protocol === 'horror') {
                     data.isNew = true;
                     msgHistory.push(data);
-                    if (msgHistory.length > 3) msgHistory.shift();
+                    if (msgHistory.length > 5) msgHistory.shift();
                     renderMessages();
                 }
             });
 
             socket.on('history', (list) => {
                 const relevant = list.filter(d => d.protocol === 'all' || d.protocol === 'horror');
-                msgHistory = relevant.slice(-3);
+                msgHistory = relevant.slice(-5);
                 renderMessages();
             });
         })();
