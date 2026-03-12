@@ -386,7 +386,7 @@
         }
 
         .void-box::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
         }
 
         .void-box::-webkit-scrollbar-thumb {
@@ -919,7 +919,7 @@
             }
             .mini-bar-container {
                 width: 150px;
-                height: 1px;
+                height: 2px;
                 background: rgba(255, 176, 0, 0.05);
                 border: 1px solid rgba(255, 176, 0, 0.2);
                 position: relative;
@@ -931,6 +931,17 @@
                 background: var(--amber-bright);
                 box-shadow: 0 0 10px var(--amber-glow);
                 transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            /* CUSTOM SCROLLBAR FOR BROADCAST */
+            #comms-list::-webkit-scrollbar {
+                width: 4px;
+            }
+            #comms-list::-webkit-scrollbar-track {
+                background: rgba(255, 176, 0, 0.05);
+            }
+            #comms-list::-webkit-scrollbar-thumb {
+                background: var(--amber-bright);
+                box-shadow: 0 0 5px var(--amber-glow);
             }
             .loader-force {
                 margin-top: 20px;
