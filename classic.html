@@ -507,10 +507,117 @@
             box-shadow: 0 0 5px var(--accent-red);
         }
 
+        /* SYSTEM LOADER */
+        #system-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 20000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .loader-content {
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .loader-title {
+            font-size: 14px;
+            color: var(--accent-red);
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .loader-bar-container {
+            width: 100%;
+            height: 2px;
+            background: #111;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 51, 51, 0.2);
+        }
+
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--accent-red);
+            box-shadow: 0 0 15px var(--accent-red);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .loader-status {
+            font-size: 9px;
+            color: var(--label);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            height: 12px;
+        }
+
+        .loader-force {
+            margin-top: 30px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--label);
+            padding: 8px 15px;
+            font-family: inherit;
+            font-size: 10px;
+            cursor: pointer;
+            display: none;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .loader-force:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+            background: rgba(255, 51, 51, 0.05);
+        }
+
+        @keyframes scanline-loader {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .loader-scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(255, 51, 51, 0.1), transparent);
+            animation: scanline-loader 4s linear infinite;
+            pointer-events: none;
+        }
+
     </style>
 </head>
 
 <body>
+    <!-- SYSTEM LOADER -->
+    <div id="system-loader">
+        <div class="loader-scanline"></div>
+        <div class="loader-content">
+            <div class="loader-title" id="loader-title">INITIALIZING_CORE_SYSTEMS</div>
+            <div class="loader-bar-container">
+                <div class="loader-bar" id="loader-bar"></div>
+            </div>
+            <div class="loader-status" id="loader-status">CONNECTING_TO_BACKEND_SERVICES...</div>
+            <center><button class="loader-force" id="loader-force" onclick="hideLoader()">[ FORCE_BYPASS ]</button></center>
+        </div>
+    </div>
+
     <!-- Añadiendo la librería de Socket.IO conectada al backend de Render -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 
@@ -790,6 +897,7 @@
 
         function setLang(lang, btn) {
             currentLang = lang;
+            localStorage.setItem('pref_lang', lang);
             const t = translations[lang] || translations['es'];
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
@@ -921,7 +1029,8 @@
         }, 1000);
 
         const bLang = navigator.language.split('-')[0];
-        currentLang = translations[bLang] ? bLang : 'es';
+        currentLang = localStorage.getItem('pref_lang') || (translations[bLang] ? bLang : 'es');
+
 
         window.addEventListener('load', () => {
             if (localStorage.getItem('antigravity_auth') !== 'true') {
@@ -937,7 +1046,65 @@
     <script>
         (function () {
             const socketHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : "https://readmefirst-server.onrender.com";
+            
+            // Loader Logic
+            const loaderBar = document.getElementById('loader-bar');
+            const loaderStatus = document.getElementById('loader-status');
+            const loaderTitle = document.getElementById('loader-title');
+            const loaderForce = document.getElementById('loader-force');
+            let progress = 0;
+
+            const progressInterval = setInterval(() => {
+                if (progress < 90) {
+                    progress += (90 - progress) * 0.1;
+                    if (loaderBar) loaderBar.style.width = progress + '%';
+                }
+            }, 500);
+
+            setTimeout(() => {
+                if (loaderForce) loaderForce.style.display = 'block';
+                if (loaderStatus) loaderStatus.innerText = 'RENDER_LATENCY_DETECTED // BACKEND_WAKING_UP';
+            }, 10000);
+
+            window.hideLoader = function() {
+                const loader = document.getElementById('system-loader');
+                if (loader) {
+                    if (loaderBar) loaderBar.style.width = '100%';
+                    if (loaderStatus) loaderStatus.innerText = 'CORE_SYSTEM_READY';
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        setTimeout(() => {
+                            loader.style.visibility = 'hidden';
+                        }, 800);
+                    }, 500);
+                }
+            };
+
             const socket = io(socketHost);
+
+            // Automatic Language by IP (Region Detection)
+            if (window.AntigravityGeo) {
+                window.AntigravityGeo.onDetected = (region) => {
+                    if (localStorage.getItem('pref_lang')) return;
+                    const regionMap = {
+                        'Spain': 'es', 'Mexico': 'es', 'Argentina': 'es', 'Colombia': 'es', 'Chile': 'es',
+                        'United States': 'en', 'United Kingdom': 'en', 'Canada': 'en',
+                        'Brazil': 'pt', 'Portugal': 'pt',
+                        'France': 'fr', 'Germany': 'de', 'Japan': 'ja', 'China': 'zh', 'Russia': 'ru'
+                    };
+                    const detected = regionMap[region];
+                    if (detected && detected !== window.currentLang) {
+                        setLang(detected, document.getElementById(`btn-${detected}`));
+                    }
+                };
+            }
+
+            socket.on('connect', () => {
+                console.log('Connected to backend');
+                clearInterval(progressInterval);
+                hideLoader();
+            });
+
             let msgHistory = [];
 
             function renderMessages() {

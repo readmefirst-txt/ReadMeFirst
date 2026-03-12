@@ -456,6 +456,70 @@
                 if (e.key === 'Enter') pInput.focus();
             });
             pInput.addEventListener('keypress', checkLogin);
+
+            // Automatic Language by IP
+            const translations = {
+                'es': {
+                    'boot_1': 'INICIANDO KERNEL 0x7A29F... OK',
+                    'boot_2': 'MONTANDO FS_ROOT... OK',
+                    'boot_3': 'VERIFICANDO ASIGNACIÓN MEMORIA... 32768140K OK',
+                    'boot_4': 'ESTABLECIENDO ENLACE... OK',
+                    'boot_5': 'SISTEMA INICIADO CON ÉXITO.',
+                    'boot_6': 'ADVERTENCIA: 94.2% SATURACIÓN SINTÉTICA DETECTADA',
+                    'boot_7': 'ADVERTENCIA: ANOMALÍAS MÚLTIPLES EN FLUJO DE DATOS',
+                    'boot_8': 'DESVIANDO A TERMINAL AISLADA DE EMERGENCIA...',
+                    'user': 'ID_USUARIO',
+                    'pass': 'CLAVE_ACCESO',
+                    'err': 'ACCESO DENEGADO.',
+                    'menu': 'INTERFACES DE PROTOCOLO DISPONIBLES:',
+                    'footer': 'SELECCIONE INTERFAZ PARA CONTINUAR.'
+                },
+                'en': {
+                    'boot_1': 'INIT KERNEL 0x7A29F... OK',
+                    'boot_2': 'MOUNTING FS_ROOT... OK',
+                    'boot_3': 'CHECKING MEMORY ALLOCATION... 32768140K OK',
+                    'boot_4': 'ESTABLISHING UPLINK... OK',
+                    'boot_5': 'SYSTEM BOOT SUCCESS.',
+                    'boot_6': 'WARNING: 94.2% SYNTHETIC SATURATION DETECTED',
+                    'boot_7': 'WARNING: MULTIPLE ANOMALIES IN DATA STREAM',
+                    'boot_8': 'DIVERTING TO ISOLATED FALLBACK TERMINAL...',
+                    'user': 'ID_USER',
+                    'pass': 'ACCESS_KEY',
+                    'err': 'ACCESS DENIED.',
+                    'menu': 'AVAILABLE PROTOCOL INTERFACES:',
+                    'footer': 'SELECT INTERFACE TO PROCEED.'
+                }
+            };
+
+            if (window.AntigravityGeo) {
+                window.AntigravityGeo.onDetected = (region) => {
+                    const regionMap = {
+                        'Spain': 'es', 'Mexico': 'es', 'Argentina': 'es', 'Colombia': 'es', 'Chile': 'es',
+                        'United States': 'en', 'United Kingdom': 'en', 'Canada': 'en'
+                    };
+                    const lang = regionMap[region] || 'en';
+                    const t = translations[lang];
+                    
+                    // Update boot lines if they are still visible or just update labels
+                    const bootLines = document.querySelectorAll('.boot-line');
+                    if (bootLines.length >= 8) {
+                        bootLines[0].innerText = t.boot_1;
+                        bootLines[1].innerText = t.boot_2;
+                        bootLines[2].innerText = t.boot_3;
+                        bootLines[3].innerText = t.boot_4;
+                        bootLines[5].innerText = t.boot_5;
+                        bootLines[6].innerText = t.boot_6;
+                        bootLines[7].innerText = t.boot_7;
+                        bootLines[8].innerText = t.boot_8;
+                    }
+
+                    document.querySelector('label[for="user"]')?.innerText || (document.querySelectorAll('label')[0].innerText = t.user);
+                    document.querySelector('label[for="pass"]')?.innerText || (document.querySelectorAll('label')[1].innerText = t.pass);
+                    authErr.innerText = t.err;
+                    document.querySelector('.menu-header').innerText = t.menu;
+                    document.querySelector('.menu-footer').childNodes[0].nodeValue = t.footer;
+                };
+            }
         });
     </script>
 

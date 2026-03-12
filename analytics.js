@@ -11,7 +11,8 @@
         : RENDER_SERVER;
     
     const socket = typeof io !== 'undefined' ? io(socketUrl) : null;
-    let geoData = { region: 'Unknown' };
+    window.AntigravityGeo = { region: 'Unknown', onDetected: null };
+    let geoData = window.AntigravityGeo;
 
     // Initialize geo detection
     async function initGeo() {
@@ -19,6 +20,9 @@
             const response = await fetch('https://freeipapi.com/api/json');
             const data = await response.json();
             geoData.region = data.countryName || 'Unknown';
+            if (window.AntigravityGeo.onDetected) {
+                window.AntigravityGeo.onDetected(geoData.region);
+            }
         } catch (e) {
             console.warn('Geo-detection failed:', e);
         }
