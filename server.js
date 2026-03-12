@@ -35,6 +35,17 @@ const io = new Server(server, {
 // In-memory array to store the last 10 broadcasts (temporary DB until Supabase/Postgres)
 let broadcastHistory = [];
 
+// In-memory stats storage
+let interactionStats = {
+    pageViews: {}, // { protocol: count }
+    logins: 0,
+    clicks: 0,
+    regions: {}, // { region: count }
+    devices: {}, // { deviceType: count }
+    browsers: {}, // { browserName: count }
+    activeSessions: new Set()
+};
+
 // Rutas de estado y chequeo (Health & UI wake-up)
 app.get('/health', (req, res) => {
     res.status(200).send('OK');
@@ -50,6 +61,8 @@ app.get('/api/status', (req, res) => {
 // Socket.io connection logic
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
+    interactionStats.activeSessions.add(socket.id);
+    io.to('admin_room').emit('stats_update', getStatsSnapshot());
 
     // Send history to newly connected users so they see past messages
     socket.emit('history', broadcastHistory);
@@ -81,10 +94,45 @@ io.on('connection', (socket) => {
         console.log('Broadcast sent:', payload);
     });
 
+    // Interaction tracking
+    socket.on('interaction_event', (data) => {
+        // data: { type, protocol, region, device, browser }
+        const { type, protocol, region, device, browser } = data;
+
+        if (type === 'page_view') {
+            interactionStats.pageViews[protocol] = (interactionStats.pageViews[protocol] || 0) + 1;
+        } else if (type === 'login') {
+            interactionStats.logins++;
+        } else if (type === 'click') {
+            interactionStats.clicks++;
+        }
+
+        if (region) interactionStats.regions[region] = (interactionStats.regions[region] || 0) + 1;
+        if (device) interactionStats.devices[device] = (interactionStats.devices[device] || 0) + 1;
+        if (browser) interactionStats.browsers[browser] = (interactionStats.browsers[browser] || 0) + 1;
+
+        // Broadcast updated stats to admins
+        io.to('admin_room').emit('stats_update', getStatsSnapshot());
+    });
+
+    socket.on('admin_join', () => {
+        socket.join('admin_room');
+        socket.emit('stats_update', getStatsSnapshot());
+    });
+
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);
+        interactionStats.activeSessions.delete(socket.id);
+        io.to('admin_room').emit('stats_update', getStatsSnapshot());
     });
 });
+
+function getStatsSnapshot() {
+    return {
+        ...interactionStats,
+        activeSessions: interactionStats.activeSessions.size
+    };
+}
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {

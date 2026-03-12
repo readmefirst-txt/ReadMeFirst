@@ -437,6 +437,11 @@
                         // Background fetch without UI updates
                         fetch("https://readmefirst-server.onrender.com/api/status")
                             .catch(err => console.log("Background node awakening..."));
+
+                        // Track login success
+                        if (window.AntigravityAnalytics) {
+                            window.AntigravityAnalytics.trackEvent('login', { protocol: 'index.html' });
+                        }
                     } else {
                         // Fail
                         authErr.style.display = 'block';
@@ -454,6 +459,8 @@
         });
     </script>
 
+    <script src="https://readmefirst-server.onrender.com/socket.io/socket.io.js"></script>
+    <script src="analytics.js"></script>
 </body>
 
 </html>

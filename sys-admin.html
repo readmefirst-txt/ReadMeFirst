@@ -82,6 +82,64 @@
             color: #aaa;
             min-height: 20px;
         }
+
+        /* DASHBOARD STYLES */
+        .dashboard {
+            margin-top: 40px;
+            border-top: 2px solid #00ff41;
+            padding-top: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            border: 1px solid #00ff41;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .detail-box {
+            border: 1px solid #004400;
+            padding: 10px;
+            font-size: 0.8rem;
+        }
+
+        .detail-box h3 {
+            font-size: 0.9rem;
+            margin-top: 0;
+            border-bottom: 1px solid #004400;
+            padding-bottom: 5px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dotted #003300;
+            padding: 4px 0;
+        }
     </style>
 </head>
 
@@ -111,6 +169,40 @@
 
         <button onclick="sendBroadcast()">TRANSMIT PAYLOAD</button>
         <div id="log">STATUS: WAITING_FOR_INPUT...</div>
+
+        <!-- DASHBOARD SECTION -->
+        <div class="dashboard">
+            <h1>LIVE_INTERACTION_METRICS</h1>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-val" id="stat-active">0</span>
+                    <span class="stat-label">Active Sessions</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-val" id="stat-logins">0</span>
+                    <span class="stat-label">Total Logins</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-val" id="stat-clicks">0</span>
+                    <span class="stat-label">Total Clicks</span>
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-box">
+                    <h3>PAGE_VIEWS</h3>
+                    <div id="page-views-list">LOADING...</div>
+                </div>
+                <div class="detail-box">
+                    <h3>TOP_REGIONS</h3>
+                    <div id="region-list">LOADING...</div>
+                </div>
+                <div class="detail-box">
+                    <h3>DEVICE_TYPES</h3>
+                    <div id="device-list">LOADING...</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -148,6 +240,38 @@
                 protocol: protocol
             });
         }
+
+        // --- NEW STATISTICS LOGIC ---
+        socket.emit('admin_join');
+
+        socket.on('stats_update', (stats) => {
+            console.log("Stats Update:", stats);
+            document.getElementById('stat-active').innerText = stats.activeSessions;
+            document.getElementById('stat-logins').innerText = stats.logins;
+            document.getElementById('stat-clicks').innerText = stats.clicks;
+
+            // Render Page Views
+            let pvHtml = '';
+            for (const [page, count] of Object.entries(stats.pageViews)) {
+                pvHtml += `<div class="stat-row"><span>${page}</span><span>${count}</span></div>`;
+            }
+            document.getElementById('page-views-list').innerHTML = pvHtml || 'NO DATA';
+
+            // Render Regions
+            let regHtml = '';
+            const sortedRegions = Object.entries(stats.regions).sort((a, b) => b[1] - a[1]);
+            for (const [region, count] of sortedRegions) {
+                regHtml += `<div class="stat-row"><span>${region}</span><span>${count}</span></div>`;
+            }
+            document.getElementById('region-list').innerHTML = regHtml || 'NO DATA';
+
+            // Render Devices
+            let devHtml = '';
+            for (const [dev, count] of Object.entries(stats.devices)) {
+                devHtml += `<div class="stat-row"><span>${dev}</span><span>${count}</span></div>`;
+            }
+            document.getElementById('device-list').innerHTML = devHtml || 'NO DATA';
+        });
     </script>
 
 </body>
