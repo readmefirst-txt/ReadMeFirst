@@ -168,6 +168,7 @@
         </div>
 
         <button onclick="sendBroadcast()">TRANSMIT PAYLOAD</button>
+        <button onclick="resetBroadcasts()" style="background: transparent; border: 1px solid red; color: red; margin-top: 10px;">RESET TRANSMISSIONS</button>
         <div id="log">STATUS: WAITING_FOR_INPUT...</div>
 
         <!-- DASHBOARD SECTION -->
@@ -239,6 +240,18 @@
                 message: msg,
                 protocol: protocol
             });
+        }
+
+        function resetBroadcasts() {
+            const pass = document.getElementById('pass').value.trim();
+            if (!pass) {
+                document.getElementById('log').innerText = "STATUS: PASSWORD REQUIRED FOR RESET";
+                document.getElementById('log').style.color = "yellow";
+                return;
+            }
+            if (!confirm("ARE YOU SURE? This will clear history on all connected clients.")) return;
+            
+            socket.emit('admin_reset_broadcasts', { password: pass });
         }
 
         // --- NEW STATISTICS LOGIC ---

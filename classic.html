@@ -936,7 +936,8 @@
     <script src="https://readmefirst-server.onrender.com/analytics.js"></script>
     <script>
         (function () {
-            const socket = io("https://readmefirst-server.onrender.com");
+            const socketHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : "https://readmefirst-server.onrender.com";
+            const socket = io(socketHost);
             let msgHistory = [];
 
             function renderMessages() {
@@ -984,6 +985,13 @@
             socket.on('history', (list) => {
                 const relevant = list.filter(d => d.protocol === 'all' || d.protocol === 'classic');
                 msgHistory = relevant.slice(-5);
+                renderMessages();
+            });
+
+            socket.on('clear_broadcasts', () => {
+                msgHistory = [];
+                const box = document.getElementById('broadcast-box');
+                if (box) box.style.display = 'none';
                 renderMessages();
             });
         })();

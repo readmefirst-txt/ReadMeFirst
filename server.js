@@ -94,6 +94,17 @@ io.on('connection', (socket) => {
         console.log('Broadcast sent:', payload);
     });
 
+    socket.on('admin_reset_broadcasts', (data) => {
+        if (!data.password || data.password.trim() !== 'SYS_OVERRIDE') {
+            socket.emit('admin_error', { error: "ACCESS DENIED: Invalid Admin Password" });
+            return;
+        }
+        broadcastHistory = [];
+        io.emit('clear_broadcasts');
+        socket.emit('admin_success', { status: "All Transmissions Reset" });
+        console.log('Broadcast history cleared');
+    });
+
     // Interaction tracking
     socket.on('interaction_event', (data) => {
         // data: { type, protocol, region, device, browser }
