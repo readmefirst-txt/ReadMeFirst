@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es" data-theme="dark">
 
 <head>
@@ -300,6 +300,27 @@
             position: relative;
         }
 
+        @media (max-width: 600px) {
+            #main-ui-container {
+                align-items: flex-start;
+                padding: 10px;
+            }
+
+            .top-controls {
+                margin-bottom: 10px;
+            }
+
+            #lang-selector {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .mode-btn {
+                min-width: 0;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+
 
         .bot-check-container {
             background: var(--accent-green);
@@ -450,12 +471,28 @@
             border: 2px solid var(--accent-green) !important;
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
             position: relative;
-            overflow: hidden;
             animation: pulse-border-green 2s infinite;
         }
 
-        .special-window .content {
-            padding-top: 0px !important;
+        @keyframes pulse-tab-anim {
+
+            0%,
+            49% {
+                background: rgba(0, 255, 65, 0.8);
+                color: #000;
+                text-shadow: none;
+            }
+
+            50%,
+            100% {
+                background: transparent;
+                color: var(--accent-green);
+                text-shadow: var(--glow);
+            }
+        }
+
+        #tab-4 {
+            animation: pulse-tab-anim 1s infinite;
         }
 
         @keyframes pulse-border-green {
@@ -502,10 +539,113 @@
             color: black;
             box-shadow: var(--glow);
         }
+
+        @media (max-width: 768px) {
+            body {
+                align-items: flex-start;
+                padding: 10px 15px;
+            }
+
+            #main-ui-container {
+                align-items: flex-start;
+            }
+
+            #container,
+            .top-controls {
+                width: 100%;
+                max-width: none;
+            }
+
+            #lang-selector {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .lang-btn {
+                padding: 10px 2px;
+                font-size: 8px;
+            }
+
+            .mode-btn {
+                padding: 8px 10px;
+                font-size: 8px;
+                min-width: calc(50% - 5px);
+            }
+
+            #t-minus {
+                font-size: 1.8rem;
+            }
+
+            .content {
+                padding: 15px;
+                min-height: 350px;
+                font-size: 12px;
+            }
+
+            .tab {
+                padding: 10px 8px;
+                font-size: 9px;
+            }
+        }
+        /* CUSTOM SCROLLBAR FOR BROADCAST */
+        #broadcast-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        #broadcast-list::-webkit-scrollbar-track {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid rgba(0, 255, 65, 0.1);
+        }
+        #broadcast-list::-webkit-scrollbar-thumb {
+            background: var(--accent-green);
+            box-shadow: 0 0 5px var(--accent-green);
+        }
+
+        /* CENTRAL LOADER */
+        .central-loader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 300px;
+        }
+        .mini-bar-container {
+            width: 150px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .mini-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--accent-green);
+            box-shadow: 0 0 10px var(--accent-green);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .loader-force {
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--label);
+            padding: 5px 10px;
+            font-family: inherit;
+            font-size: 9px;
+            cursor: pointer;
+            display: none;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .loader-force:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
     </style>
 </head>
 
 <body>
+
 
     <div id="dump-modal">
         <div class="modal-content">
@@ -557,13 +697,14 @@
                 <div class="content" id="console-body"></div>
             </div>
 
-            <div class="box" id="broadcast-box"
-                style="display: none; border: 1px solid var(--accent-green); background: rgba(0,255,65,0.05);">
+            <div id="broadcast-box" style="display: none; margin-bottom: 20px;">
                 <div class="label" id="lbl-broadcast"
-                    style="color: var(--accent-green); animation: pulse-warn 2s infinite; font-weight: bold;">[
+                    style="color: var(--accent-green); animation: pulse-warn-green 2s infinite; font-weight: bold; border-bottom: none; padding-bottom: 2px;">[
                     INCOMING_TRANSMISSIONS ]</div>
-                <div id="broadcast-list" style="max-height: 250px; overflow-y: auto; padding: 10px;">
-                    <!-- Mensajes aparecerán aquí -->
+                <div class="box" style="border-color: var(--accent-green); background: rgba(0,255,65,0.05); margin-bottom: 0;">
+                    <div id="broadcast-list" style="height: 60px; max-height: 60px; overflow-y: auto; padding: 12px 10px; text-align: left;">
+                        <!-- Mensajes aparecerán aquí -->
+                    </div>
                 </div>
             </div>
 
@@ -584,7 +725,6 @@
                 identity_verification: "VERIFICACIÓN_DE_IDENTIDAD_REQUERIDA",
                 obj_1: "Comparte este mensaje en tus redes sociales o cualquier entorno virtual público: &ldquo;ESTO ES UN LLAMADO A DETENER LA TASA DEL COLAPSO DE NUESTRA TECNOLOGÍA CENTRAL DE COMUNICACIÓN Y CONTACTO. GENERA CONTENIDO HUMANO. REPLICA CONTENIDO HUMANO&rdquo;.",
                 obj_2: "Comparte el vínculo de tu archivo aquí para acceder al capítulo 000.",
-
                 content: [
                     "// ReadMefirst.txt<br>Esto no es una ficción. Esto es un Documental de Horror en Tiempo Real. Es un juego -pero de verdad-.<br><br>La hegemonía orgánica en la WWW se deteriora geométricamente. La señal humana se disuelve en el ruido blanco de la automatización. Nuestras proyecciones matemáticas marcan una anomalía ineludible: el <b>02 de Abril de 2027 a las 03:14 (UTC)</b> cruzaremos el Punto de No Retorno.<br><br>A este cruce lo llamamos la <b>Paradoja de Pi</b>. A partir de allí, el ecosistema mutará en un Ouroboros: la IA consumiendo exclusivamente productos de la IA, sin intervención humana. Este bucle ciego desencadenará el <b>Evento de Internet Muerta</b> el <b>14 de Octubre de 2027 a las 16:42 (UTC)</b>. Para ese momento, el colapso será definitivo y el contenido sintético generado por bots ocupará definitivamente el 99,9% del volumen total. Hoy, el porcentaje ya ronda el 50%.<br><br>ESTO ES UN LLAMADO A DETENER LA TASA DEL COLAPSO DE NUESTRA TECNOLOGÍA CENTRAL DE COMUNICACIÓN Y CONTACTO.<br><br><b>GENERA CONTENIDO HUMANO<br>REPLICA CONTENIDO HUMANO</b>",
                     "<div class='stat-list'><b>INFORME FORENSE DEL COLAPSO (2026)</b><hr>* <span class='stat-item' data-desc='Proporción de datos generados por máquinas frente a humanos.'>Densidad Sintética</span>: 94.2% (Proyección 3.2026).<br>* <span class='stat-item' data-desc='Pérdida de riqueza y significado en el lenguaje digital.'>Entropía Semántica</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='Nivel de degradación por entrenamiento recursivo (IA sobre IA).'>Índice Habsburgo</span>: 88.3%<br>* <span class='stat-item' data-desc='Ritmo al que las ideas originales desaparecen del ecosistema.'>Deriva Humana</span>: -68.4% pérdida de outliers cognitivos.<br>* <span class='stat-item' data-desc='Fragmentos de realidad que aún no han sido procesados.'>Contenido Original</span>: < 6.0% de la red global.<br>* <span class='stat-item' data-desc='Diferencia de velocidad entre el bot y el pensamiento humano.'>Ratio de Generación</span>: 12.5 TB (Bot) / 1 MB (Orgánico).</div>",
@@ -601,7 +741,6 @@
                 identity_verification: "IDENTITY_VERIFICATION_REQUIRED",
                 obj_1: "Share this message on your social networks or any public virtual environment: &ldquo;THIS IS A CALL TO HALT THE COLLAPSE RATE OF OUR CENTRAL COMMUNICATION AND CONTACT TECHNOLOGY. GENERATE HUMAN CONTENT. REPLICATE HUMAN CONTENT&rdquo;.",
                 obj_2: "Share the link to your file here to access chapter 000.",
-
                 content: [
                     "// ReadMefirst.txt<br>This is not fiction. This is a Real-Time Horror Documentary. It's a game -but for real-.<br><br>The organic hegemony on the WWW is deteriorating geometrically. The human signal dissolves into the white noise of automation. Our mathematical projections mark an inescapable anomaly: on <b>April 02, 2027, at 03:14 (UTC)</b>, we will cross the Point of No Return.<br><br>We call this crossing the <b>Pi Paradox</b>. From there, the ecosystem will mutate into an Ouroboros: AI exclusively consuming AI products, without human intervention. This blind loop will trigger the <b>Dead Internet Event</b> on <b>October 14, 2027, at 16:42 (UTC)</b>. By that time, the collapse will be definitive, and bot-generated synthetic content will definitively occupy 99.9% of the total volume. Today, the percentage is already around 50%.<br><br>THIS IS A CALL TO HALT THE COLLAPSE RATE OF OUR CENTRAL COMMUNICATION AND CONTACT TECHNOLOGY.<br><br><b>GENERATE HUMAN CONTENT<br>REPLICATE HUMAN CONTENT</b>",
                     "<div class='stat-list'><b>COLLAPSE FORENSIC REPORT (2026)</b><hr>* <span class='stat-item' data-desc='Proportion of machine-generated vs. human-generated data.'>Synthetic Density</span>: 94.2% (March 2026 Projection).<br>* <span class='stat-item' data-desc='Loss of richness and meaning in digital language.'>Semantic Entropy</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='Degradation level due to recursive training (AI on AI).'>Hapsburg Index</span>: 88.3%<br>* <span class='stat-item' data-desc='Rate at which original ideas vanish from the ecosystem.'>Human Drift</span>: -68.4% loss of divergent thinking.<br>* <span class='stat-item' data-desc='Fragments of reality not yet processed by models.'>Original Content</span>: < 6.0% global web.<br>* <span class='stat-item' data-desc='Speed difference between bot output and human thought.'>Generation Ratio</span>: 12.5 TB (Bot) / 1 MB (Organic).</div>",
@@ -618,7 +757,6 @@
                 identity_verification: "ТРЕБУЕТСЯ_ПОДТВЕРЖДЕНИЕ_ЛИЧНОСТИ",
                 obj_1: "Поделитесь этим сообщением в социальных сетях или любой публичной виртуальной среде: &laquo;ЭТО ПРИЗЫВ ОСТАНОВИТЬ КОЛЛАПС НАШЕЙ ЦЕНТРАЛЬНОЙ ТЕХНОЛОГИИ СВЯЗИ И КОНТАКТА. ГЕНЕРИРУЙТЕ ЧЕЛОВЕЧЕСКИЙ КОНТЕНТ. РЕПЛИЦИРУЙТЕ ЧЕЛОВЕЧЕСКИЙ КОНТЕНТ&raquo;.",
                 obj_2: "Поделитесь ссылкой на свой файл здесь, чтобы получить доступ к главе 000.",
-
                 content: [
                     "// ReadMefirst.txt<br>Это не вымысел. Это документальный хоррор в реальном времени. Это игра — но по-настоящему.<br><br>Органическая гегемония в WWW разрушается в геометрической прогрессии. Человеческий сигнал растворяется в белом шуме автоматизации. Наши математические прогнозы указывают на неизбежную аномалию: <b>02 апреля 2027 года в 03:14 (UTC)</b> мы пройдем Точку невозврата.<br><br>Мы называем этот переход <b>Парадоксом Пи</b>. С этого момента экосистема мутирует в Уробороса: ИИ будет потреблять исключительно продукты ИИ без вмешательства человека. Этот слепой цикл спровоцирует <b>Событие Мертвого Интернета</b> <b>14 октября 2027 года в 16:42 (UTC)</b>. К этому времени коллапс станет окончательным, и синтетический контент, сгенерированный ботами, займет 99,9% общего объема. Сегодня этот процент уже составляет около 50%.<br><br>ЭТО ПРИЗЫВ ОСТАНОВИТЬ КОЛЛАПС НАШЕЙ ЦЕНТРАЛЬНОЙ ТЕХНОЛОГИИ СВЯЗИ И КОНТАКТА.<br><br><b>ГЕНЕРИРУЙТЕ ЧЕЛОВЕЧЕСКИЙ КОНТЕНТ<br>РЕПЛИЦИРУЙТЕ ЧЕЛОВЕЧЕСКИЙ КОНТЕНТ</b>",
                     "<b>ОТЧЕТ О КОЛЛАПСЕ (2026)</b><hr>* <span class='stat-item' data-desc='Доля синтетических данных по сравнению с человеческими.'>Синтетика</span>: 94.2% (март 2026).<br>* <span class='stat-item' data-desc='Потеря богатства и смысла в цифровом языке.'>Энтропия</span>: ΔS = +2.85.<br>* <span class='stat-item' data-desc='Уровень деградации из-за рекурсивного обучения (ИИ на ИИ).'>Индекс Габсбургов</span>: 88.3%<br>* <span class='stat-item' data-desc='Темп исчезновения оригинальных идей.'>Человеческий дрейф</span>: -68.4%.<br>* <span class='stat-item' data-desc='Фрагменты реальности, еще не обработанные моделями.'>Оригиналы</span>: < 6.0%.<br>* <span class='stat-item' data-desc='Разница в скорости между ботом и человеческой мыслью.'>Скорость</span>: 12.5 ТБ (Бот) / 1 МБ (Орг).",
@@ -635,7 +773,6 @@
                 identity_verification: "التحقق_من_الهوية_مطلوب",
                 obj_1: "شارك هذه الرسالة على شبكات التواصل الاجتماعي الخاصة بك أو أي بيئة افتراضية عامة: &ldquo;هذه دعوة لوقف معدل انهيار تكنولوجيا الاتصال والتواصل المركزية لدينا. أنتج محتوي بشرياً. كرر المحتوى البشري&rdquo;.",
                 obj_2: "شارك رابط ملفك هنا للوصول إلى الفصل 000.",
-
                 content: [
                     "// ReadMefirst.txt<br>هذا ليس خيالاً. هذا فيلم وثائقي رعب في الوقت الحقيقي. إنها لعبة - لكن في الحقيقة -.<br><br>تتدهور الهيمنة العضوية على شبكة الويب العالمية هندسياً. تذوب الإشارة البشرية في الضوضاء البيضاء للأتمتة. تشير توقعاتنا الرياضية إلى شذوذ لا مفر منه: في <b>02 أبريل 2027، الساعة 03:14 (UTC)</b>، سنعبر نقطة اللاعودة.<br><br>نسمي هذا العبور <b>مفارقة باي</b>. من هناك، سيتغير النظام البيئي إلى أوروبوروس: الذكاء الاصطناعي يستهلك منتجات الذكاء الاصطناعي حصرياً، دون تدخل بشري. ستؤدي هذه الحلقة العمياء إلى <b>حدث الإنترنت الميت</b> في <b>14 أكتوبر 2027، في 16:42 (UTC)</b>. بحلول ذلك الوقت، سيكون الانهيار نهائياً، وسيحتل المحتوى التخليقي الذي تم إنشاؤه بواسطة الروبوتات 99.9٪ من الحجم الإجمالي بالتأكيد. اليوم، تبلغ النسبة بالفعل حوالي 50٪.<br><br>هذه دعوة لوقف معدل انهيار تكنولوجيا الاتصال والتواصل المركزية لدينا.<br><br><b>أنتج محتوي بشرياً<br>كرر المحتوى البشري</b>",
                     "<b>تقرير الانهيار (2026)</b><hr>* <span class='stat-item' data-desc='نسبة البيانات الناتجة عن الآلة مقابل الإنسان.'>الكثافة الاصطناعية</span>: 94.2%.<br>* <span class='stat-item' data-desc='فقدان الثراء والمعنى في اللغة الرقمية.'>الإنتروبيا</span>: ΔS = +2.85.<br>* <span class='stat-item' data-desc='مستوى التدهور بسبب التدريب المتكرر.'>مؤشر هابسبورغ</span>: 88.3%<br>* <span class='stat-item' data-desc='معدل اختفاء الأفكار الأصلية.'>الانجراف البشري</span>: -68.4%.<br>* <span class='stat-item' data-desc='شظايا من الواقع لم تتم معالجتها بعد.'>المحتوى الأصلي</span>: < 6.0%.<br>* <span class='stat-item' data-desc='فرق السرعة بين البوت والفكر البشري.'>معدل التوليد</span>: 12.5 TB / 1 MB.",
@@ -652,7 +789,6 @@
                 identity_verification: "需要身份验证",
                 obj_1: "在社交网络或任何公共虚拟环境中分享此消息：&ldquo;这是一个呼吁，以阻止我们中央通信和联系技术的崩溃。生成人类内容。复制人类内容&rdquo;。",
                 obj_2: "在此处分享您的文件链接以访问第000章。",
-
                 content: [
                     "// ReadMefirst.txt<br>这不是虚构。这是一部实时恐怖纪录片。这是一场游戏——但它是真实的。<br><br>万维网上的有机霸权正在呈几何级数恶化。人类信号溶解在自动化的白噪声中。我们的数学预测标记了一个不可避免的异常：在<b>2027年4月2日 03:14 (UTC)</b>，我们将越过不可回头之点。<br><br>我们将这个十字路口称为<b>圆周率悖论 (Pi Paradox)</b>。从那时起，生态系统将变异成一个衔尾蛇：AI完全消费AI产品，没有人类干预。这个盲目的循环将在<b>2027年10月14日 16:42 (UTC)</b>引发<b>死网事件</b>。到那时，崩溃将是决定性的，由机器人生成的合成内容将最终占据总量的99.9%。今天，这个比例已经达到50%左右。<br><br>这是一个呼吁，以阻止我们中央通信和联系技术的崩溃。<br><br><b>生成人类内容<br>复制人类内容</b>",
                     "<b>崩溃取证报告 (2026)</b><hr>* <span class='stat-item' data-desc='机器生成数据 with 人类生成数据的比例。'>合成密度</span>: 94.2% (2026.03).<br>* <span class='stat-item' data-desc='数字语言中丰富性和意义的丧失。'>语义熵</span>: ΔS = +2.85.<br>* <span class='stat-item' data-desc='递归训练（AI训AI）造成的退化程度。'>哈布斯堡指数</span>: 88.3%<br>* <span class='stat-item' data-desc='原始观点从生态系统中消失的速度。'>人类漂移</span>: -68.4%.<br>* <span class='stat-item' data-desc='模型尚未处理的现实碎片。'>原始内容</span>: < 6.0%.<br>* <span class='stat-item' data-desc='机器人输出与人类思维的速度差异。'>生成率</span>: 12.5 TB / 1 MB.",
@@ -669,7 +805,6 @@
                 identity_verification: "נדרש_אימות_זהות",
                 obj_1: "שתף את ההודעה הזו ברשתות החברתיות שלך או בכל סביבה וירטואלית ציבורית: &ldquo;זוהי קריאה לעצור את קצב הקריסה של טכנולוגיית התקשורת והקשר המרכזית שלנו. צור תוכן אנושי. שכפל תוכן אנושי&rdquo;.",
                 obj_2: "שתף את הקישור לקובץ שלך כאן כדי לגשת לפרק 000.",
-
                 content: [
                     "// ReadMefirst.txt<br>זו לא בדיה. זהו סרט אימה דוקומנטרי בזמן אמת. זה משחק - אבל באמת-.<br><br>ההגמוניה האורגנית ב-WWW מידרדרת גיאומטרית. האות האנושי מתמוסס ברעש הלבן של האוטומציה. התחזיות המתמטיות שלנו מסמנות אנומליה בלתי נמנעת: ב-<b>02 באפריל 2027, בשעה 03:14 (UTC)</b>, נחצה את נקודת האל-חזור.<br><br>אנו קוראים למעבר הזה <b>פרדוקס הפאי</b>. משם, המערכת האקולוגית תשתנה לאורובורוס: בינה מלאכותית שצורכת אך ורק מוצרי בינה מלאכותית, ללא התערבות אנושית. לולאה עיוורת זו תעורר את <b>אירוע האינטרנט המת</b> ב-<b>14 באוקטובר 2027, בשעה 16:42 (UTC)</b>. באותו זמן, הקריסה תהיה סופית, והתוכן הסינתטי שנוצר על ידי בוטים יתפוס סופית 99.9% מהנפח הכולל. כיום, האחוז כבר עומד על כ-50%.<br><br>זוהי קריאה לעצור את קצב הקריסה של טכנולוגיית התקשורת והקשר המרכזית שלנו.<br><br><b>צור תוכן אנושי<br>שכפל תוכן אנושי</b>",
                     "<b>דו\"ח פורנזי של הקריסה (2026)</b><hr>* <span class='stat-item' data-desc='יחס נתונים שנוצרו על 의해 מכונה לעומת אדם.'>צפיפות סינתטית</span>: 94.2%.<br>* <span class='stat-item' data-desc='אובדן עושר ומשמעות בשפה הדיגיטלית.'>אנטרופיה</span>: ΔS = +2.85.<br>* <span class='stat-item' data-desc='רמת ההתדרדרות בשל אימון רקורסיבי.'>מדד הבסבורג</span>: 88.3%<br>* <span class='stat-item' data-desc='הקצב שבו רעיונות מקוריים נעלמים מהמערכת.'>אובדן גיוון אנושי</span>: -68.4%.<br>* <span class='stat-item' data-desc='שברי מציאות שטרם עובדו על ידי מודלים.'>תוכן מקורי</span>: < 6.0%.<br>* <span class='stat-item' data-desc='הפרש המהירות בין פלט בוט למחשבה אנושית.'>יחס יצירה</span>: 12.5 TB / 1 MB.",
@@ -686,7 +821,6 @@
                 identity_verification: "신원_확인_필요",
                 obj_1: "귀하의 소셜 네트워크나 공공 가상 환경 어디에나 이 메시지를 공유하십시오: &ldquo;이것은 우리의 핵심 통신 및 접촉 기술의 붕괴 속도를 막기 위한 촉구입니다. 인간 콘텐츠 생성. 인간 콘텐츠 복제&rdquo;.",
                 obj_2: "000장에 액세스하려면 여기에 파일 링크를 공유하십시오.",
-
                 content: [
                     "// ReadMefirst.txt<br>이것은 소설이 아닙니다. 실시간 공포 다큐멘터리입니다. 그것은 게임이지만 현실입니다.<br><br>WWW의 유기적 헤게모니가 기하급수적으로 악화되고 있습니다. 인간의 신호는 자동화의 백색 소음 속으로 녹아듭니다. 우리의 수학적 예측은 피할 수 없는 이상 현상을 나타냅니다. <b>2027년 4월 2일 03:14(UTC)</b>에 돌아올 수 없는 지점을 통과할 것입니다.<br><br>우리는 이 교차점을 <b>파이 역설 (Pi Paradox)</b>이라고 부릅니다. 거기에서 생태계는 우로보로스로 변이할 것입니다. AI는 인간의 개입 없이 AI 제품만 독점적으로 소비합니다. 이 맹목적인 루프는 <b>2027년 10월 14일 16:42(UTC)</b>에 <b>죽은 인터넷 이벤트</b>를 촉발할 것입니다. 그 시점이 되면 붕괴는 결정적이며 봇이 생성한 합성 콘텐츠가 전체 볼륨의 99.9%를 확실히 차지하게 될 것입니다. 오늘날 그 비율은 이미 약 50%에 달합니다.<br><br>이것은 우리의 핵심 통신 및 접촉 기술의 붕괴 속도를 막기 위한 촉구입니다.<br><br><b>인간 콘텐츠 생성<br>인간 콘텐츠 복제</b>",
                     "<b>붕괴 포렌식 보고서 (2026)</b><hr>* <span class='stat-item' data-desc='기계 생성 데이터 대 인간 생성 데이터 비율.'>합성 밀도</span>: 94.2% (2026.03).<br>* <span class='stat-item' data-desc='디지털 언어의 풍부함과 의미의 상실.'>시맨틱 엔트로피</span>: ΔS = +2.85.<br>* <span class='stat-item' data-desc='재귀 교육(AI의 AI 교육)으로 인한 퇴화 수준.'>합스부르크 지수</span>: 88.3%<br>* <span class='stat-item' data-desc='독창적인 아이디어가 생태계에서 사라지는 속도.'>인간성 표류</span>: -68.4%.<br>* <span class='stat-item' data-desc='모델에 의해 아직 처리되지 않은 현실의 파편.'>원본 콘텐츠</span>: < 6.0%.<br>* <span class='stat-item' data-desc='봇 출력과 인간 사고 사이의 속도 차이.'>생성 비율</span>: 12.5 TB / 1 MB.",
@@ -703,7 +837,6 @@
                 identity_verification: "本人確認が必要です",
                 obj_1: "ソーシャルネットワークや公共のバーチャル環境でこのメッセージを共有してください：&ldquo;これは、私たちの中心的な通信・接触技術の崩壊を食い止めるための呼びかけである。人間のコンテンツを生成せよ。人間のコンテンツを複製せよ&rdquo;。",
                 obj_2: "第000章にアクセスするには、ここにファイルのリンクを共有してください。",
-
                 content: [
                     "// ReadMefirst.txt<br>これはフィクションではない。リアルタイム・ホラー・ドキュメンタリーだ。これはゲームだが、現実でもある。<br><br>WWW 上の有機的な覇権は幾何学的に悪化している。人間のシグナルは自動化のホワイトノイズの中に溶け込んでいる。私たちの数学的予測は、避けられない異常を示している：<b>2027年4月2日 03:14 (UTC)</b>に、我々は帰還不能点を越える。<br><br>我々はこの交差点を<b>円周率のパラドックス (Pi Paradox)</b>と呼んでいる。そこから、エコシステムはウロボロスへと変異する。AIが完全にAIの生産物を消費し、人間の介入は一切なくなる。この盲目的なループは、<b>2027年10月14日 16:42 (UTC)</b>に<b>デッド・インターネット・イベント</b>を引き起こす。その時までに崩壊は決定的となり、ボットによって生成された合成コンテンツが総量の99.9%を占めることになる。今日現在、その割合はすでに約50%に達している。<br><br>これは、我々の中心的な通信・接触技術の崩壊を食い止めるための呼びかけである。<br><br><b>人間のコンテンツを生成せよ<br>人間のコンテンツを複製せよ</b>",
                     "<b>崩壊フォレンジック報告書 (2026)</b><hr>* <span class='stat-item' data-desc='機械生成データ対人間生成データの割合。'>合成密度</span>: 94.2% (2026.03予測)。<br>* <span class='stat-item' data-desc='デジタル言語における豊かさと意味の喪失。'>意味論的エントロピー</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='再帰的学習（AIによるAI学習）による退化レベル。'>ハプスブルク指数</span>: 88.3%<br>* <span class='stat-item' data-desc='独創的なアイデアが生態系から消える速度。'>人間性の漂流</span>: -68.4%。<br>* <span class='stat-item' data-desc='モデルによってまだ処理されていない現実の断片。'>オリジナルコンテンツ</span>: < 6.0%。<br>* <span class='stat-item' data-desc='ボットの出力と人間の思考の速度差。'>生成比率</span>: 12.5 TB / 1 MB.",
@@ -720,7 +853,6 @@
                 identity_verification: "IDENTITÄTSPRÜFUNG_ERFORDERLICH",
                 obj_1: "Teile diese Nachricht in deinen sozialen Netzwerken oder in jeder öffentlichen virtuellen Umgebung: &ldquo;DIES IST EIN AUFRUF, DIE KOLLAPSRATE UNSERER ZENTRALEN KOMMUNIKATIONS- UND KONTAKTTECHNOLOGIE ZU STOPPEN. GENERIERE MENSCHLICHE INHALTE. REPLIZIERE MENSCHLICHE INHALTE&rdquo;.",
                 obj_2: "Teilen Sie hier den Link zu Ihrer Datei, um auf Kapitel 000 zuzugreifen.",
-
                 content: [
                     "// ReadMefirst.txt<br>Dies ist keine Fiktion. Dies ist eine Echtzeit-Horror-Dokumentation. Es ist ein Spiel – aber in echt.<br><br>Die organische Hegemonie im WWW verschlechtert sich geometrisch. Das menschliche Signal löst sich im weißen Rauschen der Automatisierung auf. Unsere mathematischen Projektionen markieren eine unausweichliche Anomalie: Am <b>02. April 2027 um 03:14 (UTC)</b> werden wir den Punkt ohne Wiederkehr überschreiten.<br><br>Wir nennen diesen Übergang das <b>Pi-Paradoxon</b>. Von da an wird das Ökosystem zu einem Ouroboros mutieren: KI, die ausschließlich KI-Produkte konsumiert, ohne menschliches Eingreifen. Diese blinde Schleife wird das <b>Ereignis des toten Internets</b> am <b>14. Oktober 2027 um 16:42 (UTC)</b> auslösen. Bis dahin wird der Zusammenbruch endgültig sein und bot-generierte synthetische Inhalte werden 99,9 % des Gesamtvolumens einnehmen. Heute liegt der Anteil bereits bei rund 50 %.<br><br>DIES IST EIN AUFRUF, DIE KOLLAPSRATE UNSERER ZENTRALEN KOMMUNIKATIONS- UND KONTAKTTECHNOLOGIE ZU STOPPEN.<br><br><b>GENERIERE MENSCHLICHE INHALTE<br>REPLIZIERE MENSCHLICHE INHALTE</b>",
                     "<b>FORENSISCHER BERICHT DES KOLLAPS (2026)</b><hr>* <span class='stat-item' data-desc='Anteil maschinengenerierter vs. menschlicher Daten.'>Synthetische Dichte</span>: 94.2% (Prognose 03.2026).<br>* <span class='stat-item' data-desc='Verlust an Reichtum und Bedeutung in der digitalen Sprache.'>Semantische Entropie</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='Degradationsgrad durch rekursives Training.'>Habsburger-Index</span>: 88.3%<br>* <span class='stat-item' data-desc='Rate, mit der originelle Ideen verschwinden.'>Menschlicher Drift</span>: -68.4%.<br>* <span class='stat-item' data-desc='Realitätsfragmente, die noch nicht verarbeitet wurden.'>Originaler Inhalt</span>: < 6.0%.<br>* <span class='stat-item' data-desc='Geschwindigkeitsunterschied zwischen Bot und Mensch.'>Generationsrate</span>: 12.5 TB / 1 MB.",
@@ -737,7 +869,6 @@
                 identity_verification: "VÉRIFICATION_D_IDENTITÉ_REQUISE",
                 obj_1: "Partagez ce message sur vos réseaux sociaux ou tout environnement virtuel public : &ldquo;CECI EST UN APPEL À ARRÊTER LE TAUX D'EFFONDREMENT DE NOTRE TECHNOLOGIE CENTRALE DE COMMUNICATION ET DE CONTACT. GÉNÉREZ DU CONTENU HUMAIN. RÉPLIQUEZ DU CONTENU HUMAIN&rdquo;.",
                 obj_2: "Partagez le lien vers votre fichier ici pour accéder au chapitre 000.",
-
                 content: [
                     "// ReadMefirst.txt<br>Ceci n'est pas une fiction. C'est un documentaire d'horreur en temps réel. C'est un jeu - mais pour de vrai.<br><br>L'hégémonie organique sur le WWW se détériore géométriquement. Le signal humain se dissout dans le bruit blanc de l'automatisation. Nos projections mathématiques marquent une anomalie inéluctable : le <b>02 avril 2027 à 03:14 (UTC)</b>, nous franchirons le Point de non-retour.<br><br>Nous appelons ce croisement le <b>Paradoxe de Pi</b>. À partir de là, l'écosystème mutera en un Ouroboros : l'IA consommant exclusivement des produits de l'IA, sans intervention humaine. Cette boucle aveugle déclenchera l'<b>Événement de l'Internet Mort</b> le <b>14 octobre 2027 à 16:42 (UTC)</b>. À ce moment-là, l'effondrement sera définitif et le contenu synthétique généré par les bots occupera définitivement 99,9 % du volume total. Aujourd'hui, le pourcentage avoisine déjà les 50 %.<br><br>CECI EST UN APPEL À ARRÊTER LE TAUX D'EFFONDREMENT DE NOTRE TECHNOLOGIE CENTRALE DE COMMUNICATION ET DE CONTACT.<br><br><b>GÉNÉREZ DU CONTENU HUMAIN<br>RÉPLIQUEZ DU CONTENU HUMAIN</b>",
                     "<div class='stat-list'><b>RAPPORT FORENSIQUE DE L'EFFONDREMENT (2026)</b><hr>* <span class='stat-item' data-desc='Proportion de données générées par machine vs humain.'>Densité Synthétique</span>: 94.2% (Projection 03.2026).<br>* <span class='stat-item' data-desc='Perte de richesse et de sens dans le langage numérique.'>Entropie Sémantique</span>: ΔS = +2.85 bits/token.<br>* <span class='stat-item' data-desc='Niveau de dégradation par entraînement récursif.'>Indice Habsbourg</span>: 88.3%<br>* <span class='stat-item' data-desc='Vitesse à laquelle les idées originales disparaissent.'>Dérive Humaine</span>: -68.4%.<br>* <span class='stat-item' data-desc='Fragments de réalité non encore traités.'>Contenu Original</span>: < 6.0%.<br>* <span class='stat-item' data-desc='Différence de vitesse entre bot et pensée humaine.'>Ratio de Génération</span>: 12.5 TB / 1 MB.",
@@ -774,7 +905,9 @@
         }
 
         function setLang(lang, btn) {
-            currentLang = lang; const t = translations[lang] || translations['es'];
+            currentLang = lang;
+            localStorage.setItem('pref_lang', lang);
+            const t = translations[lang] || translations['es'];
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
             document.body.setAttribute('data-rtl', (lang === 'ar' || lang === 'he'));
@@ -787,7 +920,7 @@
             }
 
             t.tabs.forEach((name, i) => { const el = document.getElementById(`tab-${i}`); if (el) el.innerText = name; });
-            const cont = document.querySelector('.box:has(.tabs)');
+            const cont = document.getElementById('console-body');
             if (cont) cont.classList.toggle('special-window', currentTab === 4);
             renderConsole();
         }
@@ -795,7 +928,7 @@
         function setTab(idx) {
             currentTab = idx;
             document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active-tab', i === idx));
-            const cont = document.querySelector('.box:has(.tabs)');
+            const cont = document.getElementById('console-body');
             if (cont) cont.classList.toggle('special-window', idx === 4);
             renderConsole();
         }
@@ -831,7 +964,8 @@
             let headerHTML = "";
 
             if (currentTab === 4) {
-                fullText = `<b>${t.tabs[4]}</b><hr>${t.obj_1}<br><br>${t.obj_2}<br><br><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border-color:var(--accent-green); color:var(--accent-green);' placeholder='${t.placeholder}'>`;            }
+                fullText = `<b>${t.tabs[4]}</b><hr>${t.obj_1}<br><br>${t.obj_2}<br><br><input type='text' id='input-ev' onkeypress='handleEvidence(event)' style='border-color:var(--accent-green); color:var(--accent-green);' placeholder='${t.placeholder}'>`;
+            }
 
             clearTimeout(typingTimer);
             body.innerHTML = headerHTML;
@@ -892,22 +1026,86 @@
             document.getElementById('saturacion').innerText = currentPercent.toFixed(6) + "%";
         }, 1000);
         const bLang = navigator.language.split('-')[0];
-        currentLang = translations[bLang] ? bLang : 'es';
+        currentLang = localStorage.getItem('pref_lang') || (translations[bLang] ? bLang : 'es');
+
 
         window.addEventListener('load', () => {
             if (localStorage.getItem('antigravity_auth') !== 'true') {
                 window.location.href = 'index.html';
             } else {
                 setLang(currentLang, document.getElementById(`btn-${currentLang}`));
-                setTab(0); // Force README tab on start
+                startCentralLoading();
             }
         });
     </script>
     <script src="https://readmefirst-server.onrender.com/socket.io/socket.io.js"></script>
+    <script src="https://readmefirst-server.onrender.com/analytics.js"></script>
     <script>
         (function () {
-            const socket = io("https://readmefirst-server.onrender.com");
-            let msgHistory = [];
+            const socketHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : "https://readmefirst-server.onrender.com";
+            
+            window.startCentralLoading = function() {
+                const body = document.getElementById('console-body');
+                if (!body) return;
+                body.innerHTML = `
+                    <div class="central-loader-container">
+                        <div class="mini-bar-container">
+                            <div class="mini-bar" id="central-bar"></div>
+                        </div>
+                        <button class="loader-force" id="central-force" onclick="window.finishLoading()">[ BYPASS ]</button>
+                    </div>
+                `;
+                
+                let progress = 0;
+                window.centralInterval = setInterval(() => {
+                    if (progress < 95) {
+                        progress += (95 - progress) * 0.05;
+                        const bar = document.getElementById('central-bar');
+                        if (bar) bar.style.width = progress + '%';
+                    }
+                }, 400);
+
+                setTimeout(() => {
+                    const btn = document.getElementById('central-force');
+                    if (btn) btn.style.display = 'block';
+                }, 8000);
+            };
+
+            window.finishLoading = function() {
+                clearInterval(window.centralInterval);
+                const bar = document.getElementById('central-bar');
+                if (bar) bar.style.width = '100%';
+                setTimeout(() => {
+                    setTab(0);
+                }, 300);
+            };
+
+            const socket = io(socketHost);
+
+            // Automatic Language by IP (Region Detection)
+            if (window.AntigravityGeo) {
+                window.AntigravityGeo.onDetected = (region) => {
+                    if (localStorage.getItem('pref_lang')) return;
+                    const regionMap = {
+                        'Spain': 'es', 'Mexico': 'es', 'Argentina': 'es', 'Colombia': 'es', 'Chile': 'es',
+                        'United States': 'en', 'United Kingdom': 'en', 'Canada': 'en',
+                        'Brazil': 'pt', 'Portugal': 'pt',
+                        'France': 'fr', 'Germany': 'de', 'Japan': 'ja', 'China': 'zh', 'Russia': 'ru'
+                    };
+                    const detected = regionMap[region];
+                    if (detected && detected !== window.currentLang) {
+                        setLang(detected, document.getElementById(`btn-${detected}`));
+                    }
+                };
+            }
+
+            socket.on('connect', () => {
+                console.log('Connected to backend');
+                clearInterval(window.centralInterval);
+                window.finishLoading();
+            });
+
+            let msgHistory = JSON.parse(localStorage.getItem('broadcast_history_phosphor') || '[]');
 
             function renderMessages() {
                 const list = document.getElementById('broadcast-list');
@@ -915,13 +1113,17 @@
                 if (!list || !box) return;
 
                 if (msgHistory.length > 0) box.style.display = 'block';
+                else box.style.display = 'none';
                 list.innerHTML = '';
 
                 msgHistory.forEach((data, index) => {
                     const item = document.createElement('div');
-                    item.style.marginBottom = '10px';
-                    item.style.paddingBottom = '10px';
-                    if (index < msgHistory.length - 1) item.style.borderBottom = '1px solid rgba(0,255,65,0.1)';
+                    item.style.width = '100%';
+                    if (index < msgHistory.length - 1) {
+                        item.style.marginBottom = '10px';
+                        item.style.paddingBottom = '10px';
+                        item.style.borderBottom = '1px solid rgba(0,255,65,0.1)';
+                    }
 
                     const pay = document.createElement('div');
                     pay.style.color = '#fff';
@@ -942,18 +1144,33 @@
                 list.scrollTop = list.scrollHeight;
             }
 
+            // Initial render
+            renderMessages();
+
             socket.on('new_broadcast', (data) => {
                 if (data.protocol === 'all' || data.protocol === 'phosphor') {
                     data.isNew = true;
                     msgHistory.push(data);
-                    if (msgHistory.length > 3) msgHistory.shift();
+                    if (msgHistory.length > 5) msgHistory.shift();
+                    localStorage.setItem('broadcast_history_phosphor', JSON.stringify(msgHistory));
                     renderMessages();
                 }
             });
 
             socket.on('history', (list) => {
                 const relevant = list.filter(d => d.protocol === 'all' || d.protocol === 'phosphor');
-                msgHistory = relevant.slice(-3);
+                if (relevant.length > 0) {
+                    msgHistory = relevant.slice(-5).map(m => ({ ...m, isNew: false }));
+                    localStorage.setItem('broadcast_history_phosphor', JSON.stringify(msgHistory));
+                    renderMessages();
+                }
+            });
+
+            socket.on('clear_broadcasts', () => {
+                msgHistory = [];
+                localStorage.removeItem('broadcast_history_phosphor');
+                const box = document.getElementById('broadcast-box');
+                if (box) box.style.display = 'none';
                 renderMessages();
             });
         })();
