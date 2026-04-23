@@ -93,55 +93,63 @@
 
 
         #dump-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 10, 0, 0.98);
-            z-index: 10000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 10, 0, 0.98);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
 
-        .modal-content {
-            width: 95%;
-            max-width: 800px;
-            background: var(--box-bg);
-            border: 2px solid var(--accent-green);
-            position: relative;
-            box-shadow: var(--glow);
-        }
+.modal-content {
+    /* CAMBIO CLAVE: Usamos el 90% del ancho de la pantalla */
+    width: 90vw; 
+    /* Aumentamos el máximo para pantallas de escritorio grandes */
+    max-width: 1200px; 
+    background: var(--box-bg);
+    border: 2px solid var(--accent-green);
+    position: relative;
+    box-shadow: var(--glow);
+}
 
-        .close-modal {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            color: var(--accent-green);
-            cursor: pointer;
-            font-size: 12px;
-            text-transform: uppercase;
-            font-weight: bold;
-            padding: 5px 10px;
-        }
+.close-modal {
+    position: absolute;
+    /* Ajustado para que no se pierda arriba si la ventana es muy grande */
+    top: -30px; 
+    right: 0;
+    color: var(--accent-green);
+    cursor: pointer;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 5px 10px;
+    letter-spacing: 2px;
+}
 
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            background: #000;
-        }
+.video-wrapper {
+    position: relative;
+    /* Mantenemos 16:9 */
+    padding-bottom: 56.25%; 
+    height: 0;
+    background: #000;
+    /* Un toque estético: ocultar desbordes por si el filtro genera artefactos */
+    overflow: hidden; 
+}
 
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-            filter: sepia(1) hue-rotate(80deg) brightness(0.8) contrast(1.2);
-        }
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    /* Tu estética de fósforo verde */
+    filter: sepia(1) hue-rotate(80deg) brightness(0.8) contrast(1.2);
+}
 
         #auth-overlay {
             position: fixed;
